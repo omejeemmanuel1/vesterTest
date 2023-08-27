@@ -51,7 +51,6 @@ export const apiPatch = (path: string, data: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      
     },
   };
   return axios.patch(`${baseUrl}${path}`, data, config);

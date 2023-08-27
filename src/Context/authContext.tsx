@@ -83,9 +83,9 @@ const DataProvider = ({ children }: any) => {
         const errorMessage = error.response.data?.error || "An error occurred";
         console.log(errorMessage);
 
-        if (errorMessage === "Email not found or not verified") {
+        if (errorMessage === "Invalid email or password") {
           toast.error(
-            "Email not found or not verified. Please check your credentials."
+            "Invalid email or password. Please check your credentials."
           );
         } else {
           toast.error(errorMessage);
