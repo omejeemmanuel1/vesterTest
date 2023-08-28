@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import MessageIcon from "../../assets/Vector.png";
-import { useAuth } from "../../Context/authContext";
+import { useAuth } from "../../../Context/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
