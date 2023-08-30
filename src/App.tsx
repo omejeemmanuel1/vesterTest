@@ -2,12 +2,12 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import RegisterPage from "./Pages/RegisterPage";
 import DataProvider from "./Context/authContext";
 import LoginPage from "./Pages/LoginPage";
-import ForgotPassword from "./Components/Company/Password/ForgotPassword";
-import VerifyOtp from "./Components/Company/Password/VerifyOtp";
-import ResetPassword from "./Components/Company/Password/ResetPassword";
-import PasswordCreated from "./Components/Company/PasswordCreatedModal/PasswordCreated";
-import VerifyLink from "./Components/Company/VerifyLink/VerifyLink";
-import CompDashboard from "./Components/Company/Dashboard/CompDashboard";
+import ForgotPassword from "./Company/Password/ForgotPassword";
+import VerifyOtp from "./Company/Password/VerifyOtp";
+import ResetPassword from "./Company/Password/ResetPassword";
+import PasswordCreated from "./Company/PasswordCreatedModal/PasswordCreated";
+import VerifyLink from "./Company/VerifyLink/VerifyLink";
+import CompDashboard from "./Company/Dashboard/CompDashboard";
 
 const App: React.FC = () => {
   return (

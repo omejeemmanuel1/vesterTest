@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import MessageIcon from "../../assets/Vector.png";
 import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../../../Context/authContext";
+import { useAuth } from "../../Context/authContext";
 
 const validationSchema = Yup.object().shape({
   otp: Yup.array()

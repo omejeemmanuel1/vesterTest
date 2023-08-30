@@ -2,7 +2,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { passwordSchema } from "../formValidate";
-import { useAuth } from "../../../Context/authContext";
+import { useAuth } from "../../Context/authContext";
 
 const initialValues = {
   companyMail: "",

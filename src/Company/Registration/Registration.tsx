@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchema } from "../formValidate";
 
-import { useAuth } from "../../../Context/authContext";
+import { useAuth } from "../../Context/authContext";
 
 const sectors = [
   "Technology",
