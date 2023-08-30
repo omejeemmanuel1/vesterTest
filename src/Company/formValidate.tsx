@@ -31,7 +31,7 @@ export const validationSchema = Yup.object().shape({
       }
     ),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("password"), ''], "Passwords must match")
     .nullable() // Allow null value in confirmPassword
     .required("Confirm password is required"),
 
@@ -81,7 +81,7 @@ export const resetSchema = Yup.object().shape({
       }
     ),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("password"), ''], "Passwords must match")
     .nullable() // Allow null value in confirmPassword
     .required("Confirm password is required"),
 });
