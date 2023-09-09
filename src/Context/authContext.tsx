@@ -43,9 +43,8 @@ const DataProvider = ({ children }: any) => {
     try {
       await apiPost("/auth/login", loginData).then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data?.token);
+        localStorage.setItem("token", res.data.access_token);
         toast.success("Login successful");
-        window.location.href = "/company_dashboard";
       });
     } catch (error: any) {
       if (error.response) {
@@ -145,6 +144,31 @@ const DataProvider = ({ children }: any) => {
     }
   };
 
+  const submitFormData = async (data: any) => {
+    try {
+      const response = await apiPost("/teamscore/create-teamscore", data);
+
+      console.log(response.data);
+
+      toast.success("Data submitted successfully");
+    } catch (error: any) {
+      if (error.response) {
+        const errorMessage = error.response.data?.error || "An error occurred";
+        console.log(errorMessage);
+
+        if (errorMessage === "Invalid email or password") {
+          toast.error(
+            "Invalid email or password. Please check your credentials."
+          );
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error("Server is not responding. Please try again later.");
+      }
+    }
+  };
+
   return (
     <dataContext.Provider
       value={{
@@ -154,6 +178,7 @@ const DataProvider = ({ children }: any) => {
         forgot_password,
         verify_otp,
         reset_password,
+        submitFormData,
       }}
     >
       {children}

@@ -48,3 +48,8 @@ To get started with Vester.AI, follow these steps:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+Start the frontend development server:
+
+- yarn
+- yarn start
