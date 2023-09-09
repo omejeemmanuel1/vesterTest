@@ -20,6 +20,8 @@ import { FaBackward } from "react-icons/fa";
 import GeneralInfo2 from "./GeneralInfo2";
 import Teamscore3 from "./TeamScore3";
 
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+
 const TeamScoreContainer: React.FC = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
@@ -54,7 +56,7 @@ const TeamScoreContainer: React.FC = () => {
       };
 
       await axios.post(
-        "http://127.0.0.1:5000/teamscore/create-teamscore",
+        `${baseUrl}/teamscore/create-teamscore`,
         combinedData,
         config
       );

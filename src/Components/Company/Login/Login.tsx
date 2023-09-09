@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+
 const initialValues = {
   companyMail: "",
   password: "",
@@ -22,10 +24,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/auth/login",
-        values
-      );
+      const response = await axios.post(`${baseUrl}/auth/login`, values);
 
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);

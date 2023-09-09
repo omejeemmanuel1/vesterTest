@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useNavigate } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 interface PitchDeckUploadProps {
   closePitchDeckUploadModal: () => void;
 }
@@ -46,7 +47,7 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
         };
 
         const response = await axios.post(
-          "http://127.0.0.1:5000/teamscore/upload-pitchdeck",
+          `${baseUrl}/teamscore/upload-pitchdeck`,
           formData,
           config
         );
