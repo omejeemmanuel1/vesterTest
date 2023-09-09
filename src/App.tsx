@@ -9,7 +9,7 @@ import PasswordCreated from "./Components/Company/PasswordCreatedModal/PasswordC
 import VerifyLink from "./Components/Company/VerifyLink/VerifyLink";
 import TeamscorePage from "./Pages/TeamscorePage";
 import CompanyDashbordPage from "./Pages/CompanyDashbordPage";
-import CompanyPerformancePage from "./Pages/CompanyPerformancePage";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 const App: React.FC = () => {
   return (
@@ -24,12 +24,23 @@ const App: React.FC = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/password-created" element={<PasswordCreated />} />
             <Route path="/verify-link" element={<VerifyLink />} />
+
             <Route
               path="/company_dashboard"
-              element={<CompanyDashbordPage />}
+              element={
+                <PrivateRoute>
+                  <CompanyDashbordPage />
+                </PrivateRoute>
+              }
             />
-            <Route path="/team-info" element={<TeamscorePage />} />
-            <Route path="/performance" element={<CompanyPerformancePage />} />
+            <Route
+              path="/team-info"
+              element={
+                <PrivateRoute>
+                  <TeamscorePage />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </Router>
       </DataProvider>
