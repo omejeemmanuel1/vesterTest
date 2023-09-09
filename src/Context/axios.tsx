@@ -7,7 +7,7 @@ export const apiGet = (path: string) => {
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "x-user-email": sessionStorage.getItem("userEmail"), // Get session info
+      "x-user-email": sessionStorage.getItem("userEmail"),
     },
   };
   return axios.get(`${baseUrl}${path}`, config);
@@ -16,7 +16,7 @@ export const apiGet = (path: string) => {
 export const apiPost = async (path: string, data: any) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     },
   };
   const response = await axios.post(`${baseUrl}${path}`, data, config);
@@ -33,6 +33,7 @@ export const apiPassPost = async (path: string, data: any) => {
   const response = await axios.post(`${baseUrl}${path}`, data, config);
   return response.data;
 };
+
 export const apiResetPost = async (path: string, data: any) => {
   const company_mail = sessionStorage.getItem("reset_email");
 

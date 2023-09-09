@@ -15,13 +15,11 @@ export const validationSchema = Yup.object().shape({
       "strong-password",
       "Password must include at least one lowercase letter, one uppercase letter, one digit, and one special character.",
       (value) => {
-        // Define regex patterns for each requirement
         const lowercaseRegex = /[a-z]/;
         const uppercaseRegex = /[A-Z]/;
         const digitRegex = /[0-9]/;
         const specialCharRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]/;
 
-        // Check if all requirements are met
         return (
           lowercaseRegex.test(value) &&
           uppercaseRegex.test(value) &&
@@ -31,8 +29,8 @@ export const validationSchema = Yup.object().shape({
       }
     ),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .nullable() // Allow null value in confirmPassword
+    .oneOf([Yup.ref("password"), undefined], "Passwords must match")
+    .nullable()
     .required("Confirm password is required"),
 
   companySector: Yup.string().required("Company sector is required"),
@@ -65,13 +63,11 @@ export const resetSchema = Yup.object().shape({
       "strong-password",
       "Password must include at least one lowercase letter, one uppercase letter, one digit, and one special character.",
       (value) => {
-        // Define regex patterns for each requirement
         const lowercaseRegex = /[a-z]/;
         const uppercaseRegex = /[A-Z]/;
         const digitRegex = /[0-9]/;
         const specialCharRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]/;
 
-        // Check if all requirements are met
         return (
           lowercaseRegex.test(value) &&
           uppercaseRegex.test(value) &&
@@ -81,7 +77,56 @@ export const resetSchema = Yup.object().shape({
       }
     ),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .nullable() // Allow null value in confirmPassword
+    .oneOf([Yup.ref("password"), undefined], "Passwords must match")
+    .nullable()
     .required("Confirm password is required"),
+});
+
+export const teamscoreSchema = Yup.object().shape({
+  cofounderCount: Yup.number()
+    .typeError("Please enter a valid number.")
+    .required("Please enter the number of cofounders not more than 3")
+    .min(1, "The number of cofounders must be at least 1")
+    .max(3, "The number of cofounders cannot exceed 3"),
+});
+
+export const marketscoreSchema = Yup.object().shape({
+  problemSolved: Yup.string().required("Enter the problem you are solving"),
+  problemCost: Yup.string().required("Enter the cost of the problem solved"),
+});
+
+export const businessSchema = Yup.object().shape({
+  productStage: Yup.string().required("Enter your product stage"),
+});
+
+export const financialSchema = Yup.object().shape({
+  customerAcquisition: Yup.string().required(
+    "Enter your monthly gross month  1, 2, 3"
+  ),
+  startupRevenue: Yup.string().required("Enter your startup runway"),
+  currentBurnRatet: Yup.string().required("Enter your current burn rate"),
+});
+
+export const generalSchema = Yup.object().shape({
+  companyOverview: Yup.string().required("Please fill the company overview"),
+  registrationRegion: Yup.string().required(
+    "Select the region your company is registered"
+  ),
+  registrationCountry: Yup.string().required(
+    "Select the country your company is registered"
+  ),
+});
+
+export const generalSchema2 = Yup.object().shape({
+  industry: Yup.string().required("Please select your industry"),
+  mainTechnology: Yup.string().required("Please select your main technology"),
+  foundingDate: Yup.string().required("Please select your founding date"),
+  companyExplanation: Yup.string().required("This field is required"),
+});
+
+export const teamscoreSchema2 = Yup.object().shape({
+  founderGender: Yup.string().required("Please select an option"),
+  technicalFounder: Yup.string().required("Please select an option"),
+  founderTime: Yup.string().required("Please select an option"),
+  cLevel: Yup.string().required("Please select an option"),
 });
