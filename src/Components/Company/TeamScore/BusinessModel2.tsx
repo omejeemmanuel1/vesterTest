@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 
 interface BusinessModel2Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 const initialValues = {
   revenuePercentage: "",
@@ -11,17 +12,20 @@ const initialValues = {
   loseUsersLast3Months: "",
 };
 
-const BusinessModel2: React.FC<BusinessModel2Props> = ({ onSubmit }) => {
+const BusinessModel2: React.FC<BusinessModel2Props> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
-
+        enableReinitialize={true}
         onSubmit={onSubmit}
       >
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
-            <label htmlFor="revenue" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="revenue" className="block text-sm">
               what % of your revenue is coming from your core business or
               product?
             </label>
@@ -34,7 +38,7 @@ const BusinessModel2: React.FC<BusinessModel2Props> = ({ onSubmit }) => {
           </div>
           {/* New Users in Last 3 Months */}
           <div className="mb-4">
-            <label className="block text-sm text-[#0A0A3F]">
+            <label className="block text-sm">
               Number of new users acquired in the last 3 months (Month 1, Month
               2, Month 3):
             </label>
@@ -70,8 +74,9 @@ const BusinessModel2: React.FC<BusinessModel2Props> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm text-[#0A0A3F]">
-              How many users did you lose in the last 3 month (Month 1, Month 2, Month 3):
+            <label className="block text-sm">
+              How many users did you lose in the last 3 month (Month 1, Month 2,
+              Month 3):
             </label>
             <div className="mt-1">
               <label htmlFor="loseUsersLast3Months.month1" className="mr-2">

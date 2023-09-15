@@ -5,6 +5,7 @@ import { marketscoreSchema } from "../formValidate";
 
 interface MarketScoreProps {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 const initialValues = {
   problemSolved: "",
@@ -13,23 +14,22 @@ const initialValues = {
   problemCost: "",
 };
 
-const MarketScore: React.FC<MarketScoreProps> = ({ onSubmit }) => {
+const MarketScore: React.FC<MarketScoreProps> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         validationSchema={marketscoreSchema}
         onSubmit={onSubmit}
       >
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-          <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
-            Market Score
-          </h2>
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <h2 className="text-[32px] font-semibold mb-4">Market Score</h2>
           <div className="mb-4">
-            <label
-              htmlFor="problemFaced"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="problemFaced" className="block text-sm">
               What problem are you solving?
               <span className="text-red-500">*</span>
             </label>
@@ -46,7 +46,7 @@ const MarketScore: React.FC<MarketScoreProps> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="geopeople" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="geopeople" className="block text-sm">
               How many people in your geographical focus face this problem that
               you are solving
             </label>
@@ -58,7 +58,7 @@ const MarketScore: React.FC<MarketScoreProps> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="payTimes" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="payTimes" className="block text-sm">
               How many times do they pay to solve this problem per year?
             </label>
             <Field
@@ -69,10 +69,7 @@ const MarketScore: React.FC<MarketScoreProps> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="problemCost"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="problemCost" className="block text-sm">
               What is the cost to solve the problem each time? in dollars?
               <span className="text-red-500">*</span>
             </label>

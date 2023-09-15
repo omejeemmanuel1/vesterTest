@@ -4,19 +4,27 @@ import { Formik, Form, Field } from "formik";
 
 interface BusinessModel3Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 const initialValues = {
   averageRevenue: "",
   customerAcquisition: "",
 };
 
-const BusinessModel3: React.FC<BusinessModel3Props> = ({ onSubmit }) => {
+const BusinessModel3: React.FC<BusinessModel3Props> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
-            <label className="block text-sm text-[#0A0A3F]">
+            <label className="block text-sm">
               What is you company's average revenue per user (ARPU) per month -
               looking at the last 3 month average - Month 1, Month 2, Month 3
             </label>
@@ -52,7 +60,7 @@ const BusinessModel3: React.FC<BusinessModel3Props> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm text-[#0A0A3F]">
+            <label className="block text-sm">
               What is you company's customer acquisition cost (CAC) per month -
               looking at the last 3 month average - Month 1, Month 2, Month 3
             </label>

@@ -3,7 +3,7 @@ import TeamScoreContainer from "../Components/Company/TeamScore/TeamScoreContain
 
 const TeamscorePage: React.FC = () => {
   return (
-    <div className="overflow-hidden">
+    <div>
       <TeamScoreContainer />
     </div>
   );

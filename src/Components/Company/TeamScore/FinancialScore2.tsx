@@ -29,10 +29,10 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
     <div className="min-h-screen flex items-center justify-center">
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values }) => (
-          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             {/* Funding Sources */}
             <div className="mb-4">
-              <label className="block text-sm text-[#0A0A3F]">
+              <label className="block text-sm">
                 Which of the following sources has your company raised funding
                 from?
               </label>
@@ -54,7 +54,7 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
             {/* Funding Amounts */}
             {values.fundingSources.length > 0 && (
               <div className="mb-4">
-                <label className="block text-sm text-[#0A0A3F]">
+                <label className="block text-sm">
                   Since it was founded, how much funding has your startup raised
                   for each selected source?
                 </label>

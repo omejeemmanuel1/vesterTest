@@ -2,10 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor: {
+        "custom-navbar": "#ffff",
+      },
+      darkMode: "className",
+      fontFamily: {
+        cabinet: ["Cabinet Grotesk Variable", "sans"],
+      },
+    },
   },
   plugins: [],
-  fontFamily: {
-    cabinet: ["Cabinet Grotesk Variable", "sans"],
-  },
+ 
 };

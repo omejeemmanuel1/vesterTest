@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 
 interface GovernanceProps {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 const initialValues = {
   boardOfDirector: "",
@@ -12,22 +13,23 @@ const initialValues = {
   advisors2: "",
   investorFunding: "",
   directorsAvailable: "",
-
 };
 
-const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
+const GovernanceScore: React.FC<GovernanceProps> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-          <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
-            Governance Score
-          </h2>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <h2 className="text-[32px] font-semibold mb-4">Governance Score</h2>
           <div className="mb-4">
-            <label
-              htmlFor="boardOfDirector"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="boardOfDirector" className="block text-sm">
               Do you have an official board of directors?
             </label>
             <div className="mt-1">
@@ -52,10 +54,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="boardOfDirector2"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="boardOfDirector2" className="block text-sm">
               If yes, How often does your board meeting?
             </label>
             <Field
@@ -67,10 +66,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="advisors"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="advisors" className="block text-sm">
               Do you have a team of advisors?
             </label>
             <div className="mt-1">
@@ -84,10 +80,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
               </label>
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="advisors2"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="advisors2" className="block text-sm">
                 If yes, How often do you meet with your advisers?
               </label>
               <Field
@@ -100,10 +93,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor=" investorFunding"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor=" investorFunding" className="block text-sm">
               If you've raised funding, who are your investors?
             </label>
             <Field
@@ -114,16 +104,26 @@ const GovernanceScore: React.FC<GovernanceProps> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="directorsAvailable" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="directorsAvailable" className="block text-sm">
               Are there directors , investors or founders PEPs? (yes or no)
             </label>
             <div className="mt-1">
               <label className="mr-4">
-                <Field type="radio" id="directorsAvailable" name="directorsAvailable" value="Yes" />
+                <Field
+                  type="radio"
+                  id="directorsAvailable"
+                  name="directorsAvailable"
+                  value="Yes"
+                />
                 Yes
               </label>
               <label className="mr-4">
-                <Field type="radio" id="directorsAvailable" name="directorsAvailable" value="No" />
+                <Field
+                  type="radio"
+                  id="directorsAvailable"
+                  name="directorsAvailable"
+                  value="No"
+                />
                 No
               </label>
             </div>

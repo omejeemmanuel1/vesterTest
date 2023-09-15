@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 interface Teamscore3Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 
 const initialValues = {
@@ -17,16 +18,17 @@ const initialValues = {
   otherEmployeeWomen: "",
 };
 
-const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
+const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit, initialValues }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
-            <label
-              htmlFor="cLevelNoneFounders"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="cLevelNoneFounders" className="block text-sm">
               Do you have any C-Level Execs that are none founders?
             </label>
             <div className="mt-1">
@@ -46,10 +48,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor=" cLevelLinkedin"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor=" cLevelLinkedin" className="block text-sm">
               If yes, C-level linkedin
             </label>
             <Field
@@ -60,10 +59,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor=" cLevelRole"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor=" cLevelRole" className="block text-sm">
               What is their role in the business?
             </label>
             <Field
@@ -74,10 +70,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="execGender"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="execGender" className="block text-sm">
               Is this Exec male or female?
             </label>
             <div className="mt-1">
@@ -102,7 +95,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="execTime" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="execTime" className="block text-sm">
               Is the Exec part time or full time in the business?
             </label>
             <div className="mt-1">
@@ -128,10 +121,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="otherEmployee"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="otherEmployee" className="block text-sm">
               Do you have have any other employees?
             </label>
             <div className="mt-1">
@@ -161,10 +151,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="otherEmployee2"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="otherEmployee2" className="block text-sm">
               If yes, how many other employees do you have?
             </label>
             <Field
@@ -175,10 +162,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="otherEmployeeWomen"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="otherEmployeeWomen" className="block text-sm">
               How many of your other employees are women?
             </label>
             <Field

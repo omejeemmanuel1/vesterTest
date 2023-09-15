@@ -4,13 +4,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { businessSchema } from "../formValidate";
 
 const productStageOptions = [
-  "Concept/Idea",
-  "Prototype",
-  "Development",
-  "Testing",
-  "Launch",
-  "Post-launch",
-  "Other",
+  "Pre-seed",
+  "Seed",
+  "Early stage",
+  "Growth stage",
+  "Expansion",
+  "Exit stage",
 ];
 
 interface BusinessModelProps {
@@ -33,7 +32,7 @@ const businessModels = [
 const DynamicUserCounts = ({ values }: any) => {
   return (
     <div className="mb-4">
-      <label className="block text-sm text-[#0A0A3F]">
+      <label className="block text-sm">
         Number of users for each selected business model:
       </label>
       {values.businessModels.map((model: string) => (
@@ -62,15 +61,12 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
         validationSchema={businessSchema}
       >
         {({ values }) => (
-          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            <h2 className="text-[26px] font-semibold mb-4 text-[#0A0A3F]">
+          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+            <h2 className="text-[26px] font-semibold mb-4">
               Understanding your Business Model
             </h2>
             <div className="mb-4">
-              <label
-                htmlFor="productStage"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="productStage" className="block text-sm">
                 What is your product status/stage?
                 <span className="text-red-500">*</span>
               </label>
@@ -94,7 +90,7 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm text-[#0A0A3F]">
+              <label className="block text-sm">
                 What is your business model(s)?
               </label>
               <div className="mt-1">

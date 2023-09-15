@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 interface Teamscore1Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 const initialValues = {
   cofounderCount: "",
@@ -11,7 +12,7 @@ const initialValues = {
   cofounderLinkedins: ["", "", ""],
 };
 
-const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit }) => {
+const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   const [cofounderCount, setCofounderCount] = useState<number>(0);
 
   const handleCofounderCountChange = (
@@ -26,17 +27,16 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-          <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
-            Team Score
-          </h2>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <h2 className="text-[32px] font-semibold mb-4">Team Score</h2>
 
           <div className="mb-4">
-            <label
-              htmlFor="cofounderCount"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="cofounderCount" className="block text-sm">
               How many co-founders does your company have?
             </label>
             <Field
@@ -52,17 +52,16 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit }) => {
             />
             <ErrorMessage
               name="cofounderCount"
-              component="div" // Use div to display the error message
+              component="div"
               className="text-red-500 text-sm"
             />
           </div>
 
-          {/* Display cofounder name and LinkedIn input fields based on count */}
           {Array.from({ length: cofounderCount }).map((_, index) => (
             <div className="mb-4" key={index}>
               <label
                 htmlFor={`cofounderNames[${index}]`}
-                className="block text-sm text-[#0A0A3F]"
+                className="block text-sm"
               >
                 Co-founder {index + 1} Name
               </label>
@@ -75,7 +74,7 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit }) => {
 
               <label
                 htmlFor={`cofounderLinkedins[${index}]`}
-                className="block text-sm text-[#0A0A3F] mt-2"
+                className="block text-sm mt-2"
               >
                 Co-founder {index + 1} LinkedIn Profile
               </label>

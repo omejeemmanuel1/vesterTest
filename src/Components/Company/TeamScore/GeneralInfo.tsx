@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { FaBackward } from "react-icons/fa";
+import { FaFastBackward } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { generalSchema } from "../formValidate";
-
 interface GeneralInfoProps {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 
 const initialValues = {
@@ -18,7 +18,10 @@ const initialValues = {
   teamLocation2: "",
 };
 
-const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
+const GeneralInfo: React.FC<GeneralInfoProps> = ({
+  onSubmit,
+  initialValues,
+}) => {
   const [showTeamLocation2, setShowTeamLocation2] = useState(false);
   const [selectedTeamLocation, setSelectedTeamLocation] = useState("");
   // Define the region-country mapping
@@ -102,30 +105,25 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
     <div className="min-h-screen flex items-center justify-center mb-[500px]">
       <Link to="/company_dashboard">
         <button className="absolute right-10 top-10 shadow-md p-2  flex cursor-pointer text-white rounded-md bg-[#000D80] hover:bg-blue-600 ">
-          <span className="mr-2 mt-[3px]">
-            <FaBackward />
-          </span>
-          Back to dashboard
+          <FaFastBackward />
         </button>
       </Link>
       <Formik
-        initialValues={initialValues}
         validationSchema={generalSchema}
         onSubmit={onSubmit}
+        initialValues={initialValues}
+        enableReinitialize={true}
       >
         {({ handleSubmit, setFieldValue }) => (
           <Form
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
+            className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
           >
-            <h2 className="text-[26px] font-semibold mb-4 text-[#0A0A3F]">
+            <h2 className="text-[26px] font-semibold mb-4">
               Company's General Information
             </h2>
             <div className="mb-4">
-              <label
-                htmlFor="companyOverview"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="companyOverview" className="block text-sm">
                 Company Overview? <span className="text-red-500">*</span>
               </label>
               <Field
@@ -143,10 +141,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
             </div>
             {/* Region Dropdown */}
             <div className="mb-4">
-              <label
-                htmlFor="registrationRegion"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="registrationRegion" className="block text-sm">
                 Where is your company legally registered in Africa (Region)?
                 <span className="text-red-500">*</span>
               </label>
@@ -176,10 +171,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="registrationCountry"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="registrationCountry" className="block text-sm">
                 Where is your company legally registered in Africa (Country)?
                 <span className="text-red-500">*</span>
               </label>
@@ -203,10 +195,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="teamLocation"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="teamLocation" className="block text-sm">
                 Is the majority of your team based in Africa? (Primary location)
               </label>
               <div className="mt-1">
@@ -243,10 +232,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ onSubmit }) => {
 
             {showTeamLocation2 && (
               <div className="mb-4">
-                <label
-                  htmlFor="teamLocation2"
-                  className="block text-sm text-[#0A0A3F]"
-                >
+                <label htmlFor="teamLocation2" className="block text-sm">
                   If no, where is the majority of your team based?
                 </label>
                 <Field

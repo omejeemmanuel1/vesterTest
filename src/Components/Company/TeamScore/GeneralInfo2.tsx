@@ -5,6 +5,7 @@ import { generalSchema2 } from "../formValidate";
 
 interface GeneralInfo2Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 
 const initialValues = {
@@ -15,24 +16,25 @@ const initialValues = {
   companyExplanation: "",
 };
 
-const GeneralInfo2: React.FC<GeneralInfo2Props> = ({ onSubmit }) => {
+const GeneralInfo2: React.FC<GeneralInfo2Props> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         validationSchema={generalSchema2}
         onSubmit={onSubmit}
       >
         {({ handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
+            className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
           >
             <div className="mb-4">
-              <label
-                htmlFor="industry"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="industry" className="block text-sm">
                 Which industry do you operate in?
                 <span className="text-red-500">*</span>
               </label>
@@ -70,10 +72,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="mainTechnology"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="mainTechnology" className="block text-sm">
                 What is your company's main technology?
                 <span className="text-red-500">*</span>
               </label>
@@ -116,10 +115,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="mainTechnology2"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="mainTechnology2" className="block text-sm">
                 If other, specify the technology
               </label>
               <Field
@@ -130,10 +126,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="foundingDate"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="foundingDate" className="block text-sm">
                 When was this company founded? (date selection){" "}
                 <span className="text-red-500">*</span>
               </label>
@@ -150,10 +143,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({ onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="companyExplanation"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="companyExplanation" className="block text-sm">
                 In under 100 words, explain why you started this company?{" "}
                 <span className="text-red-500">*</span>
               </label>

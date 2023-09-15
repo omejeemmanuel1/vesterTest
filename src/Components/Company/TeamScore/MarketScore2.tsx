@@ -35,12 +35,9 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
         onSubmit={onSubmit}
       >
         {(formikProps) => (
-          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
-              <label
-                htmlFor="competitors"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="competitors" className="block text-sm">
                 Share the website links of 3 of your most direct competitors in
                 the market. <span className="text-red-500">*</span>
               </label>
@@ -98,10 +95,7 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
               </FieldArray>
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="marketClaims"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="marketClaims" className="block text-sm">
                 Include any reports or evidence to back your market claims, inc.
               </label>
               <Field
@@ -114,10 +108,7 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
             </div>
 
             <div className="mb-4">
-              <label
-                htmlFor=" evidenceUrl"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor=" evidenceUrl" className="block text-sm">
                 Share a link for your market claim:{" "}
                 <span className="text-red-500">*</span>
               </label>

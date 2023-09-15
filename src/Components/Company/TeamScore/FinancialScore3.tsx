@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 
 interface FinancialScore3Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 
 const initialValues = {
@@ -11,16 +12,20 @@ const initialValues = {
   totalFundingRaised: "",
 };
 
-const FinancialScore3: React.FC<FinancialScore3Props> = ({ onSubmit }) => {
+const FinancialScore3: React.FC<FinancialScore3Props> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
-            <label
-              htmlFor="lastFunding"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="lastFunding" className="block text-sm">
               When did you close your last funding round?
             </label>
             <Field
@@ -32,10 +37,7 @@ const FinancialScore3: React.FC<FinancialScore3Props> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="totalFundingRaised"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="totalFundingRaised" className="block text-sm">
               How much did you raise? and what valuation?
             </label>
             <Field

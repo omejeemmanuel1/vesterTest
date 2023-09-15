@@ -17,7 +17,7 @@ const PitchDeckStep: React.FC<PitchDeckStepProps> = ({
   closePitchDeckStepModal,
 }) => {
   return (
-    <div className="w-[1098px] h-[668px] mx-auto text-center text-sm justify-center items-center shadow-md p-6 mt-16 bg-[#F7F9FB]">
+    <div className="w-[1098px] h-[668px] mx-auto text-center text-sm justify-center items-center font-cabinet shadow-md p-6 mt-16 bg-[#F7F9FB] overflow-hidden">
       <span>
         <MdOutlineCancel
           className="text-2xl text-gray-500 relative top-4 left-[1000px] cursor-pointer"

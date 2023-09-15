@@ -5,6 +5,7 @@ import { teamscoreSchema2 } from "../formValidate";
 
 interface Teamscore2Props {
   onSubmit: (values: typeof initialValues) => void;
+  initialValues: typeof initialValues;
 }
 
 const initialValues = {
@@ -16,20 +17,18 @@ const initialValues = {
   cLevel3: "",
 };
 
-const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
+const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit, initialValues }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         onSubmit={onSubmit}
         validationSchema={teamscoreSchema2}
       >
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
-            <label
-              htmlFor="founderGender"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="founderGender" className="block text-sm">
               Is this founder male or female?
               <span className="text-red-500">*</span>
             </label>
@@ -72,10 +71,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="technicalFounder"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="technicalFounder" className="block text-sm">
               Is this a technical founder?
               <span className="text-red-500">*</span>
             </label>
@@ -108,10 +104,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="technicalFounder"
-              className="block text-sm text-[#0A0A3F]"
-            >
+            <label htmlFor="technicalFounder" className="block text-sm">
               Is this founder part time or full time in the business?
               <span className="text-red-500">*</span>
             </label>
@@ -145,7 +138,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="cLevel" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="cLevel" className="block text-sm">
               Has this founder been a founder or C-level exec in a previous
               company?<span className="text-red-500">*</span>
             </label>
@@ -178,7 +171,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="cLevel2" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="cLevel2" className="block text-sm">
               If yes, is the previous company still running?
             </label>
             <div className="mt-1">
@@ -203,7 +196,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="cLevel3" className="block text-sm text-[#0A0A3F]">
+            <label htmlFor="cLevel3" className="block text-sm">
               If yes, was that previous company acquired or did it have an IPO?
             </label>
             <div className="mt-1">

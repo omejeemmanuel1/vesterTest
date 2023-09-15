@@ -19,12 +19,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaBackward } from "react-icons/fa";
 import GeneralInfo2 from "./GeneralInfo2";
 import Teamscore3 from "./TeamScore3";
+import { useTheme } from "../../../Context/ThemeContext";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const TeamScoreContainer: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<any>(() => {
+    const savedFormData = localStorage.getItem("formData");
+    return savedFormData ? JSON.parse(savedFormData) : {};
+  });
+  
 
   const navigate = useNavigate();
 
@@ -33,10 +38,13 @@ const TeamScoreContainer: React.FC = () => {
   };
 
   const handleContinue = (data: any) => {
-    setFormData({ ...formData, ...data });
+    const updatedFormData = { ...formData, ...data };
+    setFormData(updatedFormData);
+
+    localStorage.setItem("formData", JSON.stringify(updatedFormData));
+
     setStep(step + 1);
   };
-
   const handleBack = () => {
     if (step > 1) {
       setStep(step - 1);
@@ -66,16 +74,10 @@ const TeamScoreContainer: React.FC = () => {
       navigate("/company_dashboard");
     } catch (error: any) {
       if (error.response) {
-        const errorMessage = error.response.data?.error || "An error occurred";
+        const errorMessage =
+          error.response.data?.error || error.response.data?.error;
         console.log(errorMessage);
-
-        if (errorMessage === "Invalid email or password") {
-          toast.error(
-            "Invalid email or password. Please check your credentials."
-          );
-        } else {
-          toast.error(errorMessage);
-        }
+        toast.error(errorMessage);
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
@@ -84,31 +86,59 @@ const TeamScoreContainer: React.FC = () => {
 
   const totalSteps = 14;
 
-  // Calculate the progress percentage
   const progressPercentage = (step / totalSteps) * 100;
+  const { theme } = useTheme();
 
   return (
-    <div className="overflow-hidden h-[100vh]">
+    <div
+      className={`overflow-hidden h-[100vh] ${
+        theme === "light"
+          ? "bg-[#fff] bg-opacity-10 text-[#000D80]"
+          : "dark:bg-gray-800 text-gray-400"
+      }`}
+    >
       <div className="relative h-[10px] overflow-hidden bg-gray-300">
         <div
           className="absolute h-full bg-gradient-to-r from-gray-700 via-green-600 to-orange-400 transition-all duration-300 ease-in-out"
           style={{ width: `${progressPercentage}%` }}
         ></div>
       </div>
-      {step === 1 && <GeneralInfo onSubmit={handleContinue} />}
-      {step === 2 && <GeneralInfo2 onSubmit={handleContinue} />}
-      {step === 3 && <Teamscore1 onSubmit={handleContinue} />}
-      {step === 4 && <Teamscore2 onSubmit={handleContinue} />}
-      {step === 5 && <Teamscore3 onSubmit={handleContinue} />}
-      {step === 6 && <MarketScore onSubmit={handleContinue} />}
+      {step === 1 && (
+        <GeneralInfo onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 2 && (
+        <GeneralInfo2 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 3 && (
+        <Teamscore1 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 4 && (
+        <Teamscore2 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 5 && (
+        <Teamscore3 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 6 && (
+        <MarketScore onSubmit={handleContinue} initialValues={formData} />
+      )}
       {step === 7 && <MarketScore2 onSubmit={handleContinue} />}
       {step === 8 && <BusinessModel onSubmit={handleContinue} />}
-      {step === 9 && <BusinessModel2 onSubmit={handleContinue} />}
-      {step === 10 && <BusinessModel3 onSubmit={handleContinue} />}
-      {step === 11 && <FinancialScore onSubmit={handleContinue} />}
+      {step === 9 && (
+        <BusinessModel2 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 10 && (
+        <BusinessModel3 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 11 && (
+        <FinancialScore onSubmit={handleContinue} initialValues={formData} />
+      )}
       {step === 12 && <FinancialScore2 onSubmit={handleContinue} />}
-      {step === 13 && <FinancialScore3 onSubmit={handleContinue} />}
-      {step === 14 && <GovernanceScore onSubmit={handleSubmit} />}
+      {step === 13 && (
+        <FinancialScore3 onSubmit={handleContinue} initialValues={formData} />
+      )}
+      {step === 14 && (
+        <GovernanceScore onSubmit={handleSubmit} initialValues={formData} />
+      )}
       {step > 1 && (
         <button
           onClick={handleBack}

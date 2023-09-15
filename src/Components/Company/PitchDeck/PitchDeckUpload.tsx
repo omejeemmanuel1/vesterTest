@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import DownloadIcon from "../../../assets/Downloading.png";
@@ -29,9 +28,7 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
     initialValues: {
       file: null,
     },
-    validationSchema: Yup.object({
-      file: Yup.mixed().required("Please select a file"),
-    }),
+
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("file", values.file as unknown as File);
@@ -57,16 +54,9 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
       } catch (error: any) {
         if (error.response) {
           const errorMessage =
-            error.response.data?.error || "An error occurred";
+            error.response.data?.error || error.response.data?.msg;
           console.log(errorMessage);
-
-          if (errorMessage === "Invalid email or password") {
-            toast.error(
-              "Invalid email or password. Please check your credentials."
-            );
-          } else {
-            toast.error(errorMessage);
-          }
+          toast.error(errorMessage);
         } else {
           toast.error("Server is not responding. Please try again later.");
         }
@@ -86,7 +76,7 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="w-[1098px] mx-auto text-center justify-center items-center shadow-md p-6 mt-16 bg-[#F7F9FB]">
+      <div className="w-[1098px] mx-auto text-center justify-center font-cabinet items-center shadow-md p-6 mt-16 bg-[#F7F9FB]">
         <div className="border-2 border-dashed border-gray-300 rounded-lg">
           <span className="text-3xl text-gray-500 relative top-[84px] left-10 cursor-pointer">
             <MdOutlineArrowBackIosNew onClick={closePitchDeckUploadModal} />{" "}
