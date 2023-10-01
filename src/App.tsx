@@ -13,6 +13,14 @@ import CompanyDashbordPage from "./Pages/CompanyDashbordPage";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Score from "./Components/Company/Scorecard/Score";
 import { ThemeProvider } from "./Context/ThemeContext";
+import CompanyPerformancePage from "./Pages/CompanyPerformancePage";
+import LandingPage from "./Pages/LandingPage";
+import AdminLoginPage from "./Pages/AdminLoginPage";
+import AdminDashboardPage from "./Pages/AdminDashboardPage";
+import DataDisplayPage from "./Pages/DataDisplayPage";
+import CompanyDataDisplay from "./Components/Admin/AdminDashboard/CompanyDataDisplay";
+import TeamScoreDataDisplay from "./Components/Admin/AdminDashboard/TeamScoreDataDisplay";
+import PitchDeckDataDisplay from "./Components/Admin/AdminDashboard/PitchDeckDataDisplay";
 
 const App: React.FC = () => {
   return (
@@ -21,6 +29,8 @@ const App: React.FC = () => {
         <Router>
           <ThemeProvider>
             <Routes>
+              <Route path="/admin-login" element={<AdminLoginPage />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/comp-reg" element={<RegisterPage />} />
               <Route path="/comp-login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -28,6 +38,47 @@ const App: React.FC = () => {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/password-created" element={<PasswordCreated />} />
               <Route path="/verify-link" element={<VerifyLink />} />
+
+              <Route
+                path="/adminDashboard"
+                element={
+                  <PrivateRoute>
+                    <AdminDashboardPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/data"
+                element={
+                  <PrivateRoute>
+                    <DataDisplayPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="company-data"
+                element={
+                  <PrivateRoute>
+                    <CompanyDataDisplay />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="teamscore-data"
+                element={
+                  <PrivateRoute>
+                    <TeamScoreDataDisplay />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="pitchdeck-data"
+                element={
+                  <PrivateRoute>
+                    <PitchDeckDataDisplay />
+                  </PrivateRoute>
+                }
+              />
 
               <Route
                 path="/company_dashboard"
@@ -45,7 +96,22 @@ const App: React.FC = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path="/score" element={<Score />} />
+              <Route
+                path="/score"
+                element={
+                  <PrivateRoute>
+                    <Score />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/performance"
+                element={
+                  <PrivateRoute>
+                    <CompanyPerformancePage />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </ThemeProvider>
         </Router>

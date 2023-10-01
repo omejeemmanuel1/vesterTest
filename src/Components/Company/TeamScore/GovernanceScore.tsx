@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface GovernanceProps {
   onSubmit: (values: typeof initialValues) => void;
   initialValues: typeof initialValues;
 }
 const initialValues = {
+  registered: "",
   boardOfDirector: "",
   boardOfDirector2: "",
   advisors: "",
@@ -14,6 +16,12 @@ const initialValues = {
   investorFunding: "",
   directorsAvailable: "",
 };
+
+const validationSchema = Yup.object().shape({
+  registered: Yup.string().required(
+    "select if your company is registered or not"
+  ),
+});
 
 const GovernanceScore: React.FC<GovernanceProps> = ({
   onSubmit,
@@ -25,9 +33,32 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize={true}
+        validationSchema={validationSchema}
       >
         <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4">Governance Score</h2>
+          <div className="mb-4">
+            <label htmlFor="registered" className="block text-sm">
+              Is your company registered?
+              <span className="text-red-500">*</span>
+            </label>
+            <Field
+              as="select"
+              id="registered"
+              name="registered"
+              className="mt-1 p-2 w-full border rounded"
+            >
+              <option value="">Select your registration level</option>
+              <option value="fully">fully</option>
+              <option value="ongoing">ongoing</option>
+              <option value="not_registered">not_registered</option>
+            </Field>
+            <ErrorMessage
+              name="registered"
+              component="p"
+              className="text-red-500 text-sm"
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="boardOfDirector" className="block text-sm">
               Do you have an official board of directors?
@@ -98,8 +129,8 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
             </label>
             <Field
               type="text"
-              id=" investorFunding"
-              name=" investorFunding"
+              id="investorFunding"
+              name="investorFunding"
               className="mt-1 p-2 w-full border rounded"
             />
           </div>
@@ -133,7 +164,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
             type="submit"
             className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
           >
-            Get Started
+            Complete form and get your Vester Score
           </button>
         </Form>
       </Formik>

@@ -1,7 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 // import { financialSchema } from "../formValidate";
+
+const fundingStageOptions = [
+  "Pre-Seed stage",
+  "Seed stage",
+  "Pre-series A",
+  "Series A",
+  "Pre-series B",
+  "Series B",
+  "Pre-series C",
+  "Series C",
+  "Pre-series D",
+  "Series D",
+];
 
 interface FinancialScoreProps {
   onSubmit: (values: typeof initialValues) => void;
@@ -9,12 +22,16 @@ interface FinancialScoreProps {
 }
 
 const initialValues = {
+  fundingStage: "",
+  moneyRaise: "",
+  totalFundingRaised: "",
   monthlyGross: "",
-  startupRunway: "",
-  currentBurnRate: "",
 };
 
-const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit, initialValues }) => {
+const FinancialScore: React.FC<FinancialScoreProps> = ({
+  onSubmit,
+  initialValues,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
@@ -23,17 +40,62 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit, initialValues
         enableReinitialize={true}
       >
         <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-          <h2 className="text-[32px] font-semibold mb-4">
-            Financial Score
-          </h2>
+          <h2 className="text-[32px] font-semibold mb-4">Financial Score</h2>
+          <div className="mb-4">
+            <label htmlFor="fundingStage" className="block text-sm">
+              What is your product status/stage?
+              <span className="text-red-500">*</span>
+            </label>
+            <Field
+              as="select"
+              id="fundingStage"
+              name="fundingStage"
+              className="mt-1 p-2 w-full border rounded"
+            >
+              <option value="">Select Product Stage</option>
+              {fundingStageOptions.map((stage) => (
+                <option key={stage} value={stage}>
+                  {stage}
+                </option>
+              ))}
+            </Field>
+            <ErrorMessage
+              name="fundingStage"
+              component="p"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="moneyRaise" className="block text-sm">
+              How much are you currently trying to raise?($)
+            </label>
+            <Field
+              type="text"
+              id="moneyRaise"
+              name="moneyRaise"
+              className="mt-1 p-2 w-full border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="totalFundingRaised" className="block text-sm">
+              What is your company valuation? ($)
+            </label>
+            <Field
+              type="text"
+              id="totalFundingRaise"
+              name="totalFundingRaised"
+              className="mt-1 p-2 w-full border rounded"
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-sm">
               What is your monthly gross margin from the last 3 individual
               months - Month 1, Month 2, Month 3?
             </label>
             <div className="mt-1">
-              <label htmlFor="customerAcquisition.month1" className="mr-2">
-                Month 1:
+              <label htmlFor="monthlyGross.month1" className="mr-2">
+                Month 1 ($):
               </label>
               <Field
                 type="num"
@@ -43,7 +105,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit, initialValues
               />
 
               <label htmlFor="monthlyGross.month2" className="mr-2">
-                Month 2:
+                Month 2 ($):
               </label>
               <Field
                 type="text"
@@ -53,7 +115,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit, initialValues
               />
 
               <label htmlFor="monthlyGross.month3" className="mr-2">
-                Month 3:
+                Month 3 ($):
               </label>
               <Field
                 type="text"
@@ -63,36 +125,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit, initialValues
               />
             </div>
           </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="startupRunway"
-              className="block text-sm"
-            >
-              What is your current startup runway? In months
-            </label>
-            <Field
-              type="text"
-              id="startupRunway"
-              name="startupRunway"
-              className="mt-1 p-2 w-full border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="currentBurnRate"
-              className="block text-sm"
-            >
-              What is your current burn rate?
-            </label>
-            <Field
-              type="text"
-              id="currentBurnRate"
-              name="currentBurnRate"
-              className="mt-1 p-2 w-full border rounded"
-            />
-          </div>
-
+         
           <button
             type="submit"
             className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"

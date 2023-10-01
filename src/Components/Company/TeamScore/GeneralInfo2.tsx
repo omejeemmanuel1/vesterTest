@@ -45,25 +45,61 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({
                 className="mt-1 p-2 w-full border rounded"
               >
                 <option value="">Select Industry</option>
-                <option value="Technology">Technology</option>
-                <option value="Finance">Finance</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Manufacturing">Manufacturing</option>
-                <option value="Retail">Retail</option>
-                <option value="Services">Services</option>
+
+                <option value="Advertising/Marketing">
+                  Advertising/Marketing
+                </option>
+                <option value="AgTech"> AgTech</option>
+                <option value="Art Tech">Art Tech</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Biotech/Life ScienceBiotech/Life Science">
+                  Biotech/Life ScienceBiotech/Life Science
+                </option>
+                <option value="Construction/Real estateS">
+                  Construction/Real estate{" "}
+                </option>
+                <option value="Consulting">Consulting</option>
+                <option value="Cybersecurity/Security">
+                  Cybersecurity/Security
+                </option>
+                <option value="Data & Analytics">Data & Analytics</option>
+                <option value="Design/UX">Design/UX</option>
+                <option value="E-commerce/Consumer">E-commerce/Consumer</option>
+                <option value="EdTech">EdTech</option>
                 <option value="Energy">Energy</option>
-                <option value="Transportation and Logistics">
-                  Transportation and Logistics
+                <option value="Entertainment">Entertainment</option>
+                <option value="Fashion/Beauty">Fashion/Beauty</option>
+                <option value="Fintech">Fintech</option>
+                <option value="Food/Beverage">Food/Beverage</option>
+                <option value="aming/E-sports">Gaming/E-sports</option>
+                <option value="Health/Medical">Health/Medical </option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Insurance IoT (Internet of Things)">
+                  Insurance IoT (Internet of Things){" "}
                 </option>
-                <option value="Media and Entertainment">
-                  Media and Entertainment
+                <option value="Law Enforcement">Law Enforcement</option>
+                <option value="Legal Tech">Legal Tech</option>
+                <option value="Logistics">Logistics</option>
+                <option value="Manufacturing">Manufacturing</option>
+                <option value="Not-for-profi">Not-for-profit</option>
+                <option value="Productivity">Productivity</option>
+                <option value="Publishing/Content creation">
+                  Publishing/Content creation
                 </option>
-                <option value="Real Estate and Construction">
-                  Real Estate and Construction
+                <option value="Robotics">Robotics</option>
+                <option value="Smart cities">Smart cities</option>
+                <option value="Social Impact">Social Impact</option>
+                <option value="Social networking"> Social networking</option>
+                <option value="Space Tech">Space Tech</option>
+                <option value="Sports"> Sports</option>
+                <option value="Social networking"> Social networking</option>
+                <option value="Sustainanility & Cleantech">
+                  Sustainanility & Cleantech
                 </option>
-                <option value="Non-profit/Government">
-                  Non-profit/Government
-                </option>
+                <option value="Telecommunications">Telecommunications</option>
+                <option value="Travel/Hospitality">Travel/Hospitality</option>
+                <option value="Wearable Tech">Wearable Tech</option>
+                <option value="Other">Other</option>
               </Field>
               <ErrorMessage
                 name="industry"

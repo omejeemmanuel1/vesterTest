@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { loginSchema } from "../formValidate";
-import { Link, useNavigate } from "react-router-dom";
+import { adminLoginSchema } from "../../Company/formValidate";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,11 +11,11 @@ import Heading from "../../LandingPage/Heading";
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const initialValues = {
-  companyMail: "",
+  adminMail: "",
   password: "",
 };
 
-const Login: React.FC = () => {
+const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -25,12 +25,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await axios.post(`${baseUrl}/auth/login`, values);
+      const response = await axios.post(`${baseUrl}/admin/admin-login`, values);
 
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);
 
-        navigate("/company_dashboard");
+        navigate("/adminDashboard");
       } else {
         console.error("Login failed");
       }
@@ -58,29 +58,29 @@ const Login: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <Formik
           initialValues={initialValues}
-          validationSchema={loginSchema}
+          validationSchema={adminLoginSchema}
           onSubmit={handleSubmit}
         >
           <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
-              Log in
+              Admin Log in
             </h2>
 
             <div className="mb-4">
               <label
-                htmlFor="companyMail"
+                htmlFor="adminMail"
                 className="block text-sm text-[#0A0A3F]"
               >
-                Company mail?*
+                Admin Mail?*
               </label>
               <Field
                 type="text"
-                id="companyMail"
-                name="companyMail"
+                id="adminMail"
+                name="adminMail"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="companyMail"
+                name="adminMail"
                 component="p"
                 className="text-red-500 text-sm"
               />
@@ -157,17 +157,6 @@ const Login: React.FC = () => {
             >
               Log in
             </button>
-            <div className="mt-4 text-sm text-gray-600 text-center">
-              Don't have an account?{" "}
-              <Link to="/comp-reg" className="text-[#000D80]">
-                Create account
-              </Link>
-              <div className="mt-4 text-sm text-gray-600 text-center">
-                <Link to="/forgot-password" className="text-[#000D80]">
-                  Forgot Password ?
-                </Link>
-              </div>
-            </div>
           </Form>
         </Formik>
         <ToastContainer />
@@ -176,4 +165,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

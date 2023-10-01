@@ -30,7 +30,7 @@ const BusinessModel3: React.FC<BusinessModel3Props> = ({
             </label>
             <div className="mt-1">
               <label htmlFor="averageRevenue.month1" className="mr-2">
-                Month 1:
+                Month 1 ($):
               </label>
               <Field
                 type="number"
@@ -39,7 +39,7 @@ const BusinessModel3: React.FC<BusinessModel3Props> = ({
                 className="p-2 w-full border rounded"
               />
               <label htmlFor="averageRevenue.month2" className="mr-2">
-                Month 2:
+                Month 2 ($):
               </label>
               <Field
                 type="number"
@@ -48,7 +48,7 @@ const BusinessModel3: React.FC<BusinessModel3Props> = ({
                 className="p-2 w-full border rounded"
               />
               <label htmlFor="averageRevenue.month3" className="mr-2">
-                Month 3:
+                Month 3 ($):
               </label>
               <Field
                 type="number"

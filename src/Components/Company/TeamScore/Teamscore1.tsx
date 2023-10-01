@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { teamscoreSchema } from "../formValidate";
 
 interface Teamscore1Props {
   onSubmit: (values: typeof initialValues) => void;
@@ -10,6 +11,7 @@ const initialValues = {
   cofounderCount: "",
   cofounderNames: ["", "", ""],
   cofounderLinkedins: ["", "", ""],
+  founding_team_info: "",
 };
 
 const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
@@ -26,11 +28,12 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center mt-10">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize={true}
+        validationSchema={teamscoreSchema}
       >
         <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4">Team Score</h2>
@@ -49,11 +52,6 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
               min="1"
               max="3"
               required
-            />
-            <ErrorMessage
-              name="cofounderCount"
-              component="div"
-              className="text-red-500 text-sm"
             />
           </div>
 
@@ -86,6 +84,24 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
               />
             </div>
           ))}
+          <div className="mb-4">
+            <label htmlFor="founding_team_info" className="block text-sm">
+              What is the founding team information
+              <span className="text-red-500">*</span>
+            </label>
+            <Field
+              as="textarea"
+              id="founding_team_info"
+              name="founding_team_info"
+              rows={4}
+              className="mt-1 p-2 w-full border rounded"
+            />
+            <ErrorMessage
+              name="founding_team_info"
+              component="p"
+              className="text-red-500 text-sm"
+            />
+          </div>
 
           <button
             type="submit"

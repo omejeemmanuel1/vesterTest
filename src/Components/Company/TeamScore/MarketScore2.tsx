@@ -10,7 +10,7 @@ interface MarketScore2props {
 
 const initialValues = {
   competitors: [{ name: "", website: "" }],
-  marketClaims: "",
+  servicable_adressable_market: "",
   evidenceUrl: "",
 };
 
@@ -20,6 +20,10 @@ const validationSchema = Yup.object().shape({
       name: Yup.string().required("Name is required"),
       website: Yup.string().required("Website is required"),
     })
+  ),
+
+  servicable_adressable_market: Yup.string().required(
+    "select the serviceable addreassable market"
   ),
   evidenceUrl: Yup.string()
     .url("Please enter a valid URL")
@@ -95,15 +99,30 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
               </FieldArray>
             </div>
             <div className="mb-4">
-              <label htmlFor="marketClaims" className="block text-sm">
-                Include any reports or evidence to back your market claims, inc.
+              <label
+                htmlFor="servicable_adressable_market"
+                className="block text-sm"
+              >
+                What is your serviceable addressable market
+                <span className="text-red-500">*</span>
               </label>
               <Field
-                as="textarea"
-                id="marketClaims"
-                name="marketClaims"
-                rows={4}
+                as="select"
+                id="servicable_adressable_market"
+                name="servicable_adressable_market"
                 className="mt-1 p-2 w-full border rounded"
+              >
+                <option value="">Select serviceable addressable market</option>
+                <option value="Over $10bn">Over $10bn</option>
+                <option value="0ver $5bn">Over $5bn</option>
+                <option value="Over $1bn">Over $1bn</option>
+                <option value="$500m-$1bn">$500m-$1bn</option>
+                <option value="$100m-$500m">$100m-$500m</option>
+              </Field>
+              <ErrorMessage
+                name="serviceableAddreassableMarket"
+                component="p"
+                className="text-red-500 text-sm"
               />
             </div>
 

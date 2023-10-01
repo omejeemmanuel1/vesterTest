@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from "../../../Context/ThemeContext";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const ProCon: React.FC = () => {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    Aos.init({ duration: 3000 });
+  }, []);
   return (
     <div>
       <div className="flex space-x-14 font-cabinet ">
         <div
+          data-aos="slide-right"
           className={`bg-[#F7F9FB] w-[635px] rounded-md shadow-md ${
             theme === "light" ? "bg-[#F7F9FB]" : "dark:bg-gray-600 text-white"
           }`}
@@ -62,6 +69,7 @@ const ProCon: React.FC = () => {
           </div>
         </div>
         <div
+          data-aos="slide-left"
           className={`bg-[#F7F9FB] w-[488px] shadow-md rounded-md ${
             theme === "light" ? "bg-[#F7F9FB]" : "dark:bg-gray-600 text-white"
           }`}

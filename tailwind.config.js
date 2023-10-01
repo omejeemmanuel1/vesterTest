@@ -9,9 +9,9 @@ export default {
       darkMode: "className",
       fontFamily: {
         cabinet: ["Cabinet Grotesk Variable", "sans"],
+        cursive: ["Kalam", "cursive"],
       },
     },
   },
   plugins: [],
- 
 };

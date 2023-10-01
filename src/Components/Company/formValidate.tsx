@@ -49,6 +49,15 @@ export const loginSchema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters"),
 });
 
+export const adminLoginSchema = Yup.object().shape({
+  adminMail: Yup.string()
+    .email("Invalid email format")
+    .required("Company mail is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
+
 export const passwordSchema = Yup.object().shape({
   companyMail: Yup.string()
     .email("Invalid email format")
@@ -83,11 +92,9 @@ export const resetSchema = Yup.object().shape({
 });
 
 export const teamscoreSchema = Yup.object().shape({
-  cofounderCount: Yup.number()
-    .typeError("Please enter a valid number.")
-    .required("Please enter the number of cofounders not more than 3")
-    .min(1, "The number of cofounders must be at least 1")
-    .max(3, "The number of cofounders cannot exceed 3"),
+  founding_team_info: Yup.string().required(
+    "Please provide detailed founding team information"
+  ),
 });
 
 export const marketscoreSchema = Yup.object().shape({
@@ -97,6 +104,13 @@ export const marketscoreSchema = Yup.object().shape({
 
 export const businessSchema = Yup.object().shape({
   productStage: Yup.string().required("Enter your product stage"),
+  businessModels: Yup.array()
+    .of(Yup.string())
+    .test(
+      "at-least-one-model",
+      "Select at least one business model",
+      (value = []) => value.length > 0
+    ),
 });
 
 export const financialSchema = Yup.object().shape({

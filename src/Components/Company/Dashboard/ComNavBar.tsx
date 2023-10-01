@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { Formik, Form, Field } from "formik";
 import { FaRegBell } from "react-icons/fa";
@@ -30,8 +29,6 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
     companyLogo: "",
   });
   const [loading, setLoading] = useState(true);
-
-  const navigate = useNavigate();
 
   const { theme, toggleTheme } = useTheme();
   console.log(theme);
@@ -78,18 +75,13 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
     event.preventDefault();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/comp-login");
-  };
-
   // const navClasses = `p-4 h-[100px] lg:flex hidden ${
   //   bgColor || "bg-[#C0C0F5] bg-opacity-10"
   // } dark:bg-gray-800`;
 
   return (
-    <nav className="p-4 h-[100px] lg:flex bg-[#C0C0F5] font-cabinet bg-opacity-10 ">
-      <div className="flex space-x-[410px]">
+    <nav className="p-4 h-[100px] w-[100%] bg-[#C0C0F5] font-cabinet bg-opacity-10 ">
+      <div className="flex items-center">
         <div className="flex">
           <Formik
             initialValues={{ search: "" }}
@@ -117,7 +109,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
             )}
           </Formik>
         </div>
-        <div className="flex items-center justify-center space-x-2 p-6">
+        <div className="flex items-center justify-center space-x-2 p-6 ml-auto">
           <FaRegBell className=" text-xl" />
           {theme === "light" ? (
             <FiMoon
@@ -154,10 +146,6 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
               )}
             </>
           )}
-
-          <button onClick={handleLogout} className="mr-2 pointer">
-            Logout
-          </button>
         </div>
       </div>
     </nav>

@@ -29,7 +29,6 @@ const TeamScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : {};
   });
-  
 
   const navigate = useNavigate();
 
@@ -91,7 +90,7 @@ const TeamScoreContainer: React.FC = () => {
 
   return (
     <div
-      className={`overflow-hidden h-[100vh] ${
+      className={`overflow-scroll h-[100vh] ${
         theme === "light"
           ? "bg-[#fff] bg-opacity-10 text-[#000D80]"
           : "dark:bg-gray-800 text-gray-400"

@@ -6,10 +6,13 @@ const fundingSourceOptions = [
   "Venture Capital",
   "Angel Investors",
   "Bank Loans",
-  "Grants",
+  "Grant - Government",
+  "Grant - NGO",
+  "Grant - Incubators and accelerators",
+  "Equity - Incubators and accelerators",
   "Crowdfunding",
-  "Corporate Investments",
-  "Bootstrapped",
+  "Corporate Venture Capital",
+  "Personal funds",
 ];
 
 interface FinancialScore2Props {
@@ -26,11 +29,10 @@ const initialValues: {
 
 const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center mt-5 overflow-scroll">
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values }) => (
           <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            {/* Funding Sources */}
             <div className="mb-4">
               <label className="block text-sm">
                 Which of the following sources has your company raised funding
@@ -51,7 +53,6 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
               </div>
             </div>
 
-            {/* Funding Amounts */}
             {values.fundingSources.length > 0 && (
               <div className="mb-4">
                 <label className="block text-sm">

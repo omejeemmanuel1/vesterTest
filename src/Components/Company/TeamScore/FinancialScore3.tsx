@@ -9,7 +9,9 @@ interface FinancialScore3Props {
 
 const initialValues = {
   lastFunding: "",
-  totalFundingRaised: "",
+  startupRunway: "",
+  currentBurnRate: "",
+  revenueStatus: "",
 };
 
 const FinancialScore3: React.FC<FinancialScore3Props> = ({
@@ -37,15 +39,46 @@ const FinancialScore3: React.FC<FinancialScore3Props> = ({
           </div>
 
           <div className="mb-4">
-            <label htmlFor="totalFundingRaised" className="block text-sm">
-              How much did you raise? and what valuation?
+            <label htmlFor="startupRunway" className="block text-sm">
+              What is your current startup runway? In months($)
             </label>
             <Field
               type="text"
-              id="totalFundingRaised"
-              name="totalFundingRaised"
+              id="startupRunway"
+              name="startupRunway"
               className="mt-1 p-2 w-full border rounded"
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="currentBurnRate" className="block text-sm">
+              What is your current burn rate? ($)
+            </label>
+            <Field
+              type="text"
+              id="currentBurnRate"
+              name="currentBurnRate"
+              className="mt-1 p-2 w-full border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="mainTechnology" className="block text-sm">
+              What is your current revenue status?
+              <span className="text-red-500">*</span>
+            </label>
+            <Field
+              as="select"
+              id="revenueStatus"
+              name="revenueStatus"
+              className="mt-1 p-2 w-full border rounded"
+            >
+              <option value="">Select Revenue Status</option>
+              <option value="started">started</option>
+              <option value="customers_trying_but_no_revenue">
+                {" "}
+                customers_trying_but_no_revenue
+              </option>
+              <option value="no_trial_no_revenue">no_trial_no_revenue</option>
+            </Field>
           </div>
 
           <button

@@ -6,7 +6,6 @@ import Modal from "react-modal";
 import PitchDeckStep from "../PitchDeck/PitchDeckStep";
 import PitchDeckUpload from "../PitchDeck/PitchDeckUpload";
 import YC from "../../../assets/Ycom.png";
-import AMC from "../../../assets/AMC.png";
 import PerformanceChart from "../Chart/PerformanceChart";
 import Activity from "../Activity/Activity";
 import { useTheme } from "../../../Context/ThemeContext";
@@ -55,10 +54,10 @@ const ProfileCard: React.FC = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="font-cabinet ">
-      <h2 className="mt-8 ml-10 mb-4">Upload or update company data</h2>
+    <div className="font-cabinet">
+      <h2 className="mt-8 ml-5 mb-4">Upload or update company data</h2>
       <div className="flex space-x-6">
-        <div className="flex flex-wrap ml-10 space-x-[10px] w-[836px]">
+        <div className="flex flex-wrap pl-2 space-x-[10px] w-[836px]">
           <Link to="/team-info" className="h-[108px]">
             <div className="bg-[rgb(0,13,128)] p-[16px] text-xl text-white w-[263px] rounded-2xl">
               <HiOutlineUpload />
@@ -109,31 +108,20 @@ const ProfileCard: React.FC = () => {
           </div> */}
 
           <div className="rounded-2xl">
-            <Link to="/company_dashboard">
-              <img src={AMC} alt="" className="h-[108px] w-[263px]" />
+            <Link to="/https://www.ycombinator.com/apply">
+              <img src={YC} alt="" className="h-[108px] w-[263px]" />
             </Link>
           </div>
-          <div className="mt-5 flex space-x-[20px] ">
-            <Link to="https://www.ycombinator.com/apply">
-              <div className="h-[142px] w-[300px] rounded-2xl">
-                <img src={YC} alt="" className="-ml-[10px]" />
-              </div>
-            </Link>
-          </div>
+
           <div className="w-full mt-10 mb-10 shadow-md rounded">
             <PerformanceChart data={chartData} />
           </div>
 
           <div className="flex mb-6 space-x-4">
             <div
-              className={`p-2 rounded-md w-[263px] h-[108px] shadow ${
-                theme === "light"
-                  ? "bg-[#F7F9FB]  text-[#000D80]"
-                  : "dark:bg-gray-700 text-white"
-              }`}
-            >
+              className="p-2 rounded-md w-[263px] h-[108px] shadow">
               <h2 className="text-2xl">
-                $2.2 <span className="text-[#00AB07] text-xs">11.01%</span>
+                $2.2 <span className="text-[#00AB07] text-xs">+11.01%</span>
                 <p className="text-[18px] mt-4">Investors looking at you</p>
               </h2>
             </div>
@@ -145,7 +133,7 @@ const ProfileCard: React.FC = () => {
               }`}
             >
               <h2 className="text-2xl">
-                30 <span className="text-[#00AB07] text-xs">11.01%</span>
+                30 <span className="text-[#00AB07] text-xs">+11.01%</span>
                 <p className="text-[18px] mt-4">Connections</p>
               </h2>
             </div>
@@ -157,7 +145,7 @@ const ProfileCard: React.FC = () => {
               }`}
             >
               <h2 className="text-2xl">
-                5 <span className="text-[#00AB07] text-xs">11.01%</span>
+                5 <span className="text-[#00AB07] text-xs">+11.01%</span>
                 <p className="text-[18px] mt-4">Deals closed</p>
               </h2>
             </div>

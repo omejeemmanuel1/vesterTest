@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import ComNavBar from "./ComNavBar";
 import ComSideBar from "./ComSideBar";
-import ProfileCard from "./ProfileCard";
-import jwt_decode from "jwt-decode";
+import { useTheme } from "../../../Context/ThemeContext";
 import loader from "../../../assets/loader.gif";
 import Avatar from "../../../assets/man.png";
-import { useTheme } from "../../../Context/ThemeContext";
+import ProfileCard from "./ProfileCard";
+import ComNavBar from "./ComNavBar";
+import axios from "axios";
+
+import jwt_decode from "jwt-decode";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -16,6 +18,14 @@ interface DecodedToken {
   companyName: string;
 }
 
+interface TeamScore {
+  _id: string;
+  fundingStage: string;
+  totalFundingRaised: string;
+  moneyRaise: string;
+  Grade: string;
+}
+
 const CompanyDashboard: React.FC = () => {
   const [companyInfo, setCompanyInfo] = useState({
     companyLogo: "",
@@ -23,6 +33,7 @@ const CompanyDashboard: React.FC = () => {
   });
   const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
+  const [teamscores, setTeamscores] = useState<TeamScore[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,29 +42,40 @@ const CompanyDashboard: React.FC = () => {
       console.log(decodedToken.sub.companyWebsite);
       setDecodedToken(decodedToken);
 
-      const apiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
-      console.log(apiUrl);
+      const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
+      console.log(companyApiUrl);
 
-      fetch(apiUrl)
+      axios
+        .get(companyApiUrl)
         .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch company data");
-          }
-          return response.json();
-        })
-        .then((data) => {
           setCompanyInfo({
-            companyLogo: data.companyWebsiteInfo.companyLogo,
-            companyType: data.companyWebsiteInfo.websiteType,
+            companyLogo: response.data.companyWebsiteInfo.companyLogo,
+            companyType: response.data.companyWebsiteInfo.websiteType,
           });
           setLoading(false);
-          console.log(data.companyName);
+          console.log(response.data.companyName);
         })
         .catch((error) => {
-          console.error(error);
+          console.error("Failed to fetch company data", error);
+        });
+
+      const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
+
+      // Use Axios for the teamscores API request
+      axios
+        .get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setTeamscores(response.data);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch teamscores", error);
         });
     }
-  }, []);
+  }, [teamscores]);
 
   const { theme } = useTheme();
 
@@ -65,9 +87,14 @@ const CompanyDashboard: React.FC = () => {
           : "dark:bg-gray-800 text-white"
       }`}
     >
-      <ComSideBar />
+      <div>
+        {" "}
+        <ComSideBar />
+      </div>
+
       <div className="flex-1">
         <ComNavBar />
+
         <div>
           <div className="flex h-[175px] space-x-[130px] p-14 bg-[#C0C0F5] bg-opacity-10 ">
             {loading ? (
@@ -96,27 +123,68 @@ const CompanyDashboard: React.FC = () => {
               </div>
             )}
 
-            <div>
-              <h6>Stage</h6>
-              <p>
-                NA{" "}
-                <span className="bg-[#DCFFDD] text-xs p-[4px] rounded-md text-[#006804]">
-                  open
-                </span>
-              </p>
-            </div>
-            <div>
-              <h6>Company Valuation</h6>
-              <p>NA</p>
-            </div>
-            <div>
-              <h6>Current Target Raised</h6>
-              <p>NA</p>
-            </div>
-            <div>
-              <h6>Score</h6>
-              <p>NA</p>
-            </div>
+            <>
+              <div>
+                <h6>Stage</h6>
+                {loading ? (
+                  <div className="text-center m-auto">
+                    <img src={loader} alt="Loading" className="w-[60px]" />
+                  </div>
+                ) : (
+                  <div>
+                    {teamscores.map((teamscore) => (
+                      <p>
+                        <span className="bg-[#DCFFDD] text-xs p-[4px] rounded-md text-[#006804]">
+                          {teamscore.fundingStage || "NA"}
+                        </span>
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h6>Company Valuation</h6>
+                {loading ? (
+                  <div className="text-center m-auto">
+                    <img src={loader} alt="Loading" className="w-[60px]" />
+                  </div>
+                ) : (
+                  <div>
+                    {teamscores.map((teamscore) => (
+                      <p>{teamscore.totalFundingRaised || "NA"}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h6>Current Target Raised</h6>
+                {loading ? (
+                  <div className="text-center m-auto">
+                    <img src={loader} alt="Loading" className="w-[60px]" />
+                  </div>
+                ) : (
+                  <div>
+                    {teamscores.map((teamscore) => (
+                      <p>${teamscore.moneyRaise || "NA"}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h6>Score</h6>
+                {loading ? (
+                  <div className="text-center m-auto">
+                    <img src={loader} alt="Loading" className="w-[60px]" />
+                  </div>
+                ) : (
+                  <div>
+                    {teamscores.map((teamscore) => (
+                      <p>{teamscore.Grade || "NA"}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           </div>
           <div>
             <ProfileCard />

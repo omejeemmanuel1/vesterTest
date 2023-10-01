@@ -1,43 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { AiOutlinePieChart } from "react-icons/ai";
-import { MdOutlineSettings } from "react-icons/md";
-import { RxBarChart } from "react-icons/rx";
+import { AiOutlineDatabase } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { MdHelp } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../Context/ThemeContext";
 
-const ComSideBar: React.FC = () => {
+const AdminSideBar: React.FC = () => {
   const isActive = (path: string) => {
     return window.location.pathname === path;
   };
-
   const { theme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/comp-login");
+    navigate("/admin-login");
   };
   return (
-    <div className="flex h-[100%]">
+    <div className="flex h-[100vh]">
       <aside
         className={`bg-[#083982e2] text-[#fff] w-[257px] p-4 pr-10 font-cabinet ${
           theme === "light" ? "bg-[#083982e2]" : "dark:bg-gray-700 text-white"
         }`}
       >
-        <h1 className="text-white ml-6 text-2xl mt-6">Vester.AI</h1>
+        <h1 className="text-blue-500 ml-6 text-2xl mt-6">Vester.AI</h1>
         <ul className="mt-[80px] ml-6">
           <li
             className={`mb-6 flex ${
-              isActive("/company_dashboard")
+              isActive("/AdminDashboard")
                 ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-5"
                 : ""
             }`}
           >
             <NavLink
-              to="/company_dashboard"
+              to="/AdminDashboard"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
@@ -46,47 +43,17 @@ const ComSideBar: React.FC = () => {
           </li>
           <li
             className={`mb-6 flex ${
-              isActive("/score")
+              isActive("/data")
                 ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-6"
                 : ""
             }`}
           >
             <NavLink
-              to="/score"
+              to="/data"
               className="flex hover:transition-transform hover:scale-105"
             >
-              <RxBarChart className="mt-[1px] mr-2 text-2xl" />
-              Vester Score
-            </NavLink>
-          </li>
-          <li
-            className={`mb-6 flex ${
-              isActive("/Performance")
-                ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-4"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/Performance"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
-              Investor Match
-            </NavLink>
-          </li>
-          <li
-            className={`flex ${
-              isActive("/d-admin")
-                ? "text-red-500 bg-white rounded-2xl p-2 pt-2 pb-2 pl-4"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/d-admin"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <MdOutlineSettings className="mt-[1px] mr-2 text-2xl" />
-              Profile
+              <AiOutlineDatabase className="mt-[1px] mr-2 text-2xl" />
+              Data's
             </NavLink>
           </li>
 
@@ -99,7 +66,7 @@ const ComSideBar: React.FC = () => {
               }`}
             >
               <NavLink
-                to="/comp-login"
+                to="/admin-login"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <BiLogOut className="mt-[1px] mr-2 text-2xl" />
@@ -131,4 +98,4 @@ const ComSideBar: React.FC = () => {
   );
 };
 
-export default ComSideBar;
+export default AdminSideBar;

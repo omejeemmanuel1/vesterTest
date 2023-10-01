@@ -4,12 +4,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { businessSchema } from "../formValidate";
 
 const productStageOptions = [
-  "Pre-seed",
-  "Seed",
-  "Early stage",
-  "Growth stage",
-  "Expansion",
-  "Exit stage",
+  "Idea",
+  "Prototype / Beta-testing",
+  "Launched but no sales yet",
+  "Launched with traction and customers",
+  "Focused on scaling company (entering new markets and significant team growth)",
 ];
 
 interface BusinessModelProps {
@@ -92,6 +91,7 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
             <div className="mb-4">
               <label className="block text-sm">
                 What is your business model(s)?
+                <span className="text-red-500">*</span>
               </label>
               <div className="mt-1">
                 {businessModels.map((model) => (
@@ -112,7 +112,6 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
               />
             </div>
 
-            {/* Dynamic User Count Fields */}
             {values.businessModels.length > 0 && (
               <DynamicUserCounts values={values} />
             )}
