@@ -50,7 +50,7 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const adminLoginSchema = Yup.object().shape({
-  adminMail: Yup.string()
+  email: Yup.string()
     .email("Invalid email format")
     .required("Company mail is required"),
   password: Yup.string()

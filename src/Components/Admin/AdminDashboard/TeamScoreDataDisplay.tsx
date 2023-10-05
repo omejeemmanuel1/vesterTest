@@ -43,10 +43,8 @@ const TeamScoreDataDisplay: React.FC = () => {
       )
     : [];
 
-  // Calculate the number of pages based on the number of items per page
   const pageCount = Math.ceil(teamscoresData.length / itemsPerPage);
 
-  // Calculate start and end indices for the current page
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = teamscoresData.slice(startIndex, endIndex);

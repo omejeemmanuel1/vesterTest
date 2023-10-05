@@ -11,7 +11,7 @@ import Heading from "../../LandingPage/Heading";
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const initialValues = {
-  adminMail: "",
+  email: "",
   password: "",
 };
 
@@ -68,19 +68,19 @@ const AdminLogin: React.FC = () => {
 
             <div className="mb-4">
               <label
-                htmlFor="adminMail"
+                htmlFor="email"
                 className="block text-sm text-[#0A0A3F]"
               >
                 Admin Mail?*
               </label>
               <Field
                 type="text"
-                id="adminMail"
-                name="adminMail"
+                id="email"
+                name="email"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="adminMail"
+                name="email"
                 component="p"
                 className="text-red-500 text-sm"
               />

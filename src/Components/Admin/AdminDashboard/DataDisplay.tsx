@@ -42,7 +42,7 @@ const DataDisplay: React.FC = () => {
       </div>
       <div>
         <div className="flex font-cabinet">
-          <div className="bg-red-300 ml-20 mt-10 w-[400px] h-[180px] rounded-2xl">
+          <div className="bg-gradient-to-r from-red-300 to-red-500 ml-20 mt-10 w-[400px] h-[180px] rounded-2xl">
             <Link to="/company-data">
               <div className="text-2xl text-white drop-shadow-lg w-[35px] h-[35px] text-center  rounded-lg pt-[2px] bg-red-200 relative left-[350px] top-4">
                 {data.totalCompanies}
@@ -60,7 +60,7 @@ const DataDisplay: React.FC = () => {
               <BsFillBuildingsFill />
             </div>
           </div>
-          <div className="bg-blue-300 m-10 w-[400px] h-[180px] rounded-2xl">
+          <div className="bg-gradient-to-r from-blue-300 to-blue-500 m-10 w-[400px] h-[180px] rounded-2xl">
             <Link to="/teamscore-data">
               <div className="text-2xl text-white drop-shadow-lg w-[35px] h-[35px] text-center  rounded-lg pt-[2px] bg-blue-200 relative left-[350px] top-4">
                 {data.totalTeamscores}
@@ -78,7 +78,7 @@ const DataDisplay: React.FC = () => {
               <BsFillFileSpreadsheetFill />
             </div>
           </div>
-          <div className="bg-gray-300 mr-15 mt-10 w-[400px] h-[180px] rounded-2xl">
+          <div className="bg-gradient-to-r from-gray-300 to-gray-500 mr-15 mt-10 w-[400px] h-[180px] rounded-2xl">
             <Link to="/pitchdeck-data">
               <div className="text-2xl text-white drop-shadow-lg w-[35px] h-[35px] text-center  rounded-lg pt-[2px] bg-gray-200 relative left-[350px] top-4">
                 {data.totalPitchdecks}
@@ -104,7 +104,7 @@ const DataDisplay: React.FC = () => {
                 {data.totalPitchdecks}
               </div>
               <h2 className="ml-5 -mt-5 font-bold text-white drop-shadow-md">
-                Matched Users
+                Registered Investors
               </h2>
               <img
                 src={Abstract}

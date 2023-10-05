@@ -18,6 +18,7 @@ const ComSideBar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("teamscores");
     navigate("/comp-login");
   };
   return (

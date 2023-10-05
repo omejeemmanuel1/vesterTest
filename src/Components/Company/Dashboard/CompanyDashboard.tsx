@@ -59,23 +59,31 @@ const CompanyDashboard: React.FC = () => {
           console.error("Failed to fetch company data", error);
         });
 
-      const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
+      const teamscoresFromLocalStorage = localStorage.getItem("teamscores");
 
-      // Use Axios for the teamscores API request
-      axios
-        .get(teamscoresApiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setTeamscores(response.data);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch teamscores", error);
-        });
+      if (teamscoresFromLocalStorage) {
+
+        setTeamscores(JSON.parse(teamscoresFromLocalStorage));
+      } else {
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
+
+        axios
+          .get(teamscoresApiUrl, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            setTeamscores(response.data);
+
+            localStorage.setItem("teamscores", JSON.stringify(response.data));
+          })
+          .catch((error) => {
+            console.error("Failed to fetch teamscores", error);
+          });
+      }
     }
-  }, [teamscores]);
+  }, []);
 
   const { theme } = useTheme();
 

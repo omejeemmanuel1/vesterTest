@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import ComSideBar from "../Dashboard/ComSideBar";
 import ComNavBar from "../Dashboard/ComNavBar";
 import { Link } from "react-router-dom";
@@ -46,8 +46,6 @@ const Score: React.FC = () => {
   const [, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const isMountedRef = useRef<boolean>(true);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -55,7 +53,12 @@ const Score: React.FC = () => {
       console.log(decodedToken.sub.companyWebsite);
       setDecodedToken(decodedToken);
 
-      if (isMountedRef.current && teamscores.length === 0) {
+      const teamscoresFromLocalStorage = localStorage.getItem("teamscores");
+
+      if (teamscoresFromLocalStorage) {
+        setTeamscores(JSON.parse(teamscoresFromLocalStorage));
+        setLoading(false);
+      } else {
         const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
 
         axios
@@ -65,22 +68,17 @@ const Score: React.FC = () => {
             },
           })
           .then((response) => {
-            if (isMountedRef.current) {
-              setTeamscores(response.data);
-              setLoading(false);
-            }
+            setTeamscores(response.data);
+            setLoading(false);
+
+            localStorage.setItem("teamscores", JSON.stringify(response.data));
           })
           .catch((error) => {
             console.error("Failed to fetch teamscores", error);
           });
       }
     }
-
-    // Cleanup function to update isMountedRef when the component unmounts
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, [teamscores]);
+  }, []);
 
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName);

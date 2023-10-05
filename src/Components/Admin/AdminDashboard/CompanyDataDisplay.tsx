@@ -36,14 +36,12 @@ const CompanyDataDisplay: React.FC = () => {
     userDataIsObject ? Object.values(userData).length / itemsPerPage : 0
   );
 
-  // Calculate start and end indices for the current page
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = userDataIsObject
     ? Object.values(userData).slice(startIndex, endIndex)
     : [];
 
-  // Handle page change
   const handlePageChange = (selectedPage: { selected: number }) => {
     setCurrentPage(selectedPage.selected);
   };
