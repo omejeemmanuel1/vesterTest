@@ -24,7 +24,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
 }) => {
   const [showTeamLocation2, setShowTeamLocation2] = useState(false);
   const [selectedTeamLocation, setSelectedTeamLocation] = useState("");
-  // Define the region-country mapping
+
   const regionCountries: Record<string, string[]> = {
     "North Africa": [
       "Algeria",
@@ -102,7 +102,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
   }, [selectedRegion]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center mb-[500px]">
+    <div className="min-h-screen flex md:items-center justify-center mt-10 md:mt-none">
       <Link to="/company_dashboard">
         <button className="absolute right-10 top-10 shadow-md p-2  flex cursor-pointer text-white rounded-md bg-[#000D80] hover:bg-blue-600 ">
           <FaFastBackward />
@@ -117,7 +117,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
         {({ handleSubmit, setFieldValue }) => (
           <Form
             onSubmit={handleSubmit}
-            className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
+            className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
           >
             <h2 className="text-[26px] font-semibold mb-4">
               Company's General Information

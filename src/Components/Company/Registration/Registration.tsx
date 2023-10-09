@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchema } from "../formValidate";
-
 import { useAuth } from "../../../Context/authContext";
 import Heading from "../../LandingPage/Heading";
 
@@ -43,7 +42,7 @@ const Registration: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await comp_register(values); // Using the register function from context
+      const response = await comp_register(values);
 
       console.log(response);
     } catch (error: any) {
@@ -60,8 +59,8 @@ const Registration: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
+          <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+            <h2 className="text-xl md:text-[32px] font-semibold mb-4 text-[#0A0A3F]">
               Create Account
             </h2>
             <div className="mb-4">

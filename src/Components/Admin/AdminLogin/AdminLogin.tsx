@@ -55,22 +55,19 @@ const AdminLogin: React.FC = () => {
   return (
     <>
       <Heading />
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="m-6 md:min-h-screen flex md:items-center justify-center mt-[100px] md:mt-0">
         <Formik
           initialValues={initialValues}
           validationSchema={adminLoginSchema}
           onSubmit={handleSubmit}
         >
           <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
+            <h2 className="text-xl md:text-[32px] font-semibold mb-4 text-[#0A0A3F]">
               Admin Log in
             </h2>
 
             <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm text-[#0A0A3F]"
-              >
+              <label htmlFor="email" className="block text-sm text-[#0A0A3F]">
                 Admin Mail?*
               </label>
               <Field

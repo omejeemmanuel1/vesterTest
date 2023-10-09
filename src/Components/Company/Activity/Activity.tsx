@@ -6,7 +6,7 @@ const Activity: React.FC = () => {
   return (
     <>
       <div
-        className={`w-[312px] h-[269px] bg-[#F7F9FB] rounded-xl p-[24px] shadow-md ${
+        className={`hidden md:block w-[312px] h-[269px] bg-[#F7F9FB] rounded-xl p-[24px] shadow-md ${
           theme === "light" ? "bg-[#F7F9FB]" : "dark:bg-gray-700 text-white"
         }`}
       >

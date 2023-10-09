@@ -56,77 +56,73 @@ const ProfileCard: React.FC = () => {
   return (
     <div className="font-cabinet">
       <h2 className="mt-8 ml-5 mb-4">Upload or update company data</h2>
-      <div className="flex space-x-6">
-        <div className="flex flex-wrap pl-2 space-x-[10px] w-[836px]">
-          <Link to="/team-info" className="h-[108px]">
-            <div className="bg-[rgb(0,13,128)] p-[16px] text-xl text-white w-[263px] rounded-2xl">
-              <HiOutlineUpload />
+      <div className="md:flex space-x-6">
+        <div>
+          <div className="block md:flex md:pl-2 md:space-x-[10px] md:w-[836px]">
+            <Link to="/team-info" className="h-[108px]">
+              <div className="bg-[rgb(0,13,128)] p-[16px] text-xl text-white md:w-[263px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4">
+                <HiOutlineUpload />
 
-              <h2 className="mt-8"> Upload company data</h2>
-            </div>
-          </Link>
-          <div
-            className="text-[#0A0A3F] text-xl bg-[#C0C0F5] p-[16px] h-[108px] w-[263px] rounded-2xl cursor-pointer"
-            onClick={openPitchDeckStepModal}
-          >
-            <MdUploadFile />
-            <h2 className="mt-8">Upload pitch deck</h2>
-          </div>
-          {isPitchDeckStepOpen && (
-            <Modal
-              isOpen={isPitchDeckStepOpen}
-              onRequestClose={closePitchDeckStepModal}
-              overlayClassName={overlayClassName}
-              className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
-            >
-              <PitchDeckStep
-                openPitchDeckUploadModal={openPitchDeckUploadModal}
-                closePitchDeckStepModal={closePitchDeckStepModal}
-              />
-            </Modal>
-          )}
-
-          {isPitchDeckUploadOpen && (
-            <Modal
-              isOpen={isPitchDeckUploadOpen}
-              onRequestClose={closePitchDeckUploadModal}
-              overlayClassName={overlayClassName}
-              className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
-            >
-              <PitchDeckUpload
-                closePitchDeckUploadModal={handleUploadSuccess}
-              />
-            </Modal>
-          )}
-          {/* 
-          <div
-            className="bg-[#C0C0F5] text-xl text-[#0A0A3F] p-[16px] h-[108px] w-[263px] rounded-2xl"
-            onClick={openPitchDeckStepModal}
-          >
-            <HiOutlineUpload />
-            <h2 className="mt-8">Upload funding data</h2>
-          </div> */}
-
-          <div className="rounded-2xl">
-            <Link to="/https://www.ycombinator.com/apply">
-              <img src={YC} alt="" className="h-[108px] w-[263px]" />
+                <h2 className="mt-8"> Upload company data</h2>
+              </div>
             </Link>
+            <div
+              className="text-[#0A0A3F] text-xl bg-[#C0C0F5] p-[16px] h-[108px]  md:w-[263px] w-[343px] mb-5 md:mb-none ml-4 rounded-2xl cursor-pointer"
+              onClick={openPitchDeckStepModal}
+            >
+              <MdUploadFile />
+              <h2 className="mt-8">Upload pitch deck</h2>
+            </div>
+            {isPitchDeckStepOpen && (
+              <Modal
+                isOpen={isPitchDeckStepOpen}
+                onRequestClose={closePitchDeckStepModal}
+                overlayClassName={overlayClassName}
+                className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
+              >
+                <PitchDeckStep
+                  openPitchDeckUploadModal={openPitchDeckUploadModal}
+                  closePitchDeckStepModal={closePitchDeckStepModal}
+                />
+              </Modal>
+            )}
+
+            {isPitchDeckUploadOpen && (
+              <Modal
+                isOpen={isPitchDeckUploadOpen}
+                onRequestClose={closePitchDeckUploadModal}
+                overlayClassName={overlayClassName}
+                className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
+              >
+                <PitchDeckUpload
+                  closePitchDeckUploadModal={handleUploadSuccess}
+                />
+              </Modal>
+            )}
+            <div className="rounded-2xl mb-4">
+              <Link to="/https://www.ycombinator.com/apply">
+                <img
+                  src={YC}
+                  alt=""
+                  className="h-[108px] md:w-[263px] w-[343px] mb-5 md:mb-none ml-4 "
+                />
+              </Link>
+            </div>
           </div>
 
-          <div className="w-full mt-10 mb-10 shadow-md rounded">
+          <div className="mt-10 mb-10 md:ml-5 shadow-md rounded">
             <PerformanceChart data={chartData} />
           </div>
 
-          <div className="flex mb-6 space-x-4">
-            <div
-              className="p-2 rounded-md w-[263px] h-[108px] shadow">
+          <div className="md:flex mb-6 space-x-4">
+            <div className="p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow">
               <h2 className="text-2xl">
                 $2.2 <span className="text-[#00AB07] text-xs">+11.01%</span>
                 <p className="text-[18px] mt-4">Investors looking at you</p>
               </h2>
             </div>
             <div
-              className={`p-2 rounded-md w-[263px] h-[108px] shadow ${
+              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
                 theme === "light"
                   ? "bg-[#F7F9FB]  text-[#000D80]"
                   : "dark:bg-gray-700 text-white"
@@ -138,7 +134,7 @@ const ProfileCard: React.FC = () => {
               </h2>
             </div>
             <div
-              className={`p-2 rounded-md w-[263px] h-[108px] shadow ${
+              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
                 theme === "light"
                   ? "bg-[#F7F9FB]  text-[#000D80]"
                   : "dark:bg-gray-700 text-white"

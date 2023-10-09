@@ -26,7 +26,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit, initialValues }) => {
         onSubmit={onSubmit}
         validationSchema={teamscoreSchema2}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
             <label htmlFor="founderGender" className="block text-sm">
               Is this founder male or female?

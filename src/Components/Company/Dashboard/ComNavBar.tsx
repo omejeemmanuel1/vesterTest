@@ -10,6 +10,17 @@ import jwt_decode from "jwt-decode";
 import loader from "../../../assets/loader.gif";
 import { useTheme } from "../../../Context/ThemeContext";
 import Avatar from "../../../assets/man.png";
+import { BiLogOut } from "react-icons/bi";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  MdHelp,
+  MdOutlineSettings,
+  MdOutlineSpaceDashboard,
+} from "react-icons/md";
+import { RxBarChart } from "react-icons/rx";
+import { AiOutlinePieChart } from "react-icons/ai";
+import { CgMenuBoxed } from "react-icons/cg";
+import { CgCloseR } from "react-icons/cg";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -30,9 +41,17 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
   });
   const [loading, setLoading] = useState(true);
 
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  const handleToggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
   const { theme, toggleTheme } = useTheme();
   console.log(theme);
   let decodedToken: DecodedToken;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
@@ -75,14 +94,16 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
     event.preventDefault();
   };
 
-  // const navClasses = `p-4 h-[100px] lg:flex hidden ${
-  //   bgColor || "bg-[#C0C0F5] bg-opacity-10"
-  // } dark:bg-gray-800`;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("teamscores");
+    navigate("/comp-login");
+  };
 
   return (
-    <nav className="p-4 h-[100px] w-[100%] bg-[#C0C0F5] font-cabinet bg-opacity-10 ">
-      <div className="flex items-center">
-        <div className="flex">
+    <nav className="md:p-4 pl-[15px] md:h-[100px] w-[100%] bg-[#C0C0F5] pb-4 md:pb-0 font-cabinet bg-opacity-10">
+      <div className="flex md:items-center justify-between">
+        <div className="flex justify-between">
           <Formik
             initialValues={{ search: "" }}
             onSubmit={(values) => {
@@ -90,12 +111,15 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
             }}
           >
             {() => (
-              <Form onSubmit={handleFormSubmit} className="flex items-center">
+              <Form
+                onSubmit={handleFormSubmit}
+                className="flex items-center mt-2 md:mt-none"
+              >
                 <div className="relative">
                   <Field
                     type="text"
                     name="search"
-                    className="bg-[#0A0A3F] bg-opacity-5 border rounded-xl w-[523px] h-[56px] px-2 py-1 pl-8"
+                    className="bg-[#0A0A3F] bg-opacity-5 border rounded-xl md:w-[523px] w-[250px] md:h-[56px] h-[30px] px-2 py-1 pl-8"
                     placeholder="Search..."
                   />
                   <button
@@ -109,7 +133,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
             )}
           </Formik>
         </div>
-        <div className="flex items-center justify-center space-x-2 p-6 ml-auto">
+        <div className="hidden md:flex md:items-center justify-center space-x-2 p-6 ml-auto">
           <FaRegBell className=" text-xl" />
           {theme === "light" ? (
             <FiMoon
@@ -145,6 +169,87 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
                 />
               )}
             </>
+          )}
+        </div>
+        {/* mobile nav */}
+        <div className="md:hidden w-full">
+          <button
+            onClick={handleToggleMobileNav}
+            className="text-3xl ml-14 text-white absolute top-2 z-50"
+          >
+            {isMobileNavOpen ? (
+              <CgCloseR />
+            ) : (
+              <span className="text-[#000D80]">
+                <CgMenuBoxed />
+              </span>
+            )}
+          </button>
+          {isMobileNavOpen && (
+            <div className="md:hidden h-[300px] bg-[#000D80] absolute top-0 left-0 w-full block text-white pt-4 pb-4">
+              <FaRegBell className=" text-xl mb-2 md:mb-none ml-5" />
+              <ul className="">
+                <li className="text-white rounded-2xl pt-2 pb-2 pl-5">
+                  <NavLink
+                    to="/company_dashboard"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="text-white rounded-2xl pt-2 pb-2 pl-6">
+                  <NavLink
+                    to="/score"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <RxBarChart className="mt-[1px] mr-2 text-2xl" />
+                    Vester Score
+                  </NavLink>
+                </li>
+                <li className="text-white rounded-2xl pt-2 pb-2 pl-4">
+                  <NavLink
+                    to="/Performance"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
+                    Investor Match
+                  </NavLink>
+                </li>
+                <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
+                  <NavLink
+                    to="/profile-update"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <MdOutlineSettings className="mt-[1px] mr-2 text-2xl" />
+                    Profile
+                  </NavLink>
+                </li>
+
+                <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
+                  <NavLink
+                    to="/comp-login"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <BiLogOut className="mt-[1px] mr-2 text-2xl" />
+                    <button onClick={handleLogout} className="mr-2 pointer">
+                      Logout
+                    </button>
+                  </NavLink>
+                </li>
+
+                <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
+                  <NavLink
+                    to="/d-admin"
+                    className="flex hover:transition-transform hover:scale-105"
+                  >
+                    <MdHelp className="mt-[1px] mr-2 text-2xl" />
+                    Help
+                  </NavLink>
+                </li>
+              </ul>
+              {/* <button onClick={handleToggleMobileNav}>Close</button> */}
+            </div>
           )}
         </div>
       </div>

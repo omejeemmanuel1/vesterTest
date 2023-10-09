@@ -80,7 +80,7 @@ const VerifyOtp: React.FC = () => {
         onSubmit={handleSubmit}
       >
         {({ ...form }) => (
-          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="flex justify-center items-center w-[100px] mb-2 mx-auto ">
               <img src={MessageIcon} alt="" />
             </div>

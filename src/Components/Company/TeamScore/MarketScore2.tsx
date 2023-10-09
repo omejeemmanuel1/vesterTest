@@ -39,7 +39,7 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
         onSubmit={onSubmit}
       >
         {(formikProps) => (
-          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
               <label htmlFor="competitors" className="block text-sm">
                 Share the website links of 3 of your most direct competitors in

@@ -60,7 +60,7 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
         validationSchema={businessSchema}
       >
         {({ values }) => (
-          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <h2 className="text-[26px] font-semibold mb-4">
               Understanding your Business Model
             </h2>

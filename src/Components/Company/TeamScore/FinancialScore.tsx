@@ -39,7 +39,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4">Financial Score</h2>
           <div className="mb-4">
             <label htmlFor="fundingStage" className="block text-sm">
@@ -125,7 +125,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({
               />
             </div>
           </div>
-         
+
           <button
             type="submit"
             className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"

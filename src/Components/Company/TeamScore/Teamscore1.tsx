@@ -35,7 +35,7 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
         enableReinitialize={true}
         validationSchema={teamscoreSchema}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4">Team Score</h2>
 
           <div className="mb-4">

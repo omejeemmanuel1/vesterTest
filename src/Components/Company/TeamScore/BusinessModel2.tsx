@@ -23,7 +23,7 @@ const BusinessModel2: React.FC<BusinessModel2Props> = ({
         enableReinitialize={true}
         onSubmit={onSubmit}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
             <label htmlFor="revenue" className="block text-sm">
               what % of your revenue is coming from your core business or

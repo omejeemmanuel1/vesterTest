@@ -76,9 +76,9 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="w-[1098px] mx-auto text-center justify-center font-cabinet items-center shadow-md p-6 mt-16 bg-[#F7F9FB]">
+      <div className="md:w-[1098px] w-[365px] mx-auto text-center justify-center font-cabinet items-center shadow-md p-6 mt-16 bg-[#F7F9FB]">
         <div className="border-2 border-dashed border-gray-300 rounded-lg">
-          <span className="text-3xl text-gray-500 relative top-[84px] left-10 cursor-pointer">
+          <span className="text-3xl text-gray-500 relative md:top-[84px] md:left-10 top-[30px]  cursor-pointer">
             <MdOutlineArrowBackIosNew onClick={closePitchDeckUploadModal} />{" "}
           </span>
           <h1 className="text-2xl font-semibold mb-2 mt-14">
@@ -120,7 +120,7 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
           {formik.touched.file && formik.errors.file ? (
             <div className="text-red-600 mt-2">{formik.errors.file}</div>
           ) : null}
-          <div className="w-[550px] h-[119px] bg-white p-6 m-auto">
+          <div className="md:w-[550px] h-[119px] bg-white p-6 m-auto">
             <h4 className="mb-4 text-sm">We keep your data private</h4>
             <p className="text-[#808080] text-sm">
               We do not share your data with anyone - and you will have complete
@@ -130,7 +130,7 @@ const PitchDeckUpload: React.FC<PitchDeckUploadProps> = ({
           <button
             type="submit"
             disabled={!file || formik.isSubmitting}
-            className="bg-[#000D80] text-white w-[458px] p-4 rounded cursor-pointer hover:bg-blue-700 transition duration-300 mt-6 mb-6"
+            className="bg-[#000D80] text-white md:w-[458px] w-full p-4 rounded cursor-pointer hover:bg-blue-700 transition duration-300 mt-6 mb-6"
           >
             Upload Pitch Deck
           </button>

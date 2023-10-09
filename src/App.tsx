@@ -21,6 +21,7 @@ import DataDisplayPage from "./Pages/DataDisplayPage";
 import CompanyDataDisplay from "./Components/Admin/AdminDashboard/CompanyDataDisplay";
 import TeamScoreDataDisplay from "./Components/Admin/AdminDashboard/TeamScoreDataDisplay";
 import PitchDeckDataDisplay from "./Components/Admin/AdminDashboard/PitchDeckDataDisplay";
+import CompanyProfilePage from "./Pages/CompanyProfilePage";
 
 const App: React.FC = () => {
   return (
@@ -109,6 +110,14 @@ const App: React.FC = () => {
                 element={
                   <PrivateRoute>
                     <CompanyPerformancePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile-update"
+                element={
+                  <PrivateRoute>
+                    <CompanyProfilePage />
                   </PrivateRoute>
                 }
               />

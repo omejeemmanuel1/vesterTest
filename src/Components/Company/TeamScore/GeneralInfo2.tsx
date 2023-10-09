@@ -31,7 +31,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({
         {({ handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
-            className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
+            className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
           >
             <div className="mb-4">
               <label htmlFor="industry" className="block text-sm">

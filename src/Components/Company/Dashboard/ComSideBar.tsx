@@ -22,7 +22,7 @@ const ComSideBar: React.FC = () => {
     navigate("/comp-login");
   };
   return (
-    <div className="flex h-[100%]">
+    <div className="hidden md:flex h-[100%]">
       <aside
         className={`bg-[#083982e2] text-[#fff] w-[257px] p-4 pr-10 font-cabinet ${
           theme === "light" ? "bg-[#083982e2]" : "dark:bg-gray-700 text-white"
@@ -83,7 +83,7 @@ const ComSideBar: React.FC = () => {
             }`}
           >
             <NavLink
-              to="/d-admin"
+              to="/profile-update"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSettings className="mt-[1px] mr-2 text-2xl" />

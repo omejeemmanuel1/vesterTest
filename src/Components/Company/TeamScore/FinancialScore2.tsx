@@ -32,7 +32,7 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
     <div className="min-h-screen flex items-center justify-center mt-5 overflow-scroll">
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values }) => (
-          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
               <label className="block text-sm">
                 Which of the following sources has your company raised funding

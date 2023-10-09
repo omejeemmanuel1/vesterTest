@@ -27,7 +27,7 @@ const ForgotPassword: React.FC = () => {
         validationSchema={passwordSchema}
         onSubmit={handleSubmit}
       >
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4 text-[#0A0A3F]">
             Forgot Password
           </h2>

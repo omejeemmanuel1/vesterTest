@@ -18,10 +18,10 @@ const AdminNavBar: React.FC<AdminNavBarProps> = () => {
   };
 
   return (
-    <div className="h-[100px] w-[1440px] p-4 lg:flex bg-[#C0C0F5] font-cabinet bg-opacity-10">
+    <div className="h-[100px] w-full md:w-[1440px] p-4 lg:flex bg-[#C0C0F5] font-cabinet bg-opacity-10">
       <nav>
-        <div className="flex space-x-[1000px]">
-          <div className="flex m-6 text-4xl">Vester.AI</div>
+        <div className="flex md:space-x-[1000px]">
+          <div className="flex m-6 text-xl md:text-4xl">Vester.AI</div>
           <div className="flex items-center justify-center space-x-2 p-6">
             <div className="flex text-center m-auto">Admin</div>
 

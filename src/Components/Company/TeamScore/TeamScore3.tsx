@@ -26,7 +26,7 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit, initialValues }) => {
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
             <label htmlFor="cLevelNoneFounders" className="block text-sm">
               Do you have any C-Level Execs that are none founders?

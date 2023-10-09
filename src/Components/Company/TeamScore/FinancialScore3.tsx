@@ -25,7 +25,7 @@ const FinancialScore3: React.FC<FinancialScore3Props> = ({
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
             <label htmlFor="lastFunding" className="block text-sm">
               When did you close your last funding round?

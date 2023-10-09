@@ -22,7 +22,7 @@ const BusinessModel3: React.FC<BusinessModel3Props> = ({
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
             <label className="block text-sm">
               What is you company's average revenue per user (ARPU) per month -

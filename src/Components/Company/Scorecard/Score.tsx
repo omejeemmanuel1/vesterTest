@@ -100,8 +100,8 @@ const Score: React.FC = () => {
 
         <div className="flex-1">
           <ComNavBar bgColor="bg-white" />
-          <div className="m-6 mt-[31px]">
-            <h4 className="text-sm">
+          <div className="md:m-6 mt-[31px]">
+            <h4 className="text-sm text-left break-words ">
               Add company data to get effective analysis on your company's
               performance{" "}
               <Link to="/team-info" className="text-blue-300">
@@ -110,10 +110,10 @@ const Score: React.FC = () => {
             </h4>
 
             <div className="mt-10">
-              <h1 className=" text-[20px] ml-10 mb-5">Summary</h1>
-              <div className="flex justify-between">
-                <div className="ml-10">
-                  <ul className="flex space-x-[10px] mb-4 text-gray-500">
+              <h1 className="ml-4 text-[20px] md:ml-10 mb-5">Summary</h1>
+              <div className="md:flex justify-between">
+                <div className="ml-4 md:ml-10">
+                  <ul className="w-full md:flex space-x-[10px] mb-4 text-gray-500">
                     <li
                       onClick={() => handleItemClick("overall")}
                       className={
@@ -186,7 +186,7 @@ const Score: React.FC = () => {
                   </ul>
 
                   <div
-                    className={`w-[620px] h-[250px] bg-white shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px]  h-[250px] bg-white shadow-md rounded-2xl p-4 border ${
                       activeItem === "overall" ? "" : "hidden"
                     }`}
                   >
@@ -227,7 +227,7 @@ const Score: React.FC = () => {
                   </div>
 
                   <div
-                    className={`w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
                       activeItem === "team" ? "" : "hidden"
                     }`}
                   >
@@ -266,7 +266,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                   <div
-                    className={`w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
                       activeItem === "market" ? "" : "hidden"
                     }`}
                   >
@@ -305,7 +305,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                   <div
-                    className={`w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
                       activeItem === "business" ? "" : "hidden"
                     }`}
                   >
@@ -344,7 +344,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                   <div
-                    className={`w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
                       activeItem === "finance" ? "" : "hidden"
                     }`}
                   >
@@ -383,7 +383,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                   <div
-                    className={`w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
                       activeItem === "governance" ? "" : "hidden"
                     }`}
                   >
@@ -421,8 +421,8 @@ const Score: React.FC = () => {
                       <RiGovernmentFill />
                     </p>
                   </div>
-                  <div className="flex justify-between mt-10">
-                    <div className="bg-white w-[300px] h-[220px] rounded-2xl border shadow-md">
+                  <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                    <div className="bg-white w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
                       <div className="flex justify-between">
                         <p className="text-3xl m-4">Strengths</p>
                         <p className="text-7xl text-[#083982e2]">
@@ -435,7 +435,7 @@ const Score: React.FC = () => {
                         <li>xxx</li>
                       </ul>
                     </div>
-                    <div className="bg-white w-[300px] h-[220px] rounded-2xl border shadow-md">
+                    <div className="bg-white w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
                       <div className="flex justify-between">
                         <p className="text-3xl m-4">Improvements</p>
                         <p className="text-7xl text-[#083982e2] font-bold">
@@ -450,8 +450,8 @@ const Score: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="block -mt-28 mr-10">
-                  <div className="bg-[#083982e2] w-[350px] h-[400px] rounded-3xl p-6 justify-center text-center text-white">
+                <div className="absolute top-[750px] left-4 md:static block -mt-28 mr-10">
+                  <div className="bg-[#083982e2] w-[330px] md:w-[350px] md:h-[400px] h-[420px] rounded-3xl p-6 justify-center text-center text-white">
                     <h3 className="text-2xl">Vester score</h3>
                     <div className="ml-20 mt-10 w-32 h-32 border-dashed border-2 border-white rounded-[50%] p-10">
                       <div>
@@ -515,7 +515,7 @@ const Score: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-[350px] h-[220px] border-4 border-red-400 bg-white rounded-3xl mt-10">
+                  <div className="w-[330px] md:w-[350px] h-[220px] border-4 border-red-400 bg-white rounded-3xl mt-4 md:mt-10">
                     <div className="text-[#083982e2] text-6xl float-right m-3">
                       <PiUsersFourFill />
                     </div>

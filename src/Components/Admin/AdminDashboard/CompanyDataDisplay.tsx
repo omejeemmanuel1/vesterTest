@@ -57,11 +57,11 @@ const CompanyDataDisplay: React.FC = () => {
           <BiArrowBack /> Go back
         </Link>
       </div>
-      <div className="mt-10 ml-36">
+      <div className="mt-10 md:ml-36">
         <h2 className="text-1xl font-bold mb-4 text-blue-700 drop-shadow-lg">
           Startups
         </h2>
-        <table className="mb-5 p-4 table-auto shadow-md bg-white border rounded-lg w-[1150px]">
+        <table className="mb-5 p-4 table-auto shadow-md bg-white border rounded-lg md:w-[1150px]">
           <thead className="text-sm text-center">
             <tr>
               <th>S/N</th>

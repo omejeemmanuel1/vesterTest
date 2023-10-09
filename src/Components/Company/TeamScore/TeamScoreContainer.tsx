@@ -141,7 +141,7 @@ const TeamScoreContainer: React.FC = () => {
       {step > 1 && (
         <button
           onClick={handleBack}
-          className="absolute right-10 top-10 shadow-md p-2  flex cursor-pointer text-white rounded-md bg-[#000D80] hover:bg-blue-600 "
+          className="absolute top-6 right-10 md:top-10 shadow-md p-2  flex cursor-pointer text-white rounded-md bg-[#000D80] hover:bg-blue-600 "
         >
           <FaBackward />
         </button>
