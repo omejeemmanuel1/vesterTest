@@ -55,7 +55,7 @@ const GeneralInfo2: React.FC<GeneralInfo2Props> = ({
                 <option value="Biotech/Life ScienceBiotech/Life Science">
                   Biotech/Life ScienceBiotech/Life Science
                 </option>
-                <option value="Construction/Real estateS">
+                <option value="Construction/Real estate">
                   Construction/Real estate{" "}
                 </option>
                 <option value="Consulting">Consulting</option>

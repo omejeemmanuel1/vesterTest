@@ -14,6 +14,7 @@ import { FaMoneyBill } from "react-icons/fa";
 import { RiGovernmentFill } from "react-icons/ri";
 import { PiDotFill } from "react-icons/pi";
 import loader from "../../../assets/loader.gif";
+import dotdot from "../../../assets/dotdot.gif";
 import axios from "axios";
 
 import jwt_decode from "jwt-decode";
@@ -38,6 +39,25 @@ interface TeamScore {
   MarketFitScore: number;
   FinancialScore: number;
   GovernanceScore: number;
+}
+function calculateGrade(percentage: any) {
+  const numericPercentage = parseFloat(percentage);
+
+  if (numericPercentage >= 90) {
+    return "A+";
+  } else if (numericPercentage >= 80) {
+    return "A";
+  } else if (numericPercentage >= 75) {
+    return "B";
+  } else if (numericPercentage >= 60) {
+    return "C";
+  } else if (numericPercentage >= 50) {
+    return "D";
+  } else if (numericPercentage >= 40) {
+    return "E";
+  } else {
+    return "F";
+  }
 }
 
 const Score: React.FC = () => {
@@ -70,15 +90,16 @@ const Score: React.FC = () => {
           .then((response) => {
             setTeamscores(response.data);
             setLoading(false);
-
-            localStorage.setItem("teamscores", JSON.stringify(response.data));
+            if (teamscores.length > 0) {
+              localStorage.setItem("teamscores", JSON.stringify(teamscores));
+            }
           })
           .catch((error) => {
             console.error("Failed to fetch teamscores", error);
           });
       }
     }
-  }, []);
+  }, [teamscores]);
 
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName);
@@ -195,11 +216,12 @@ const Score: React.FC = () => {
                     <p>...</p>
                     <div>
                       {loading ? (
-                        <div className="text-center m-auto">
+                        <div className="text-center m-auto flex">
+                          Please wait why your score is being processed
                           <img
-                            src={loader}
+                            src={dotdot}
                             alt="Loading"
-                            className="w-[60px]"
+                            className="w-[20px]"
                           />
                         </div>
                       ) : (
@@ -207,10 +229,12 @@ const Score: React.FC = () => {
                           {teamscores.map((teamscore) => (
                             <p>
                               With the score of{" "}
-                              <span>
-                                {teamscore.Percentage || "NA"}, you get acess to
-                                these vester services
+                              <span className="font-bold">
+                                {typeof teamscore.Percentage === "string"
+                                  ? calculateGrade(teamscore.Percentage)
+                                  : "NA"}
                               </span>
+                              , you get access to these vester services
                             </p>
                           ))}
                         </div>
@@ -236,26 +260,34 @@ const Score: React.FC = () => {
                       <br />
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-center m-auto flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (
                           <div>
-                            {teamscores.map((teamscore) => (
-                              <p>
-                                Below is your team score of{" "}
-                                <span className="font-bold">
-                                  {teamscore.TeamScore !== null
-                                    ? (teamscore.TeamScore * 100).toFixed(2) +
-                                      "%"
-                                    : "NA"}
-                                </span>
-                              </p>
-                            ))}
+                            {teamscores.map((teamscore) => {
+                              const scoreValue =
+                                teamscore.TeamScore !== null &&
+                                teamscore.TeamScore >= 0 &&
+                                teamscore.TeamScore <= 100
+                                  ? teamscore.TeamScore * 20
+                                  : null;
+                              return (
+                                <p>
+                                  Below is your team score of{" "}
+                                  <span className="font-bold">
+                                    {scoreValue !== null
+                                      ? `${calculateGrade(scoreValue)}`
+                                      : "NA"}
+                                  </span>
+                                </p>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -275,11 +307,12 @@ const Score: React.FC = () => {
                       <br />
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-center m-auto flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (
@@ -289,9 +322,12 @@ const Score: React.FC = () => {
                                 Below is your market score of{" "}
                                 <span className="font-bold">
                                   {teamscore.MarketFitScore !== null
-                                    ? (teamscore.MarketFitScore * 100).toFixed(
-                                        2
-                                      ) + "%"
+                                    ? teamscore.MarketFitScore >= 0 &&
+                                      teamscore.MarketFitScore <= 100
+                                      ? `${calculateGrade(
+                                          teamscore.MarketFitScore * 20
+                                        )}`
+                                      : "Out of Range"
                                     : "NA"}
                                 </span>
                               </p>
@@ -314,11 +350,12 @@ const Score: React.FC = () => {
                       <br />
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-center m-auto flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (
@@ -328,9 +365,12 @@ const Score: React.FC = () => {
                                 Below is your business model score of{" "}
                                 <span className="font-bold">
                                   {teamscore.BusinessModel !== null
-                                    ? (teamscore.BusinessModel * 100).toFixed(
-                                        2
-                                      ) + "%"
+                                    ? teamscore.BusinessModel >= 0 &&
+                                      teamscore.BusinessModel <= 100
+                                      ? `${calculateGrade(
+                                          teamscore.BusinessModel * 20
+                                        )}`
+                                      : "Out of Range"
                                     : "NA"}
                                 </span>
                               </p>
@@ -353,11 +393,12 @@ const Score: React.FC = () => {
                       <br />
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-center m-auto flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (
@@ -367,9 +408,12 @@ const Score: React.FC = () => {
                                 Below is your financial score of{" "}
                                 <span className="font-bold">
                                   {teamscore.FinancialScore !== null
-                                    ? (teamscore.FinancialScore * 100).toFixed(
-                                        2
-                                      ) + "%"
+                                    ? teamscore.FinancialScore >= 0 &&
+                                      teamscore.FinancialScore <= 100
+                                      ? `${calculateGrade(
+                                          teamscore.FinancialScore * 20
+                                        )}`
+                                      : "Out of Range"
                                     : "NA"}
                                 </span>
                               </p>
@@ -392,11 +436,12 @@ const Score: React.FC = () => {
                       <br />
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-center m-auto flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (
@@ -406,9 +451,12 @@ const Score: React.FC = () => {
                                 Below is your governance score of{" "}
                                 <span className="font-bold">
                                   {teamscore.GovernanceScore !== null
-                                    ? (teamscore.GovernanceScore * 100).toFixed(
-                                        2
-                                      ) + "%"
+                                    ? teamscore.GovernanceScore >= 0 &&
+                                      teamscore.GovernanceScore <= 100
+                                      ? `${calculateGrade(
+                                          teamscore.GovernanceScore * 20
+                                        )}`
+                                      : "Out of Range"
                                     : "NA"}
                                 </span>
                               </p>
@@ -460,7 +508,7 @@ const Score: React.FC = () => {
                             <img
                               src={loader}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[40px]"
                             />
                           </div>
                         ) : (
@@ -477,11 +525,12 @@ const Score: React.FC = () => {
                     <div>
                       <div>
                         {loading ? (
-                          <div className="text-center m-auto">
+                          <div className="text-sm text-center m-auto mt-4 flex">
+                            Please wait why your score is being processed
                             <img
-                              src={loader}
+                              src={dotdot}
                               alt="Loading"
-                              className="w-[60px]"
+                              className="w-[20px]"
                             />
                           </div>
                         ) : (

@@ -151,7 +151,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
           </div>
           {loading ? (
             <div className="text-center">
-              <img src={loader} alt="Loading" className="w-[60px]" />
+              <img src={loader} alt="Loading" className="w-[30px]" />
             </div>
           ) : (
             <>

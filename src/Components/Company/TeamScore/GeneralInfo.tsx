@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FaFastBackward } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { generalSchema } from "../formValidate";
+import countryList from "country-list"; // Import the country-list library
+
 interface GeneralInfoProps {
   onSubmit: (values: typeof initialValues) => void;
   initialValues: typeof initialValues;
@@ -14,6 +16,7 @@ const initialValues = {
   companyOverview: "",
   registrationRegion: "",
   registrationCountry: "",
+  otherCountries: "",
   teamLocation: "",
   teamLocation2: "",
 };
@@ -24,6 +27,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
 }) => {
   const [showTeamLocation2, setShowTeamLocation2] = useState(false);
   const [selectedTeamLocation, setSelectedTeamLocation] = useState("");
+
+  // Generate a list of all countries
+  const allCountries = countryList.getNames();
 
   const regionCountries: Record<string, string[]> = {
     "North Africa": [
@@ -114,7 +120,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
         initialValues={initialValues}
         enableReinitialize={true}
       >
-        {({ handleSubmit, setFieldValue }) => (
+        {({ handleSubmit, setFieldValue, values }) => (
           <Form
             onSubmit={handleSubmit}
             className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]"
@@ -124,7 +130,8 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
             </h2>
             <div className="mb-4">
               <label htmlFor="companyOverview" className="block text-sm">
-                Company Overview? <span className="text-red-500">*</span>
+                In one or two lines, tell us about your business?{" "}
+                <span className="text-red-500">*</span>
               </label>
               <Field
                 as="textarea"
@@ -194,6 +201,52 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({
                 className="text-red-500 text-sm"
               />
             </div>
+            <div className="mb-4">
+              <label className="block text-sm">
+                Is your company registered in any other country?
+              </label>
+              <div className="flex">
+                <label className="mr-2">
+                  <Field
+                    type="radio"
+                    name="otherCountries"
+                    value="yes"
+                    className="mr-1"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <Field
+                    type="radio"
+                    name="otherCountries"
+                    value="no"
+                    className="mr-1"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+
+            {values.otherCountries === "yes" && (
+              <div className="mb-4">
+                <label htmlFor="registeredCountries" className="block text-sm">
+                  List of all countries your company is registered in:
+                </label>
+                <Field
+                  as="select"
+                  id="registeredCountries"
+                  name="registeredCountries"
+                  className="mt-1 p-2 w-full border rounded"
+                >
+                  <option value="">Select Country</option>
+                  {allCountries.map((country: any) => (
+                    <option key={country} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </Field>
+              </div>
+            )}
             <div className="mb-4">
               <label htmlFor="teamLocation" className="block text-sm">
                 Is the majority of your team based in Africa? (Primary location)

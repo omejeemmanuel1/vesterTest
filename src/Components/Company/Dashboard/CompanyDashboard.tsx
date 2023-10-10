@@ -7,6 +7,7 @@ import Avatar from "../../../assets/man.png";
 import ProfileCard from "./ProfileCard";
 import ComNavBar from "./ComNavBar";
 import axios from "axios";
+import dotdot from "../../../assets/dotdot.gif";
 
 import jwt_decode from "jwt-decode";
 
@@ -34,6 +35,8 @@ const CompanyDashboard: React.FC = () => {
   const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
   const [teamscores, setTeamscores] = useState<TeamScore[]>([]);
+  const [teamscore, setTeamscore] = useState<TeamScore[]>([]);
+  const [gradeFetched, setGradeFetched] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -63,6 +66,8 @@ const CompanyDashboard: React.FC = () => {
 
       if (teamscoresFromLocalStorage) {
         setTeamscores(JSON.parse(teamscoresFromLocalStorage));
+
+        setGradeFetched(true);
       } else {
         const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
 
@@ -74,15 +79,32 @@ const CompanyDashboard: React.FC = () => {
           })
           .then((response) => {
             setTeamscores(response.data);
-
-            localStorage.setItem("teamscores", JSON.stringify(response.data));
+            setGradeFetched(true);
+            if (teamscores.length > 0) {
+              localStorage.setItem("teamscores", JSON.stringify(teamscores));
+            }
           })
           .catch((error) => {
             console.error("Failed to fetch teamscores", error);
           });
       }
     }
-  }, []);
+
+    const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
+
+    axios
+      .get(teamscoresApiUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setTeamscore(response.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch teamscores", error);
+      });
+  }, [teamscores]);
 
   const { theme } = useTheme();
 
@@ -103,11 +125,9 @@ const CompanyDashboard: React.FC = () => {
         <ComNavBar />
 
         <div>
-          <div className="block md:flex md:h-[175px] h-[370px] md:space-x-[130px] md:p-14 p-6 bg-[#C0C0F5] bg-opacity-10 pt-14">
+          <div className="block md:flex md:h-[175px] h-[370px] md:justify-between md:p-14 p-6 bg-[#C0C0F5] bg-opacity-10 pt-14">
             {loading ? (
-              <div className="md:text-center m-auto">
-                <img src={loader} alt="Loading" className="w-[60px]" />
-              </div>
+              <img src={loader} alt="Loading" className="w-[30px]" />
             ) : (
               <div className="-mt-[43px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">
                 {companyInfo.companyLogo ? (
@@ -124,7 +144,7 @@ const CompanyDashboard: React.FC = () => {
                   />
                 )}
                 <h6 className="m-auto">{decodedToken?.sub.companyName}</h6>
-                <span className="bg-[#C0C0F5] text-xs p-[4px] rounded-2xl text-[#000D80]">
+                <span className="bg-[#C0C0F5] text-xs p-[2px] rounded-2xl text-[#000D80] text-center">
                   {companyInfo.companyType}
                 </span>
               </div>
@@ -133,12 +153,10 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Stage</h6>
               {loading ? (
-                <div className="text-center m-auto">
-                  <img src={loader} alt="Loading" className="w-[60px]" />
-                </div>
+                <img src={loader} alt="Loading" className="w-[30px]" />
               ) : (
                 <div>
-                  {teamscores.map((teamscore) => (
+                  {teamscore.map((teamscore) => (
                     <p>
                       <span className="bg-[#DCFFDD] text-xs p-[4px] rounded-2xl text-[#006804]">
                         {teamscore.fundingStage || "NA"}
@@ -151,12 +169,10 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Company Valuation</h6>
               {loading ? (
-                <div className="text-center m-auto">
-                  <img src={loader} alt="Loading" className="w-[60px]" />
-                </div>
+                <img src={loader} alt="Loading" className="w-[30px]" />
               ) : (
                 <div>
-                  {teamscores.map((teamscore) => (
+                  {teamscore.map((teamscore) => (
                     <p>{teamscore.totalFundingRaised || "NA"}</p>
                   ))}
                 </div>
@@ -165,12 +181,10 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Current Target Raised</h6>
               {loading ? (
-                <div className="text-center m-auto">
-                  <img src={loader} alt="Loading" className="w-[60px]" />
-                </div>
+                <img src={loader} alt="Loading" className="w-[30px]" />
               ) : (
                 <div>
-                  {teamscores.map((teamscore) => (
+                  {teamscore.map((teamscore) => (
                     <p>${teamscore.moneyRaise || "NA"}</p>
                   ))}
                 </div>
@@ -178,9 +192,12 @@ const CompanyDashboard: React.FC = () => {
             </div>
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Score</h6>
-              {loading ? (
-                <div className="text-center m-auto">
-                  <img src={loader} alt="Loading" className="w-[60px]" />
+              {loading || !gradeFetched ? (
+                <div className="text-[12px] break-words">
+                  <p className="break-words">
+                    Please wait why your score is being processed
+                  </p>
+                  <img src={dotdot} alt="Loading" className="w-[20px]" />
                 </div>
               ) : (
                 <div>

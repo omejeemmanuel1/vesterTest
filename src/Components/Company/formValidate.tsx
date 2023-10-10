@@ -95,6 +95,14 @@ export const teamscoreSchema = Yup.object().shape({
   founding_team_info: Yup.string().required(
     "Please provide detailed founding team information"
   ),
+  founderGender: Yup.array()
+    .of(Yup.string())
+    .required("Please select an option"),
+  technicalFounder: Yup.array()
+    .of(Yup.string())
+    .required("Please select an option"),
+  founderTime: Yup.array().of(Yup.string()).required("Please select an option"),
+  cLevel: Yup.array().of(Yup.string()).required("Please select an option"),
 });
 
 export const marketscoreSchema = Yup.object().shape({
@@ -138,9 +146,4 @@ export const generalSchema2 = Yup.object().shape({
   companyExplanation: Yup.string().required("This field is required"),
 });
 
-export const teamscoreSchema2 = Yup.object().shape({
-  founderGender: Yup.string().required("Please select an option"),
-  technicalFounder: Yup.string().required("Please select an option"),
-  founderTime: Yup.string().required("Please select an option"),
-  cLevel: Yup.string().required("Please select an option"),
-});
+// export const teamscoreSchema2 = Yup.object().shape({});

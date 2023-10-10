@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GeneralInfo from "./GeneralInfo";
 import Teamscore1 from "./Teamscore1";
-import Teamscore2 from "./Teamscore2";
+// import Teamscore2 from "./Teamscore2";
 import MarketScore from "./MarketScore";
 import MarketScore2 from "./MarketScore2";
 import BusinessModel from "./BusinessModel";
@@ -83,7 +83,7 @@ const TeamScoreContainer: React.FC = () => {
     }
   };
 
-  const totalSteps = 14;
+  const totalSteps = 13;
 
   const progressPercentage = (step / totalSteps) * 100;
   const { theme } = useTheme();
@@ -111,31 +111,31 @@ const TeamScoreContainer: React.FC = () => {
       {step === 3 && (
         <Teamscore1 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 4 && (
+      {/* {step === 4 && (
         <Teamscore2 onSubmit={handleContinue} initialValues={formData} />
-      )}
-      {step === 5 && (
+      )} */}
+      {step === 4 && (
         <Teamscore3 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 6 && (
+      {step === 5 && (
         <MarketScore onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 7 && <MarketScore2 onSubmit={handleContinue} />}
-      {step === 8 && <BusinessModel onSubmit={handleContinue} />}
-      {step === 9 && (
+      {step === 6 && <MarketScore2 onSubmit={handleContinue} />}
+      {step === 7 && <BusinessModel onSubmit={handleContinue} />}
+      {step === 8 && (
         <BusinessModel2 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 10 && (
+      {step === 9 && (
         <BusinessModel3 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 11 && (
+      {step === 10 && (
         <FinancialScore onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 12 && <FinancialScore2 onSubmit={handleContinue} />}
-      {step === 13 && (
+      {step === 11 && <FinancialScore2 onSubmit={handleContinue} />}
+      {step === 12 && (
         <FinancialScore3 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {step === 14 && (
+      {step === 13 && (
         <GovernanceScore onSubmit={handleSubmit} initialValues={formData} />
       )}
       {step > 1 && (

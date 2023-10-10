@@ -4,16 +4,16 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 // import { financialSchema } from "../formValidate";
 
 const fundingStageOptions = [
-  "Pre-Seed stage",
-  "Seed stage",
-  "Pre-series A",
-  "Series A",
-  "Pre-series B",
-  "Series B",
-  "Pre-series C",
-  "Series C",
-  "Pre-series D",
-  "Series D",
+  "pre-seed",
+  "seed",
+  "pre-series A",
+  "series A",
+  "pre-series B",
+  "series B",
+  "pre-series C",
+  "series C",
+  "pre-series D",
+  "series D",
 ];
 
 interface FinancialScoreProps {

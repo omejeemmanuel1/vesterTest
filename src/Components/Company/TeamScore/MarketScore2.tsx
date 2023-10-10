@@ -42,8 +42,8 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
           <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
               <label htmlFor="competitors" className="block text-sm">
-                Share the website links of 3 of your most direct competitors in
-                the market. <span className="text-red-500">*</span>
+                Share the website link(s) of your most direct competitor(s) in
+                the market <span className="text-red-500">*</span>
               </label>
               <FieldArray name="competitors">
                 {(arrayHelpers: any) => (
@@ -128,7 +128,9 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
 
             <div className="mb-4">
               <label htmlFor=" evidenceUrl" className="block text-sm">
-                Share a link for your market claim:{" "}
+                Share a link to a report or reputable source that shows to the
+                size of your market and provides a commercial market size
+                estimate (preferably in dollars):{" "}
                 <span className="text-red-500">*</span>
               </label>
               <Field

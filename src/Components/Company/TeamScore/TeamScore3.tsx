@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 interface Teamscore3Props {
@@ -9,6 +9,7 @@ interface Teamscore3Props {
 
 const initialValues = {
   cLevelNoneFounders: "",
+  howMany: "",
   cLevelLinkedin: "",
   cLevelRole: "",
   execGender: "",
@@ -19,6 +20,8 @@ const initialValues = {
 };
 
 const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit, initialValues }) => {
+  const [hasCLevelExecs, setHasCLevelExecs] = useState<string | null>(null);
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
@@ -33,31 +36,57 @@ const Teamscore3: React.FC<Teamscore3Props> = ({ onSubmit, initialValues }) => {
             </label>
             <div className="mt-1">
               <label className="mr-2">
-                <Field type="radio" name="cLevelNoneFounders" value="yes" />
+                <input
+                  type="radio"
+                  name="cLevelNoneFounders"
+                  value="yes"
+                  onChange={() => setHasCLevelExecs("yes")}
+                />
                 Yes
               </label>
               <label>
-                <Field type="radio" name="cLevelNoneFounders" value="no" />
+                <input
+                  type="radio"
+                  name="cLevelNoneFounders"
+                  value="no"
+                  onChange={() => setHasCLevelExecs("no")}
+                />
                 No
               </label>
             </div>
-            <ErrorMessage
-              name="cLevelNoneFounders"
-              component="p"
-              className="text-red-500 text-sm"
-            />
+            {hasCLevelExecs === "yes" && (
+              <div className="mt-4">
+                <label htmlFor="howMany" className="block text-sm">
+                  How many:
+                </label>
+                <Field
+                  type="text"
+                  name="howMany"
+                  id="howMany"
+                  className="mt-1 p-2 w-full border rounded"
+                />
+              </div>
+            )}
+            {hasCLevelExecs === "no" && (
+              <p className="text-sm text-gray-500 mt-2"></p>
+            )}
           </div>
-          <div className="mb-4">
-            <label htmlFor=" cLevelLinkedin" className="block text-sm">
-              If yes, C-level linkedin
-            </label>
-            <Field
-              type="text"
-              id=" cLevelLinkedin"
-              name=" cLevelLinkedin"
-              className="mt-1 p-2 w-full border rounded"
-            />
-          </div>
+          {hasCLevelExecs === "yes" && (
+            <div className="mb-4">
+              <label htmlFor=" cLevelLinkedin" className="block text-sm">
+                C-level linkedin
+              </label>
+              <Field
+                type="text"
+                id=" cLevelLinkedin"
+                name=" cLevelLinkedin"
+                className="mt-1 p-2 w-full border rounded"
+              />
+            </div>
+          )}
+          {hasCLevelExecs === "no" && (
+            <p className="text-sm text-gray-500 mt-2"></p>
+          )}
           <div className="mb-4">
             <label htmlFor=" cLevelRole" className="block text-sm">
               What is their role in the business?

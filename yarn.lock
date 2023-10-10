@@ -2343,6 +2343,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/country-list@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@types/country-list/-/country-list-2.1.2.tgz#c0cb264d5f453cc24b86cfcd53b2bd708e3403f1"
+  integrity sha512-LhbigLmoDb/Ulfi8PDTZWjnT4nGwDBVVXh07fTIYzF83EKWBzO5zL1snBZ9Vjp1MOoYYJMOlBDvt7Dlk1H78WQ==
+
 "@types/dompurify@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-3.0.3.tgz#d34ba1cf4f8b8f2cbfe5d3118dc3b7d81858fa42"
@@ -4030,6 +4035,11 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+country-list@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/country-list/-/country-list-2.3.0.tgz#1e7ceaf9834c1d1210054301eabf4dc445ab978c"
+  integrity sha512-qZk66RlmQm7fQjMYWku1AyjlKPogjPEorAZJG88owPExoPV8EsyCcuFLvO2afTXHEhi9liVOoyd+5A6ZS5QwaA==
 
 cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"

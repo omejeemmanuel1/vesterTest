@@ -90,7 +90,7 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
             </div>
             <div className="mb-4">
               <label className="block text-sm">
-                What is your business model(s)?
+                What is your business model(s)? (You can select multiple)
                 <span className="text-red-500">*</span>
               </label>
               <div className="mt-1">
