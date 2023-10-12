@@ -2,12 +2,10 @@
 import React, { useEffect, useState } from "react";
 import ComSideBar from "./ComSideBar";
 import { useTheme } from "../../../Context/ThemeContext";
-import loader from "../../../assets/loader.gif";
 import Avatar from "../../../assets/man.png";
 import ProfileCard from "./ProfileCard";
 import ComNavBar from "./ComNavBar";
 import axios from "axios";
-import dotdot from "../../../assets/dotdot.gif";
 
 import jwt_decode from "jwt-decode";
 
@@ -18,13 +16,15 @@ interface DecodedToken {
   email: string;
   companyName: string;
 }
-
+interface ApiScores {
+  Grade: string;
+}
 interface TeamScore {
   _id: string;
   fundingStage: string;
   totalFundingRaised: string;
   moneyRaise: string;
-  Grade: string;
+  apiScores: ApiScores;
 }
 
 const CompanyDashboard: React.FC = () => {
@@ -34,9 +34,7 @@ const CompanyDashboard: React.FC = () => {
   });
   const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
-  const [teamscores, setTeamscores] = useState<TeamScore[]>([]);
   const [teamscore, setTeamscore] = useState<TeamScore[]>([]);
-  const [gradeFetched, setGradeFetched] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -61,34 +59,11 @@ const CompanyDashboard: React.FC = () => {
         .catch((error) => {
           console.error("Failed to fetch company data", error);
         });
-
-      const teamscoresFromLocalStorage = localStorage.getItem("teamscores");
-
-      if (teamscoresFromLocalStorage) {
-        setTeamscores(JSON.parse(teamscoresFromLocalStorage));
-
-        setGradeFetched(true);
-      } else {
-        const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
-
-        axios
-          .get(teamscoresApiUrl, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            setTeamscores(response.data);
-            setGradeFetched(true);
-            if (teamscores.length > 0) {
-              localStorage.setItem("teamscores", JSON.stringify(teamscores));
-            }
-          })
-          .catch((error) => {
-            console.error("Failed to fetch teamscores", error);
-          });
-      }
     }
+  }, [decodedToken]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
     const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
@@ -104,7 +79,7 @@ const CompanyDashboard: React.FC = () => {
       .catch((error) => {
         console.error("Failed to fetch teamscores", error);
       });
-  }, [teamscores]);
+  }, [teamscore]);
 
   const { theme } = useTheme();
 
@@ -127,7 +102,7 @@ const CompanyDashboard: React.FC = () => {
         <div>
           <div className="block md:flex md:h-[175px] h-[370px] md:justify-between md:p-14 p-6 bg-[#C0C0F5] bg-opacity-10 pt-14">
             {loading ? (
-              <img src={loader} alt="Loading" className="w-[30px]" />
+              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
             ) : (
               <div className="-mt-[43px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">
                 {companyInfo.companyLogo ? (
@@ -153,7 +128,7 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Stage</h6>
               {loading ? (
-                <img src={loader} alt="Loading" className="w-[30px]" />
+                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
               ) : (
                 <div>
                   {teamscore.map((teamscore) => (
@@ -169,7 +144,7 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Company Valuation</h6>
               {loading ? (
-                <img src={loader} alt="Loading" className="w-[30px]" />
+                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
               ) : (
                 <div>
                   {teamscore.map((teamscore) => (
@@ -181,7 +156,7 @@ const CompanyDashboard: React.FC = () => {
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Current Target Raised</h6>
               {loading ? (
-                <img src={loader} alt="Loading" className="w-[30px]" />
+                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
               ) : (
                 <div>
                   {teamscore.map((teamscore) => (
@@ -192,17 +167,12 @@ const CompanyDashboard: React.FC = () => {
             </div>
             <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
               <h6>Score</h6>
-              {loading || !gradeFetched ? (
-                <div className="text-[12px] break-words">
-                  <p className="break-words">
-                    Please wait why your score is being processed
-                  </p>
-                  <img src={dotdot} alt="Loading" className="w-[20px]" />
-                </div>
+              {loading ? (
+                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
               ) : (
                 <div>
-                  {teamscores.map((teamscore) => (
-                    <p>{teamscore.Grade || "NA"}</p>
+                  {teamscore.map((teamscore) => (
+                    <p>{teamscore.apiScores.Grade || "NA"}</p>
                   ))}
                 </div>
               )}

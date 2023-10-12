@@ -13,8 +13,6 @@ import { FaBusinessTime } from "react-icons/fa";
 import { FaMoneyBill } from "react-icons/fa";
 import { RiGovernmentFill } from "react-icons/ri";
 import { PiDotFill } from "react-icons/pi";
-import loader from "../../../assets/loader.gif";
-import dotdot from "../../../assets/dotdot.gif";
 import axios from "axios";
 
 import jwt_decode from "jwt-decode";
@@ -27,18 +25,19 @@ interface DecodedToken {
   companyName: string;
 }
 
-interface TeamScore {
-  _id: string;
-  fundingStage: string;
-  totalFundingRaised: string;
-  moneyRaise: string;
+interface ApiScores {
   Grade: string;
   Percentage: string;
-  TeamScore: number;
-  BusinessModel: number;
-  MarketFitScore: number;
-  FinancialScore: number;
-  GovernanceScore: number;
+  api_score: number;
+  api_score2: number;
+  api_score3: number;
+  api_score4: number;
+  api_score5: number;
+}
+
+interface TeamScore {
+  _id: string;
+  apiScores: ApiScores;
 }
 function calculateGrade(percentage: any) {
   const numericPercentage = parseFloat(percentage);
@@ -73,33 +72,23 @@ const Score: React.FC = () => {
       console.log(decodedToken.sub.companyWebsite);
       setDecodedToken(decodedToken);
 
-      const teamscoresFromLocalStorage = localStorage.getItem("teamscores");
+      const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
-      if (teamscoresFromLocalStorage) {
-        setTeamscores(JSON.parse(teamscoresFromLocalStorage));
-        setLoading(false);
-      } else {
-        const teamscoresApiUrl = `${baseUrl}/teamscore/get-all-teamscores`;
-
-        axios
-          .get(teamscoresApiUrl, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            setTeamscores(response.data);
-            setLoading(false);
-            if (teamscores.length > 0) {
-              localStorage.setItem("teamscores", JSON.stringify(teamscores));
-            }
-          })
-          .catch((error) => {
-            console.error("Failed to fetch teamscores", error);
-          });
-      }
+      axios
+        .get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setTeamscores(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch teamscores", error);
+        });
     }
-  }, [teamscores]);
+  }, []);
 
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName);
@@ -218,11 +207,7 @@ const Score: React.FC = () => {
                       {loading ? (
                         <div className="text-center m-auto flex">
                           Please wait why your score is being processed
-                          <img
-                            src={dotdot}
-                            alt="Loading"
-                            className="w-[20px]"
-                          />
+                          <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                         </div>
                       ) : (
                         <div>
@@ -230,8 +215,11 @@ const Score: React.FC = () => {
                             <p>
                               With the score of{" "}
                               <span className="font-bold">
-                                {typeof teamscore.Percentage === "string"
-                                  ? calculateGrade(teamscore.Percentage)
+                                {typeof teamscore.apiScores.Percentage ===
+                                "string"
+                                  ? calculateGrade(
+                                      teamscore.apiScores.Percentage
+                                    )
                                   : "NA"}
                               </span>
                               , you get access to these vester services
@@ -262,20 +250,16 @@ const Score: React.FC = () => {
                         {loading ? (
                           <div className="text-center m-auto flex">
                             Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
+                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
                             {teamscores.map((teamscore) => {
                               const scoreValue =
-                                teamscore.TeamScore !== null &&
-                                teamscore.TeamScore >= 0 &&
-                                teamscore.TeamScore <= 100
-                                  ? teamscore.TeamScore * 20
+                                teamscore.apiScores.api_score !== null &&
+                                teamscore.apiScores.api_score >= 0 &&
+                                teamscore.apiScores.api_score <= 100
+                                  ? teamscore.apiScores.api_score * 20
                                   : null;
                               return (
                                 <p>
@@ -309,11 +293,7 @@ const Score: React.FC = () => {
                         {loading ? (
                           <div className="text-center m-auto flex">
                             Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
+                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
@@ -321,11 +301,11 @@ const Score: React.FC = () => {
                               <p>
                                 Below is your market score of{" "}
                                 <span className="font-bold">
-                                  {teamscore.MarketFitScore !== null
-                                    ? teamscore.MarketFitScore >= 0 &&
-                                      teamscore.MarketFitScore <= 100
+                                  {teamscore.apiScores.api_score2 !== null
+                                    ? teamscore.apiScores.api_score2 >= 0 &&
+                                      teamscore.apiScores.api_score2 <= 100
                                       ? `${calculateGrade(
-                                          teamscore.MarketFitScore * 20
+                                          teamscore.apiScores.api_score2 * 20
                                         )}`
                                       : "Out of Range"
                                     : "NA"}
@@ -352,11 +332,7 @@ const Score: React.FC = () => {
                         {loading ? (
                           <div className="text-center m-auto flex">
                             Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
+                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
@@ -364,11 +340,11 @@ const Score: React.FC = () => {
                               <p>
                                 Below is your business model score of{" "}
                                 <span className="font-bold">
-                                  {teamscore.BusinessModel !== null
-                                    ? teamscore.BusinessModel >= 0 &&
-                                      teamscore.BusinessModel <= 100
+                                  {teamscore.apiScores.api_score3 !== null
+                                    ? teamscore.apiScores.api_score3 >= 0 &&
+                                      teamscore.apiScores.api_score3 <= 100
                                       ? `${calculateGrade(
-                                          teamscore.BusinessModel * 20
+                                          teamscore.apiScores.api_score3 * 20
                                         )}`
                                       : "Out of Range"
                                     : "NA"}
@@ -395,11 +371,7 @@ const Score: React.FC = () => {
                         {loading ? (
                           <div className="text-center m-auto flex">
                             Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
+                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
@@ -407,11 +379,11 @@ const Score: React.FC = () => {
                               <p>
                                 Below is your financial score of{" "}
                                 <span className="font-bold">
-                                  {teamscore.FinancialScore !== null
-                                    ? teamscore.FinancialScore >= 0 &&
-                                      teamscore.FinancialScore <= 100
+                                  {teamscore.apiScores.api_score4 !== null
+                                    ? teamscore.apiScores.api_score4 >= 0 &&
+                                      teamscore.apiScores.api_score4 <= 100
                                       ? `${calculateGrade(
-                                          teamscore.FinancialScore * 20
+                                          teamscore.apiScores.api_score4 * 20
                                         )}`
                                       : "Out of Range"
                                     : "NA"}
@@ -438,11 +410,7 @@ const Score: React.FC = () => {
                         {loading ? (
                           <div className="text-center m-auto flex">
                             Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
+                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
@@ -450,11 +418,11 @@ const Score: React.FC = () => {
                               <p>
                                 Below is your governance score of{" "}
                                 <span className="font-bold">
-                                  {teamscore.GovernanceScore !== null
-                                    ? teamscore.GovernanceScore >= 0 &&
-                                      teamscore.GovernanceScore <= 100
+                                  {teamscore.apiScores.api_score5 !== null
+                                    ? teamscore.apiScores.api_score5 >= 0 &&
+                                      teamscore.apiScores.api_score5 <= 100
                                       ? `${calculateGrade(
-                                          teamscore.GovernanceScore * 20
+                                          teamscore.apiScores.api_score5 * 20
                                         )}`
                                       : "Out of Range"
                                     : "NA"}
@@ -505,17 +473,13 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto">
-                            <img
-                              src={loader}
-                              alt="Loading"
-                              className="w-[40px]"
-                            />
+                            <div className="w-10 h-10 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
                           <div>
                             {teamscores.map((teamscore) => (
                               <p className="text-5xl font-cursive">
-                                {teamscore.Grade || "NA"}
+                                {teamscore.apiScores.Grade || "NA"}
                               </p>
                             ))}
                           </div>
@@ -524,43 +488,32 @@ const Score: React.FC = () => {
                     </div>
                     <div>
                       <div>
-                        {loading ? (
-                          <div className="text-sm text-center m-auto mt-4 flex">
-                            Please wait why your score is being processed
-                            <img
-                              src={dotdot}
-                              alt="Loading"
-                              className="w-[20px]"
-                            />
-                          </div>
-                        ) : (
-                          <div>
-                            {teamscores.map((teamscore) => (
-                              <p className="text-center font-bold mt-10">
-                                {(() => {
-                                  const grade = teamscore.Grade || "NA";
-                                  if (grade === "A+") {
-                                    return "Congratulations! Your startup is exceptionally well-prepared for investment. You have a strong foundation, a compelling value proposition, and a clear path to success. Investors will likely be eager to engage with you.";
-                                  } else if (grade === "A") {
-                                    return "Great job! Your startup is in great shape for investment. You've demonstrated a solid investment case, and your preparation is impressive. With some fine-tuning, you're on track for success.";
-                                  } else if (grade === "B") {
-                                    return "Good work! Your startup is investment-ready and shows promise. There are areas for improvement, but you're on the right path. Investors will be interested in what you have to offer.";
-                                  } else if (grade === "C") {
-                                    return "Keep pushing! Your startup has potential, but there's room for improvement before you're fully investment-ready. Consider refining your strategy and addressing weaknesses to attract investors.";
-                                  } else if (grade === "D") {
-                                    return "You're on the journey, but there's work to be done. Your startup may not be investment-ready yet, but with dedication and strategic adjustments, you can enhance your appeal to potential investors.";
-                                  } else if (grade === "E") {
-                                    return "You've got potential, but there's a significant gap to bridge. Your startup may face challenges in attracting investors at this stage. Focus on strengthening your fundamentals and strategy.";
-                                  } else if (grade === "F") {
-                                    return "There's work to do. Your startup is not yet ready for investment. It's essential to reevaluate your approach, address weaknesses, and refine your business model to become more attractive to investors.";
-                                  } else {
-                                    return "NA";
-                                  }
-                                })()}
-                              </p>
-                            ))}
-                          </div>
-                        )}
+                        <div>
+                          {teamscores.map((teamscore) => (
+                            <p className="text-center font-bold mt-5">
+                              {(() => {
+                                const grade = teamscore.apiScores.Grade || "NA";
+                                if (grade === "A+") {
+                                  return "Congratulations! Your startup is exceptionally well-prepared for investment. You have a strong foundation, a compelling value proposition, and a clear path to success. Investors will likely be eager to engage with you.";
+                                } else if (grade === "A") {
+                                  return "Great job! Your startup is in great shape for investment. You've demonstrated a solid investment case, and your preparation is impressive. With some fine-tuning, you're on track for success.";
+                                } else if (grade === "B") {
+                                  return "Good work! Your startup is investment-ready and shows promise. There are areas for improvement, but you're on the right path. Investors will be interested in what you have to offer.";
+                                } else if (grade === "C") {
+                                  return "Keep pushing! Your startup has potential, but there's room for improvement before you're fully investment-ready. Consider refining your strategy and addressing weaknesses to attract investors.";
+                                } else if (grade === "D") {
+                                  return "You're on the journey, but there's work to be done. Your startup may not be investment-ready yet, but with dedication and strategic adjustments, you can enhance your appeal to potential investors.";
+                                } else if (grade === "E") {
+                                  return "You've got potential, but there's a significant gap to bridge. Your startup may face challenges in attracting investors at this stage. Focus on strengthening your fundamentals and strategy.";
+                                } else if (grade === "F") {
+                                  return "There's work to do. Your startup is not yet ready for investment. It's essential to reevaluate your approach, address weaknesses, and refine your business model to become more attractive to investors.";
+                                } else {
+                                  return "NA";
+                                }
+                              })()}
+                            </p>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

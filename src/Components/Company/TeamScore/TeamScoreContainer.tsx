@@ -29,6 +29,7 @@ const TeamScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : {};
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,6 +52,8 @@ const TeamScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
+    setIsSubmitting(true); // Set the loading state to true
+
     try {
       const combinedData = { ...formData, ...finalData };
 
@@ -80,6 +83,8 @@ const TeamScoreContainer: React.FC = () => {
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
+    } finally {
+      setIsSubmitting(false); // Set the loading state to false
     }
   };
 
@@ -136,7 +141,11 @@ const TeamScoreContainer: React.FC = () => {
         <FinancialScore3 onSubmit={handleContinue} initialValues={formData} />
       )}
       {step === 13 && (
-        <GovernanceScore onSubmit={handleSubmit} initialValues={formData} />
+        <GovernanceScore
+          onSubmit={handleSubmit}
+          initialValues={formData}
+          isSubmitting={isSubmitting}
+        />
       )}
       {step > 1 && (
         <button

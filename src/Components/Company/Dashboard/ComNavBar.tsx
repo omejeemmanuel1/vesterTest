@@ -7,7 +7,6 @@ import { FaRegBell } from "react-icons/fa";
 import { FiMoon } from "react-icons/fi";
 import { BiSolidMoon } from "react-icons/bi";
 import jwt_decode from "jwt-decode";
-import loader from "../../../assets/loader.gif";
 import { useTheme } from "../../../Context/ThemeContext";
 import Avatar from "../../../assets/man.png";
 import { BiLogOut } from "react-icons/bi";
@@ -151,7 +150,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
           </div>
           {loading ? (
             <div className="text-center">
-              <img src={loader} alt="Loading" className="w-[30px]" />
+              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
             </div>
           ) : (
             <>
