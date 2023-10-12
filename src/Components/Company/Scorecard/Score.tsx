@@ -196,7 +196,7 @@ const Score: React.FC = () => {
                   </ul>
 
                   <div
-                    className={`w-[330px] md:w-[620px]  h-[250px] bg-white shadow-md rounded-2xl p-4 border ${
+                    className={`w-[330px] md:w-[620px]  h-[250px]  shadow-md rounded-2xl p-4 border ${
                       activeItem === "overall" ? "" : "hidden"
                     }`}
                   >
@@ -438,7 +438,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                   <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
-                    <div className="bg-white w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                    <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
                       <div className="flex justify-between">
                         <p className="text-3xl m-4">Strengths</p>
                         <p className="text-7xl text-[#083982e2]">
@@ -451,7 +451,7 @@ const Score: React.FC = () => {
                         <li>xxx</li>
                       </ul>
                     </div>
-                    <div className="bg-white w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                    <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
                       <div className="flex justify-between">
                         <p className="text-3xl m-4">Improvements</p>
                         <p className="text-7xl text-[#083982e2] font-bold">
@@ -517,7 +517,7 @@ const Score: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-[330px] md:w-[350px] h-[220px] border-4 border-red-400 bg-white rounded-3xl mt-4 md:mt-10">
+                  <div className="w-[330px] md:w-[350px] h-[220px] border-4 border-red-400 rounded-3xl mt-4 md:mt-10">
                     <div className="text-[#083982e2] text-6xl float-right m-3">
                       <PiUsersFourFill />
                     </div>

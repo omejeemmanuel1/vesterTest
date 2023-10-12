@@ -115,7 +115,13 @@ const ProfileCard: React.FC = () => {
           </div>
 
           <div className="md:flex mb-6 space-x-4">
-            <div className="p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow">
+            <div
+              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
+                theme === "light"
+                  ? "bg-[#F7F9FB]  text-[#000D80]"
+                  : "dark:bg-gray-700 text-white"
+              }`}
+            >
               <h2 className="text-2xl">
                 $2.2 <span className="text-[#00AB07] text-xs">+11.01%</span>
                 <p className="text-[18px] mt-4">Investors looking at you</p>

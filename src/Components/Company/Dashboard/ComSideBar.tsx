@@ -5,7 +5,7 @@ import { MdOutlineSettings } from "react-icons/md";
 import { RxBarChart } from "react-icons/rx";
 import { BiLogOut } from "react-icons/bi";
 import { MdHelp } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../Context/ThemeContext";
 
 const ComSideBar: React.FC = () => {
@@ -37,13 +37,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <NavLink
-              to="/company_dashboard"
+            <a
+              href="/company_dashboard"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
               Dashboard
-            </NavLink>
+            </a>
           </li>
           <li
             className={`mb-6 flex ${
@@ -52,13 +52,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <NavLink
-              to="/score"
+            <a
+              href="/score"
               className="flex hover:transition-transform hover:scale-105"
             >
               <RxBarChart className="mt-[1px] mr-2 text-2xl" />
               Vester Score
-            </NavLink>
+            </a>
           </li>
           <li
             className={`mb-6 flex ${
@@ -67,13 +67,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <NavLink
-              to="/Performance"
+            <a
+              href="/Performance"
               className="flex hover:transition-transform hover:scale-105"
             >
               <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
               Investor Match
-            </NavLink>
+            </a>
           </li>
           <li
             className={`flex ${
@@ -82,13 +82,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <NavLink
-              to="/profile-update"
+            <a
+              href="/profile-update"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSettings className="mt-[1px] mr-2 text-2xl" />
               Profile
-            </NavLink>
+            </a>
           </li>
 
           <div className=" fixed top-[700px]">
@@ -99,15 +99,15 @@ const ComSideBar: React.FC = () => {
                   : ""
               }`}
             >
-              <NavLink
-                to="/comp-login"
+              <a
+                href="/comp-login"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <BiLogOut className="mt-[1px] mr-2 text-2xl" />
                 <button onClick={handleLogout} className="mr-2 pointer">
                   Logout
                 </button>
-              </NavLink>
+              </a>
             </li>
 
             <li
@@ -117,13 +117,13 @@ const ComSideBar: React.FC = () => {
                   : ""
               }`}
             >
-              <NavLink
-                to="/d-admin"
+              <a
+                href="/d-admin"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <MdHelp className="mt-[1px] mr-2 text-2xl" />
                 Help
-              </NavLink>
+              </a>
             </li>
           </div>
         </ul>
