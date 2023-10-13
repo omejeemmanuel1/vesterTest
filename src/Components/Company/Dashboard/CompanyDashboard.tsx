@@ -34,51 +34,55 @@ const CompanyDashboard: React.FC = () => {
   });
   const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
+  const [scrapeLoading, setScrapeLoading] = useState(true);
   const [teamscore, setTeamscore] = useState<TeamScore[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken: DecodedToken = jwt_decode(token);
-      console.log(decodedToken.sub.companyWebsite);
-      setDecodedToken(decodedToken);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const decodedToken: DecodedToken = jwt_decode(token);
+          console.log(decodedToken.sub.companyWebsite);
+          setDecodedToken(decodedToken);
 
-      const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
-      console.log(companyApiUrl);
+          const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
+          console.log(companyApiUrl);
 
-      axios
-        .get(companyApiUrl)
-        .then((response) => {
+          const response = await axios.get(companyApiUrl);
+
           setCompanyInfo({
             companyLogo: response.data.companyWebsiteInfo.companyLogo,
             companyType: response.data.companyWebsiteInfo.websiteType,
           });
-          setLoading(false);
+          setScrapeLoading(false);
           console.log(response.data.companyName);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch company data", error);
-        });
-    }
+        }
+      } catch (error) {
+        console.error("Failed to fetch company data", error);
+      }
+    };
+    fetchData();
   }, [decodedToken]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
-    const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
-
-    axios
-      .get(teamscoresApiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setTeamscore(response.data);
-      })
-      .catch((error) => {
+        setLoading(false);
+      } catch (error) {
         console.error("Failed to fetch teamscores", error);
-      });
+      }
+    };
+    fetchData();
   }, [teamscore]);
 
   const { theme } = useTheme();
@@ -101,7 +105,7 @@ const CompanyDashboard: React.FC = () => {
 
         <div>
           <div className="block md:flex md:h-[175px] h-[370px] md:justify-between md:p-14 p-6 bg-[#C0C0F5] bg-opacity-10 pt-14">
-            {loading ? (
+            {scrapeLoading ? (
               <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
             ) : (
               <div className="-mt-[43px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">

@@ -15,15 +15,7 @@ import { RiGovernmentFill } from "react-icons/ri";
 import { PiDotFill } from "react-icons/pi";
 import axios from "axios";
 
-import jwt_decode from "jwt-decode";
-
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-
-interface DecodedToken {
-  sub: any;
-  email: string;
-  companyName: string;
-}
 
 interface ApiScores {
   Grade: string;
@@ -62,33 +54,27 @@ function calculateGrade(percentage: any) {
 const Score: React.FC = () => {
   const [activeItem, setActiveItem] = useState("overall");
   const [teamscores, setTeamscores] = useState<TeamScore[]>([]);
-  const [, setDecodedToken] = useState<DecodedToken | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken: DecodedToken = jwt_decode(token);
-      console.log(decodedToken.sub.companyWebsite);
-      setDecodedToken(decodedToken);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
-      const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
-
-      axios
-        .get(teamscoresApiUrl, {
+        const response = await axios.get(teamscoresApiUrl, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        .then((response) => {
-          setTeamscores(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch teamscores", error);
         });
-    }
-  }, []);
+        setTeamscores(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch teamscores", error);
+      }
+    };
+    fetchData();
+  }, [teamscores]);
 
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName);

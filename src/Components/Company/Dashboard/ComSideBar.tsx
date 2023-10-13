@@ -37,13 +37,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <NavLink
-              to="/company_dashboard"
+            <a
+              href="/company_dashboard"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
               Dashboard
-            </NavLink>
+            </a>
           </li>
           <li
             className={`mb-6 flex ${

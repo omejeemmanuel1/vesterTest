@@ -20,6 +20,7 @@ import { RxBarChart } from "react-icons/rx";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { CgMenuBoxed } from "react-icons/cg";
 import { CgCloseR } from "react-icons/cg";
+import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -64,29 +65,32 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
       } catch (error) {
         console.log(error);
       }
-
-      const apiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken?.sub.companyWebsite}`;
-      console.log(apiUrl);
-
-      fetch(apiUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch company data");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setCompanyInfo({
-            companyLogo: data.companyWebsiteInfo.companyLogo,
-          });
-          console.log(data.companyName);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     };
     fetchLoggedInUser();
+  }, []);
+
+  useEffect(() => {
+    const apiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken?.sub.companyWebsite}`;
+    console.log(apiUrl);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch company data");
+        }
+
+        setCompanyInfo({
+          companyLogo: response.data.companyWebsiteInfo.companyLogo,
+        });
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching team score data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
