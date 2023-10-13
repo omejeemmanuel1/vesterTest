@@ -62,19 +62,31 @@ const Score: React.FC = () => {
         const token = localStorage.getItem("token");
         const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
-        const response = await axios.get(teamscoresApiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTeamscores(response.data);
-        setLoading(false);
+        const storedTeamscores = localStorage.getItem("teamscores");
+
+        if (storedTeamscores) {
+          const parsedTeamscores = JSON.parse(storedTeamscores);
+          setTeamscores(parsedTeamscores);
+          setLoading(false);
+        } else {
+          const response = await axios.get(teamscoresApiUrl, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          localStorage.setItem("teamscores", JSON.stringify(response.data));
+
+          setTeamscores(response.data);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Failed to fetch teamscores", error);
+        setLoading(false);
       }
     };
     fetchData();
-  }, [teamscores]);
+  }, []);
 
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName);
@@ -192,7 +204,6 @@ const Score: React.FC = () => {
                     <div>
                       {loading ? (
                         <div className="text-center m-auto flex">
-                          Please wait why your score is being processed
                           <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                         </div>
                       ) : (
@@ -235,7 +246,6 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
-                            Please wait why your score is being processed
                             <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
@@ -278,7 +288,6 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
-                            Please wait why your score is being processed
                             <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
@@ -317,7 +326,6 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
-                            Please wait why your score is being processed
                             <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
@@ -356,7 +364,6 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
-                            Please wait why your score is being processed
                             <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (
@@ -395,7 +402,6 @@ const Score: React.FC = () => {
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
-                            Please wait why your score is being processed
                             <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
                           </div>
                         ) : (

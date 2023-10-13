@@ -46,24 +46,53 @@ const CompanyDashboard: React.FC = () => {
           console.log(decodedToken.sub.companyWebsite);
           setDecodedToken(decodedToken);
 
-          const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
-          console.log(companyApiUrl);
+          const hasFailed = localStorage.getItem("companyInfoFailed");
 
-          const response = await axios.get(companyApiUrl);
+          if (hasFailed) {
+            setCompanyInfo({ companyLogo: "", companyType: "" });
+            setScrapeLoading(false);
+          } else {
+            const storedCompanyInfo = localStorage.getItem("companyInfo");
 
-          setCompanyInfo({
-            companyLogo: response.data.companyWebsiteInfo.companyLogo,
-            companyType: response.data.companyWebsiteInfo.websiteType,
-          });
-          setScrapeLoading(false);
-          console.log(response.data.companyName);
+            if (storedCompanyInfo) {
+              const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
+              setCompanyInfo(parsedCompanyInfo);
+              setScrapeLoading(false);
+            } else {
+              const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
+              console.log(companyApiUrl);
+
+              const response = await axios.get(companyApiUrl);
+
+              if (response.status !== 200) {
+                localStorage.setItem("companyInfoFailed", "true");
+                throw new Error("Failed to fetch company data");
+              }
+
+              const newCompanyInfo = {
+                companyLogo: response.data.companyWebsiteInfo.companyLogo,
+                companyType: response.data.companyWebsiteInfo.websiteType,
+              };
+
+              localStorage.setItem(
+                "companyInfo",
+                JSON.stringify(newCompanyInfo)
+              );
+
+              setCompanyInfo(newCompanyInfo);
+              setScrapeLoading(false);
+              console.log(response.data.companyName);
+            }
+          }
         }
       } catch (error) {
         console.error("Failed to fetch company data", error);
+        setLoading(false);
+        setScrapeLoading(false);
       }
     };
     fetchData();
-  }, [decodedToken]);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,19 +100,31 @@ const CompanyDashboard: React.FC = () => {
         const token = localStorage.getItem("token");
         const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
 
-        const response = await axios.get(teamscoresApiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTeamscore(response.data);
-        setLoading(false);
+        const storedTeamscores = localStorage.getItem("teamscores");
+
+        if (storedTeamscores) {
+          const parsedTeamscores = JSON.parse(storedTeamscores);
+          setTeamscore(parsedTeamscores);
+          setLoading(false);
+        } else {
+          const response = await axios.get(teamscoresApiUrl, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          localStorage.setItem("teamscores", JSON.stringify(response.data));
+
+          setTeamscore(response.data);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Failed to fetch teamscores", error);
+        setLoading(false);
       }
     };
     fetchData();
-  }, [teamscore]);
+  }, []);
 
   const { theme } = useTheme();
 
@@ -108,18 +149,18 @@ const CompanyDashboard: React.FC = () => {
             {scrapeLoading ? (
               <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
             ) : (
-              <div className="-mt-[43px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">
+              <div className="-mt-[30px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">
                 {companyInfo.companyLogo ? (
                   <img
                     src={companyInfo.companyLogo}
                     alt="Company logo"
-                    className="w-10 md:m-auto text-xs"
+                    className="w-6 md:m-auto text-xs"
                   />
                 ) : (
                   <img
                     src={Avatar}
                     alt="Avatar"
-                    className="w-10 md:m-auto text-xs"
+                    className="w-6 md:m-auto text-xs"
                   />
                 )}
                 <h6 className="m-auto">{decodedToken?.sub.companyName}</h6>

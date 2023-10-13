@@ -75,18 +75,39 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(apiUrl);
-        if (response.status !== 200) {
-          throw new Error("Failed to fetch company data");
-        }
+        const hasFailed = localStorage.getItem("companyInfoFailed");
 
-        setCompanyInfo({
-          companyLogo: response.data.companyWebsiteInfo.companyLogo,
-        });
+       if (hasFailed) {
+         setCompanyInfo({ companyLogo: "" });
+         setLoading(false);
+       } else {
+         const storedCompanyInfo = localStorage.getItem("companyInfo");
 
-        setLoading(false);
+         if (storedCompanyInfo) {
+           const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
+           setCompanyInfo(parsedCompanyInfo);
+           setLoading(false);
+         } else {
+           const response = await axios.get(apiUrl);
+
+           if (response.status !== 200) {
+             localStorage.setItem("companyInfoFailed", "true");
+             throw new Error("Failed to fetch company data");
+           }
+
+           const newCompanyInfo = {
+             companyLogo: response.data.companyWebsiteInfo.companyLogo,
+           };
+
+           localStorage.setItem("companyInfo", JSON.stringify(newCompanyInfo));
+
+           setCompanyInfo(newCompanyInfo);
+           setLoading(false);
+         }
+       }
       } catch (error) {
-        console.error("Error fetching team score data:", error);
+        console.error("Error fetching company data:", error);
+        setLoading(false);
       }
     };
 
@@ -162,13 +183,13 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
                 <img
                   src={companyInfo.companyLogo}
                   alt="Company Logo"
-                  className="w-8 h-8 rounded-full"
+                  className="w-5 h-5 rounded-full"
                 />
               ) : (
                 <img
                   src={Avatar}
                   alt="Avatar"
-                  className="w-8 h-8 rounded-full"
+                  className="w-5 h-5 rounded-full"
                 />
               )}
             </>

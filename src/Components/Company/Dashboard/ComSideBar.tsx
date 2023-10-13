@@ -19,6 +19,8 @@ const ComSideBar: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("teamscores");
+    localStorage.removeItem("companyInfo");
+    localStorage.removeItem("companyInfoFailed");
     navigate("/comp-login");
   };
   return (
@@ -37,13 +39,13 @@ const ComSideBar: React.FC = () => {
                 : ""
             }`}
           >
-            <a
-              href="/company_dashboard"
+            <NavLink
+              to="/company_dashboard"
               className="flex hover:transition-transform hover:scale-105"
             >
               <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
               Dashboard
-            </a>
+            </NavLink>
           </li>
           <li
             className={`mb-6 flex ${
@@ -99,15 +101,15 @@ const ComSideBar: React.FC = () => {
                   : ""
               }`}
             >
-              <NavLink
-                to="/comp-login"
+              <a
+                href="/comp-login"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <BiLogOut className="mt-[1px] mr-2 text-2xl" />
                 <button onClick={handleLogout} className="mr-2 pointer">
                   Logout
                 </button>
-              </NavLink>
+              </a>
             </li>
 
             <li
