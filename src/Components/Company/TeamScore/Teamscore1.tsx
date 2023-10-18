@@ -24,7 +24,6 @@ const initialValues = {
 const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   const [cofounderCount, setCofounderCount] = useState<number>(0);
 
-  // Initialize cofounderCount from localStorage on component mount
   useEffect(() => {
     const storedCofounderCount = localStorage.getItem("cofounderCount");
     if (storedCofounderCount) {
@@ -41,7 +40,6 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
     }
     setCofounderCount(count);
 
-    // Update localStorage with the new value
     localStorage.setItem("cofounderCount", count.toString());
   };
 
@@ -221,7 +219,7 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 className="block text-sm mt-2"
               >
                 Has this founder been a founder or C-level exec in a previous
-                company?<span className="text-red-500">*</span>
+                company?
               </label>
               <div className="mt-1">
                 <label className="mr-4">

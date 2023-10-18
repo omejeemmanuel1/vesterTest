@@ -102,7 +102,6 @@ export const teamscoreSchema = Yup.object().shape({
     .of(Yup.string())
     .required("Please select an option"),
   founderTime: Yup.array().of(Yup.string()).required("Please select an option"),
-  cLevel: Yup.array().of(Yup.string()).required("Please select an option"),
 });
 
 export const marketscoreSchema = Yup.object().shape({

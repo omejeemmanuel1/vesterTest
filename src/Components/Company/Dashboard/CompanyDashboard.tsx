@@ -166,7 +166,7 @@ const CompanyDashboard: React.FC = () => {
                 )}
                 <h6 className="m-auto">{decodedToken?.sub.companyName}</h6>
                 {teamscore.map((teamscore) => (
-                  <span className="bg-[#C0C0F5] text-xs p-[2px] rounded-2xl text-[#000D80] text-center">
+                  <span className="bg-[#C0C0F5] text-xs p-[2px] px-[5px] rounded-2xl text-[#000D80] text-center">
                     {teamscore.industry}
                   </span>
                 ))}
@@ -181,7 +181,7 @@ const CompanyDashboard: React.FC = () => {
                 <div>
                   {teamscore.map((teamscore) => (
                     <p>
-                      <span className="bg-[#DCFFDD] text-xs p-[4px] rounded-2xl text-[#006804]">
+                      <span className="bg-[#DCFFDD] text-xs p-[2px] px-[5px] rounded-2xl text-[#006804]">
                         {teamscore.fundingStage || "NA"}
                       </span>
                     </p>
