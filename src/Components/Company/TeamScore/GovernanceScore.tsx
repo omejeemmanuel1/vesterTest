@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -8,7 +9,7 @@ interface GovernanceProps {
   initialValues: typeof initialValues;
   isSubmitting: boolean;
 }
-const initialValues = {
+export const initialValues = {
   registered: "",
   boardOfDirector: "",
   boardOfDirector2: "",
@@ -29,6 +30,25 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
   initialValues,
   isSubmitting,
 }) => {
+  // Define a state variable to track whether the form has been submitted
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // Use useEffect to initialize the form with values from localStorage
+  useEffect(() => {
+    // Check if the form has been submitted before
+    if (formSubmitted) {
+      const storedFormValues = localStorage.getItem("formValues");
+      if (storedFormValues) {
+        try {
+          const parsedValues = JSON.parse(storedFormValues);
+          onSubmit(parsedValues);
+        } catch (error) {
+          console.error("Error parsing stored form values:", error);
+        }
+      }
+    }
+  }, [formSubmitted, onSubmit]);
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       {isSubmitting && (
@@ -43,7 +63,12 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
 
       <Formik
         initialValues={initialValues}
-        onSubmit={onSubmit}
+        onSubmit={(values) => {
+          // Save form values in localStorage
+          localStorage.setItem("formValues", JSON.stringify(values));
+          setFormSubmitted(true); // Mark the form as submitted
+          onSubmit(values);
+        }}
         enableReinitialize={true}
         validationSchema={validationSchema}
       >

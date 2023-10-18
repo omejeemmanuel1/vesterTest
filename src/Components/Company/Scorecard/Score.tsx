@@ -103,7 +103,7 @@ const Score: React.FC = () => {
         }`}
       >
         <div>
-          <ComSideBar />
+          <ComSideBar marginTop="400px" />
         </div>
 
         <div className="flex-1">
@@ -194,55 +194,12 @@ const Score: React.FC = () => {
                   </ul>
 
                   <div
-                    className={`w-[330px] md:w-[620px]  h-[250px]  shadow-md rounded-2xl p-4 border ${
-                      activeItem === "overall" ? "" : "hidden"
-                    }`}
+                    className={`${activeItem === "overall" ? "" : "hidden"}`}
                   >
-                    <h3>Based on the information shared with us..</h3>
-                    <p>Below is your</p>
-                    <p>...</p>
-                    <div>
-                      {loading ? (
-                        <div className="text-center m-auto flex">
-                          <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-                        </div>
-                      ) : (
-                        <div>
-                          {teamscores.map((teamscore) => (
-                            <p>
-                              With the score of{" "}
-                              <span className="font-bold">
-                                {typeof teamscore.apiScores.Percentage ===
-                                "string"
-                                  ? calculateGrade(
-                                      teamscore.apiScores.Percentage
-                                    )
-                                  : "NA"}
-                              </span>
-                              , you get access to these vester services
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex justify-between mt-12 ml-4 mr-4 text-white font-bold">
-                      <button className="bg-red-400 w-[150px] p-2 rounded-full">
-                        Call to Action1
-                      </button>
-                      <button className="bg-red-400 w-[150px] p-2 rounded-full">
-                        Call to Action2
-                      </button>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
-                      activeItem === "team" ? "" : "hidden"
-                    }`}
-                  >
-                    <div className="block">
+                    <div className="w-[330px] md:w-[620px]  h-[250px]  shadow-md rounded-2xl p-4 border">
                       <h3>Based on the information shared with us..</h3>
-                      <br />
+                      <p>Below is your</p>
+                      <p>...</p>
                       <div>
                         {loading ? (
                           <div className="text-center m-auto flex">
@@ -250,211 +207,396 @@ const Score: React.FC = () => {
                           </div>
                         ) : (
                           <div>
-                            {teamscores.map((teamscore) => {
-                              const scoreValue =
-                                teamscore.apiScores.api_score !== null &&
-                                teamscore.apiScores.api_score >= 0 &&
-                                teamscore.apiScores.api_score <= 100
-                                  ? teamscore.apiScores.api_score * 20
-                                  : null;
-                              return (
+                            {teamscores.map((teamscore) => (
+                              <p>
+                                With the score of{" "}
+                                <span className="font-bold">
+                                  {typeof teamscore.apiScores.Percentage ===
+                                  "string"
+                                    ? calculateGrade(
+                                        teamscore.apiScores.Percentage
+                                      )
+                                    : "NA"}
+                                </span>
+                                , you get access to these vester services
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex justify-between mt-12 ml-4 mr-4 text-white font-bold">
+                        <button className="bg-red-400 w-[150px] p-2 rounded-full">
+                          Call to Action1
+                        </button>
+                        <button className="bg-red-400 w-[150px] p-2 rounded-full">
+                          Call to Action2
+                        </button>
+                      </div>
+                    </div>
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>oxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>oxxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`${activeItem === "team" ? "" : "hidden"}`}>
+                    <div className="w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border">
+                      <div className="block">
+                        <h3>Based on the information shared with us..</h3>
+                        <br />
+                        <div>
+                          {loading ? (
+                            <div className="text-center m-auto flex">
+                              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+                            </div>
+                          ) : (
+                            <div>
+                              {teamscores.map((teamscore) => {
+                                const scoreValue =
+                                  teamscore.apiScores.api_score !== null &&
+                                  teamscore.apiScores.api_score >= 0 &&
+                                  teamscore.apiScores.api_score <= 100
+                                    ? teamscore.apiScores.api_score * 20
+                                    : null;
+                                return (
+                                  <p>
+                                    Below is your team score of{" "}
+                                    <span className="font-bold">
+                                      {scoreValue !== null
+                                        ? `${calculateGrade(scoreValue)}`
+                                        : "NA"}
+                                    </span>
+                                  </p>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <p className=" text-9xl text-gray-500">
+                        <GiTeamUpgrade />
+                      </p>
+                    </div>
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>txx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>txxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={` ${activeItem === "market" ? "" : "hidden"}`}
+                  >
+                    <div className="w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border">
+                      <div className="block">
+                        <h3>Based on the information shared with us..</h3>
+                        <br />
+                        <div>
+                          {loading ? (
+                            <div className="text-center m-auto flex">
+                              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+                            </div>
+                          ) : (
+                            <div>
+                              {teamscores.map((teamscore) => (
                                 <p>
-                                  Below is your team score of{" "}
+                                  Below is your market score of{" "}
                                   <span className="font-bold">
-                                    {scoreValue !== null
-                                      ? `${calculateGrade(scoreValue)}`
+                                    {teamscore.apiScores.api_score2 !== null
+                                      ? teamscore.apiScores.api_score2 >= 0 &&
+                                        teamscore.apiScores.api_score2 <= 100
+                                        ? `${calculateGrade(
+                                            teamscore.apiScores.api_score2 * 20
+                                          )}`
+                                        : "Out of Range"
                                       : "NA"}
                                   </span>
                                 </p>
-                              );
-                            })}
-                          </div>
-                        )}
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
+                      <p className=" text-9xl text-gray-500">
+                        <SiMarketo />
+                      </p>
+                    </div>
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>mxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>xxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`${activeItem === "business" ? "" : "hidden"}`}
+                  >
+                    <div className="w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ">
+                      <div className="block">
+                        <h3>Based on the information shared with us..</h3>
+                        <br />
+                        <div>
+                          {loading ? (
+                            <div className="text-center m-auto flex">
+                              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+                            </div>
+                          ) : (
+                            <div>
+                              {teamscores.map((teamscore) => (
+                                <p>
+                                  Below is your business model score of{" "}
+                                  <span className="font-bold">
+                                    {teamscore.apiScores.api_score3 !== null
+                                      ? teamscore.apiScores.api_score3 >= 0 &&
+                                        teamscore.apiScores.api_score3 <= 100
+                                        ? `${calculateGrade(
+                                            teamscore.apiScores.api_score3 * 20
+                                          )}`
+                                        : "Out of Range"
+                                      : "NA"}
+                                  </span>
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <p className=" text-9xl text-gray-500">
+                        <FaBusinessTime />
+                      </p>
+                    </div>
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>bxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>xxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={` ${activeItem === "finance" ? "" : "hidden"}`}
+                  >
+                    <div className="w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border">
+                      <div className="block">
+                        <h3>Based on the information shared with us..</h3>
+                        <br />
+                        <div>
+                          {loading ? (
+                            <div className="text-center m-auto flex">
+                              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+                            </div>
+                          ) : (
+                            <div>
+                              {teamscores.map((teamscore) => (
+                                <p>
+                                  Below is your financial score of{" "}
+                                  <span className="font-bold">
+                                    {teamscore.apiScores.api_score4 !== null
+                                      ? teamscore.apiScores.api_score4 >= 0 &&
+                                        teamscore.apiScores.api_score4 <= 100
+                                        ? `${calculateGrade(
+                                            teamscore.apiScores.api_score4 * 20
+                                          )}`
+                                        : "Out of Range"
+                                      : "NA"}
+                                  </span>
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <p className=" text-9xl text-gray-500">
+                        <FaMoneyBill />
+                      </p>
+                    </div>
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>fxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>xxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${activeItem === "governance" ? "" : "hidden"}`}
+                  >
+                    <div className="w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border">
+                      <div className="block">
+                        <h3>Based on the information shared with us.. </h3>
+                        <br />
+                        <div>
+                          {loading ? (
+                            <div className="text-center m-auto flex">
+                              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+                            </div>
+                          ) : (
+                            <div>
+                              {teamscores.map((teamscore) => (
+                                <p>
+                                  Below is your governance score of{" "}
+                                  <span className="font-bold">
+                                    {teamscore.apiScores.api_score5 !== null
+                                      ? teamscore.apiScores.api_score5 >= 0 &&
+                                        teamscore.apiScores.api_score5 <= 100
+                                        ? `${calculateGrade(
+                                            teamscore.apiScores.api_score5 * 20
+                                          )}`
+                                        : "Out of Range"
+                                      : "NA"}
+                                  </span>
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <p className=" text-9xl text-gray-500">
+                        <RiGovernmentFill />
+                      </p>
                     </div>
 
-                    <p className=" text-9xl text-gray-500">
-                      <GiTeamUpgrade />
-                    </p>
-                  </div>
-                  <div
-                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
-                      activeItem === "market" ? "" : "hidden"
-                    }`}
-                  >
-                    <div className="block">
-                      <h3>Based on the information shared with us..</h3>
-                      <br />
-                      <div>
-                        {loading ? (
-                          <div className="text-center m-auto flex">
-                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-                          </div>
-                        ) : (
-                          <div>
-                            {teamscores.map((teamscore) => (
-                              <p>
-                                Below is your market score of{" "}
-                                <span className="font-bold">
-                                  {teamscore.apiScores.api_score2 !== null
-                                    ? teamscore.apiScores.api_score2 >= 0 &&
-                                      teamscore.apiScores.api_score2 <= 100
-                                      ? `${calculateGrade(
-                                          teamscore.apiScores.api_score2 * 20
-                                        )}`
-                                      : "Out of Range"
-                                    : "NA"}
-                                </span>
-                              </p>
-                            ))}
-                          </div>
-                        )}
+                    <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Strengths</p>
+                          <p className="text-7xl text-[#083982e2]">
+                            <AiOutlineBarChart />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>gxxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
                       </div>
-                    </div>
-                    <p className=" text-9xl text-gray-500">
-                      <SiMarketo />
-                    </p>
-                  </div>
-                  <div
-                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
-                      activeItem === "business" ? "" : "hidden"
-                    }`}
-                  >
-                    <div className="block">
-                      <h3>Based on the information shared with us..</h3>
-                      <br />
-                      <div>
-                        {loading ? (
-                          <div className="text-center m-auto flex">
-                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-                          </div>
-                        ) : (
-                          <div>
-                            {teamscores.map((teamscore) => (
-                              <p>
-                                Below is your business model score of{" "}
-                                <span className="font-bold">
-                                  {teamscore.apiScores.api_score3 !== null
-                                    ? teamscore.apiScores.api_score3 >= 0 &&
-                                      teamscore.apiScores.api_score3 <= 100
-                                      ? `${calculateGrade(
-                                          teamscore.apiScores.api_score3 * 20
-                                        )}`
-                                      : "Out of Range"
-                                    : "NA"}
-                                </span>
-                              </p>
-                            ))}
-                          </div>
-                        )}
+                      <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
+                        <div className="flex justify-between">
+                          <p className="text-3xl m-4">Improvements</p>
+                          <p className="text-7xl text-[#083982e2] font-bold">
+                            <GiBreakingChain />
+                          </p>
+                        </div>
+                        <ul className="list-disc m-5">
+                          <li>xxx</li>
+                          <li>xxx</li>
+                          <li>xxx</li>
+                        </ul>
                       </div>
-                    </div>
-                    <p className=" text-9xl text-gray-500">
-                      <FaBusinessTime />
-                    </p>
-                  </div>
-                  <div
-                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
-                      activeItem === "finance" ? "" : "hidden"
-                    }`}
-                  >
-                    <div className="block">
-                      <h3>Based on the information shared with us..</h3>
-                      <br />
-                      <div>
-                        {loading ? (
-                          <div className="text-center m-auto flex">
-                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-                          </div>
-                        ) : (
-                          <div>
-                            {teamscores.map((teamscore) => (
-                              <p>
-                                Below is your financial score of{" "}
-                                <span className="font-bold">
-                                  {teamscore.apiScores.api_score4 !== null
-                                    ? teamscore.apiScores.api_score4 >= 0 &&
-                                      teamscore.apiScores.api_score4 <= 100
-                                      ? `${calculateGrade(
-                                          teamscore.apiScores.api_score4 * 20
-                                        )}`
-                                      : "Out of Range"
-                                    : "NA"}
-                                </span>
-                              </p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <p className=" text-9xl text-gray-500">
-                      <FaMoneyBill />
-                    </p>
-                  </div>
-                  <div
-                    className={`w-[330px] md:w-[620px] h-[250px] flex justify-between shadow-md rounded-2xl p-4 border ${
-                      activeItem === "governance" ? "" : "hidden"
-                    }`}
-                  >
-                    <div className="block">
-                      <h3>Based on the information shared with us.. </h3>
-                      <br />
-                      <div>
-                        {loading ? (
-                          <div className="text-center m-auto flex">
-                            <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-                          </div>
-                        ) : (
-                          <div>
-                            {teamscores.map((teamscore) => (
-                              <p>
-                                Below is your governance score of{" "}
-                                <span className="font-bold">
-                                  {teamscore.apiScores.api_score5 !== null
-                                    ? teamscore.apiScores.api_score5 >= 0 &&
-                                      teamscore.apiScores.api_score5 <= 100
-                                      ? `${calculateGrade(
-                                          teamscore.apiScores.api_score5 * 20
-                                        )}`
-                                      : "Out of Range"
-                                    : "NA"}
-                                </span>
-                              </p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <p className=" text-9xl text-gray-500">
-                      <RiGovernmentFill />
-                    </p>
-                  </div>
-                  <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4">
-                    <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md mb-4 md:mb-0">
-                      <div className="flex justify-between">
-                        <p className="text-3xl m-4">Strengths</p>
-                        <p className="text-7xl text-[#083982e2]">
-                          <AiOutlineBarChart />
-                        </p>
-                      </div>
-                      <ul className="list-disc m-5">
-                        <li>xxx</li>
-                        <li>xxx</li>
-                        <li>xxx</li>
-                      </ul>
-                    </div>
-                    <div className=" w-[330px] md:w-[300px] h-[220px] rounded-2xl border shadow-md">
-                      <div className="flex justify-between">
-                        <p className="text-3xl m-4">Improvements</p>
-                        <p className="text-7xl text-[#083982e2] font-bold">
-                          <GiBreakingChain />
-                        </p>
-                      </div>
-                      <ul className="list-disc m-5">
-                        <li>xxx</li>
-                        <li>xxx</li>
-                        <li>xxx</li>
-                      </ul>
                     </div>
                   </div>
                 </div>

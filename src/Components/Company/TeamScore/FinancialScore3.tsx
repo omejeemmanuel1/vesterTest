@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { financialSchema3 } from "../formValidate";
+
 
 interface FinancialScore3Props {
   onSubmit: (values: typeof initialValues) => void;
@@ -24,6 +26,7 @@ const FinancialScore3: React.FC<FinancialScore3Props> = ({
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize={true}
+        validationSchema={financialSchema3}
       >
         <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <div className="mb-4">
@@ -79,6 +82,11 @@ const FinancialScore3: React.FC<FinancialScore3Props> = ({
               </option>
               <option value="no_trial_no_revenue">no_trial_no_revenue</option>
             </Field>
+            <ErrorMessage
+              name="revenueStatus"
+              component="p"
+              className="text-red-500 text-sm"
+            />
           </div>
 
           <button

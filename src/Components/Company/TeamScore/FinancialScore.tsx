@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-// import { financialSchema } from "../formValidate";
+import { financialSchema } from "../formValidate";
 
 const fundingStageOptions = [
   "pre-seed",
@@ -28,6 +28,7 @@ const initialValues = {
   monthlyGross: "",
 };
 
+
 const FinancialScore: React.FC<FinancialScoreProps> = ({
   onSubmit,
   initialValues,
@@ -38,6 +39,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize={true}
+        validationSchema={financialSchema}
       >
         <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[32px] font-semibold mb-4">Financial Score</h2>

@@ -8,7 +8,11 @@ import { MdHelp } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../Context/ThemeContext";
 
-const ComSideBar: React.FC = () => {
+interface ComSideBarProps {
+  marginTop: string;
+}
+
+const ComSideBar: React.FC<ComSideBarProps> = ({ marginTop }) => {
   const isActive = (path: string) => {
     return window.location.pathname === path;
   };
@@ -93,7 +97,7 @@ const ComSideBar: React.FC = () => {
             </NavLink>
           </li>
 
-          <div className=" fixed top-[700px]">
+          <div className={`mt-[${marginTop}] ml`}>
             <li
               className={`mb-4 flex ${
                 isActive("/d-admin")

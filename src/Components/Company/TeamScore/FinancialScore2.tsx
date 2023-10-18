@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Formik, Form, Field } from "formik";
 
@@ -28,9 +27,34 @@ const initialValues: {
 };
 
 const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
+  // Define a function to initialize form values from localStorage
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("financialScore2Values");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        // Handle JSON parsing error
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
+
+  // Initialize form values from localStorage when the component is first loaded
+  const initialFormValues = initializeFormValues();
+
   return (
     <div className="min-h-screen flex items-center justify-center mt-5 overflow-scroll">
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik
+        initialValues={initialFormValues}
+        onSubmit={(values) => {
+          // Save the form values in localStorage
+          localStorage.setItem("financialScore2Values", JSON.stringify(values));
+          // Call the provided onSubmit function
+          onSubmit(values);
+        }}
+      >
         {({ values }) => (
           <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
@@ -59,7 +83,7 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
                   Since it was founded, how much funding has your startup raised
                   for each selected source?
                 </label>
-                {values.fundingSources.map((source) => (
+                {values.fundingSources.map((source: string) => (
                   <div key={source}>
                     <label
                       htmlFor={`fundingAmounts.${source}`}

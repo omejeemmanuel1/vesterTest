@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GeneralInfo from "./GeneralInfo";
 import Teamscore1 from "./Teamscore1";
-// import Teamscore2 from "./Teamscore2";
 import MarketScore from "./MarketScore";
 import MarketScore2 from "./MarketScore2";
 import BusinessModel from "./BusinessModel";
@@ -18,16 +17,17 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackward } from "react-icons/fa";
 import GeneralInfo2 from "./GeneralInfo2";
-import Teamscore3 from "./TeamScore3";
+import Teamscore2 from "./TeamScore2";
 import { useTheme } from "../../../Context/ThemeContext";
+import { initialValues } from "./GovernanceScore";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const TeamScoreContainer: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<any>(() => {
+  const [formData, setFormData] = useState(() => {
     const savedFormData = localStorage.getItem("formData");
-    return savedFormData ? JSON.parse(savedFormData) : {};
+    return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -52,7 +52,7 @@ const TeamScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-    setIsSubmitting(true); // Set the loading state to true
+    setIsSubmitting(true); 
 
     try {
       const combinedData = { ...formData, ...finalData };
@@ -84,7 +84,7 @@ const TeamScoreContainer: React.FC = () => {
         toast.error("Server is not responding. Please try again later.");
       }
     } finally {
-      setIsSubmitting(false); // Set the loading state to false
+      setIsSubmitting(false);
     }
   };
 
@@ -116,12 +116,8 @@ const TeamScoreContainer: React.FC = () => {
       {step === 3 && (
         <Teamscore1 onSubmit={handleContinue} initialValues={formData} />
       )}
-      {/* {step === 4 && (
-        <Teamscore2 onSubmit={handleContinue} initialValues={formData} />
-      )} */}
-      {step === 4 && (
-        <Teamscore3 onSubmit={handleContinue} initialValues={formData} />
-      )}
+     
+      {step === 4 && <Teamscore2 onSubmit={handleContinue} />}
       {step === 5 && (
         <MarketScore onSubmit={handleContinue} initialValues={formData} />
       )}

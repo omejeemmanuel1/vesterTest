@@ -52,11 +52,30 @@ const DynamicUserCounts = ({ values }: any) => {
 };
 
 const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("businessModelValues");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
+
+  const initialFormValues = initializeFormValues();
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
+        initialValues={initialFormValues}
+        onSubmit={(values) => {
+          // Save the form values in localStorage
+          localStorage.setItem("businessModelValues", JSON.stringify(values));
+          // Call the provided onSubmit function
+          onSubmit(values);
+        }}
         validationSchema={businessSchema}
       >
         {({ values }) => (

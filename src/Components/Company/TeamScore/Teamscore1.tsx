@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { teamscoreSchema } from "../formValidate";
 
@@ -24,14 +24,25 @@ const initialValues = {
 const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   const [cofounderCount, setCofounderCount] = useState<number>(0);
 
+  // Initialize cofounderCount from localStorage on component mount
+  useEffect(() => {
+    const storedCofounderCount = localStorage.getItem("cofounderCount");
+    if (storedCofounderCount) {
+      setCofounderCount(parseInt(storedCofounderCount, 10));
+    }
+  }, []);
+
   const handleCofounderCountChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let count = parseInt(event.target.value, 4) || 0;
+    let count = parseInt(event.target.value, 10) || 0;
     if (count > 3) {
       count = 3;
     }
     setCofounderCount(count);
+
+    // Update localStorage with the new value
+    localStorage.setItem("cofounderCount", count.toString());
   };
 
   return (

@@ -77,34 +77,34 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
       try {
         const hasFailed = localStorage.getItem("companyInfoFailed");
 
-       if (hasFailed) {
-         setCompanyInfo({ companyLogo: "" });
-         setLoading(false);
-       } else {
-         const storedCompanyInfo = localStorage.getItem("companyInfo");
+        if (hasFailed) {
+          setCompanyInfo({ companyLogo: "" });
+          setLoading(false);
+        } else {
+          const storedCompanyInfo = localStorage.getItem("companyInfo");
 
-         if (storedCompanyInfo) {
-           const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
-           setCompanyInfo(parsedCompanyInfo);
-           setLoading(false);
-         } else {
-           const response = await axios.get(apiUrl);
+          if (storedCompanyInfo) {
+            const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
+            setCompanyInfo(parsedCompanyInfo);
+            setLoading(false);
+          } else {
+            const response = await axios.get(apiUrl);
 
-           if (response.status !== 200) {
-             localStorage.setItem("companyInfoFailed", "true");
-             throw new Error("Failed to fetch company data");
-           }
+            if (response.status !== 200) {
+              localStorage.setItem("companyInfoFailed", "true");
+              throw new Error("Failed to fetch company data");
+            }
 
-           const newCompanyInfo = {
-             companyLogo: response.data.companyWebsiteInfo.companyLogo,
-           };
+            const newCompanyInfo = {
+              companyLogo: response.data.companyWebsiteInfo.companyLogo,
+            };
 
-           localStorage.setItem("companyInfo", JSON.stringify(newCompanyInfo));
+            localStorage.setItem("companyInfo", JSON.stringify(newCompanyInfo));
 
-           setCompanyInfo(newCompanyInfo);
-           setLoading(false);
-         }
-       }
+            setCompanyInfo(newCompanyInfo);
+            setLoading(false);
+          }
+        }
       } catch (error) {
         console.error("Error fetching company data:", error);
         setLoading(false);

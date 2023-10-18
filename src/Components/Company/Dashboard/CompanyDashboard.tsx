@@ -24,6 +24,7 @@ interface TeamScore {
   fundingStage: string;
   totalFundingRaised: string;
   moneyRaise: string;
+  industry: string;
   apiScores: ApiScores;
 }
 
@@ -138,7 +139,7 @@ const CompanyDashboard: React.FC = () => {
     >
       <div>
         {" "}
-        <ComSideBar />
+        <ComSideBar marginTop="700px" />
       </div>
 
       <div className="flex-1">
@@ -149,7 +150,7 @@ const CompanyDashboard: React.FC = () => {
             {scrapeLoading ? (
               <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
             ) : (
-              <div className="-mt-[30px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-300">
+              <div className="-mt-[30px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-200">
                 {companyInfo.companyLogo ? (
                   <img
                     src={companyInfo.companyLogo}
@@ -164,13 +165,15 @@ const CompanyDashboard: React.FC = () => {
                   />
                 )}
                 <h6 className="m-auto">{decodedToken?.sub.companyName}</h6>
-                <span className="bg-[#C0C0F5] text-xs p-[2px] rounded-2xl text-[#000D80] text-center">
-                  {companyInfo.companyType}
-                </span>
+                {teamscore.map((teamscore) => (
+                  <span className="bg-[#C0C0F5] text-xs p-[2px] rounded-2xl text-[#000D80] text-center">
+                    {teamscore.industry}
+                  </span>
+                ))}
               </div>
             )}
 
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
+            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
               <h6>Stage</h6>
               {loading ? (
                 <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
@@ -186,7 +189,7 @@ const CompanyDashboard: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
+            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
               <h6>Company Valuation</h6>
               {loading ? (
                 <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
@@ -198,7 +201,7 @@ const CompanyDashboard: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
+            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
               <h6>Current Target Raised</h6>
               {loading ? (
                 <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
@@ -210,7 +213,7 @@ const CompanyDashboard: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-300">
+            <div className="mb-4 md:mb-0">
               <h6>Score</h6>
               {loading ? (
                 <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>

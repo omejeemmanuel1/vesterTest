@@ -122,11 +122,11 @@ export const businessSchema = Yup.object().shape({
 });
 
 export const financialSchema = Yup.object().shape({
-  customerAcquisition: Yup.string().required(
-    "Enter your monthly gross month  1, 2, 3"
-  ),
-  startupRevenue: Yup.string().required("Enter your startup runway"),
-  currentBurnRatet: Yup.string().required("Enter your current burn rate"),
+  fundingStage: Yup.string().required("Select product stage"),
+});
+
+export const financialSchema3 = Yup.object().shape({
+  revenueStatus: Yup.string().required("Select your revenue status"),
 });
 
 export const generalSchema = Yup.object().shape({
