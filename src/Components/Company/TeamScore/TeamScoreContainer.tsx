@@ -17,7 +17,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackward } from "react-icons/fa";
 import GeneralInfo2 from "./GeneralInfo2";
-import Teamscore2 from "./TeamScore2";
+import Teamscore2 from "./Teamscore2";
 import { useTheme } from "../../../Context/ThemeContext";
 import { initialValues } from "./GovernanceScore";
 
