@@ -82,7 +82,7 @@ const Profile: React.FC = () => {
       }`}
     >
       <div>
-        <ComSideBar />
+        <ComSideBar marginTop="400px" />
       </div>
 
       <div className="flex-1">
