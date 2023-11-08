@@ -1,10 +1,14 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
 
 const fundingSourceOptions = [
   "Venture Capital",
   "Angel Investors",
-  "Bank Loans",
+  "Loans",
   "Grant - Government",
   "Grant - NGO",
   "Grant - Incubators and accelerators",
@@ -16,6 +20,7 @@ const fundingSourceOptions = [
 
 interface FinancialScore2Props {
   onSubmit: (values: typeof initialValues) => void;
+  handleBack: () => void;
 }
 
 const initialValues: {
@@ -26,22 +31,23 @@ const initialValues: {
   fundingAmounts: {},
 };
 
-const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
-  // Define a function to initialize form values from localStorage
+const FinancialScore2: React.FC<FinancialScore2Props & { step: number }> = ({
+  onSubmit,
+  handleBack,
+  step,
+}) => {
   const initializeFormValues = () => {
     const storedValues = localStorage.getItem("financialScore2Values");
     if (storedValues) {
       try {
         return JSON.parse(storedValues);
       } catch (error) {
-        // Handle JSON parsing error
         console.error("Error parsing stored form values:", error);
       }
     }
     return initialValues;
   };
 
-  // Initialize form values from localStorage when the component is first loaded
   const initialFormValues = initializeFormValues();
 
   return (
@@ -49,14 +55,12 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
       <Formik
         initialValues={initialFormValues}
         onSubmit={(values) => {
-          // Save the form values in localStorage
           localStorage.setItem("financialScore2Values", JSON.stringify(values));
-          // Call the provided onSubmit function
           onSubmit(values);
         }}
       >
         {({ values }) => (
-          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white">
             <div className="mb-4">
               <label className="block text-sm">
                 Which of the following sources has your company raised funding
@@ -102,12 +106,24 @@ const FinancialScore2: React.FC<FinancialScore2Props> = ({ onSubmit }) => {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-            >
-              Next
-            </button>
+            <div className="flex space-x-6">
+              {step > 1 && (
+                <button
+                  onClick={handleBack}
+                  className="flex bg-[#031549] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+                >
+                  <MdOutlineKeyboardDoubleArrowLeft />
+                  Previous
+                </button>
+              )}
+              <button
+                type="submit"
+                className="flex bg-[#031549] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+              >
+                Next
+                <MdOutlineKeyboardDoubleArrowRight />
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

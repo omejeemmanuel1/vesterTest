@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import { BsTrash } from "react-icons/bs";
 import * as Yup from "yup";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
 
 interface MarketScore2props {
   onSubmit: (values: typeof initialValues) => void;
+  isSubmitting: boolean;
+  handleBack: () => void;
 }
 
 const initialValues = {
   competitors: [{ name: "", website: "" }],
-  servicable_adressable_market: "",
-  evidenceUrl: "",
+  competitiveAdvantage: "",
 };
 
 const validationSchema = Yup.object().shape({
@@ -21,43 +26,79 @@ const validationSchema = Yup.object().shape({
       website: Yup.string().required("Website is required"),
     })
   ),
-
-  servicable_adressable_market: Yup.string().required(
-    "select the serviceable addreassable market"
-  ),
-  // evidenceUrl: Yup.string()
-  //   .url("Please enter a valid URL")
-  //   .required("Link to to your market claim is required"),
+  competitiveAdvantage: Yup.string()
+    .required("Competitive advantage is required")
+    .max(100, "Competitive advantage must be 100 characters or less"),
 });
 
-const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
+const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
+  onSubmit,
+  isSubmitting,
+  handleBack,
+  step,
+}) => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (formSubmitted) {
+      const storedFormValues = localStorage.getItem("marketFormValues2");
+      if (storedFormValues) {
+        try {
+          const parsedValues = JSON.parse(storedFormValues);
+          onSubmit(parsedValues);
+        } catch (error) {
+          console.error("Error parsing stored form values:", error);
+        }
+      }
+    }
+  }, [formSubmitted, onSubmit]);
+
   const initializeFormValues = () => {
-    const storedValues = localStorage.getItem("formValues");
+    const storedValues = localStorage.getItem("marketFormValues2");
     if (storedValues) {
       try {
-        return JSON.parse(storedValues);
+        const parsedValues = JSON.parse(storedValues);
+        // Ensure the correct structure, including competitors
+        return {
+          ...initialValues,
+          ...parsedValues, // Merge stored values with initial values
+          competitors: parsedValues.competitors || initialValues.competitors,
+        };
       } catch (error) {
         console.error("Error parsing stored form values:", error);
       }
     }
-    return initialValues;
+    return {
+      ...initialValues,
+      competitors: initialValues.competitors,
+    };
   };
 
   const handleFormSubmit = (values: any) => {
-    localStorage.setItem("formValues", JSON.stringify(values));
-    onSubmit(values);
+    localStorage.setItem("marketFormValues2", JSON.stringify(values));
+    setFormSubmitted(true);
   };
+
   const initialFormValues = initializeFormValues();
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center md:-mt-10">
+      {isSubmitting && (
+        <div className="fixed inset-0 flex items-center justify-center space-x-4">
+          <div className="absolute inset-0 bg-black opacity-80"></div>
+          <div className="w-24 h-24 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+          <p className="z-50 text-white">
+            Please wait while your data is being processed...
+          </p>
+        </div>
+      )}
       <Formik
         initialValues={initialFormValues} // Use the initialized form values
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
         {(formikProps) => (
-          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
             <div className="mb-4">
               <label htmlFor="competitors" className="block text-sm">
                 Share the website link(s) of your most direct competitor(s) in
@@ -119,53 +160,44 @@ const MarketScore2: React.FC<MarketScore2props> = ({ onSubmit }) => {
               </FieldArray>
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="servicable_adressable_market"
-                className="block text-sm"
-              >
-                What is your serviceable addressable market
-                <span className="text-red-500">*</span>
+              <label htmlFor="competitiveAdvantage" className="block text-sm">
+                In 100 words or less, tell us what your competitive advantage is
+                over the two competitors. Think about what makes you unique -
+                technology, speed, cost, quality, convenience, efficiency,
+                something else?<span className="text-red-500">*</span>
               </label>
               <Field
-                as="select"
-                id="servicable_adressable_market"
-                name="servicable_adressable_market"
+                as="textarea"
+                id="competitiveAdvantage"
+                name="competitiveAdvantage"
+                rows={4}
                 className="mt-1 p-2 w-full border rounded"
-              >
-                <option value="">Select serviceable addressable market</option>
-                <option value="Over $10bn">Over $10bn</option>
-                <option value="0ver $5bn">Over $5bn</option>
-                <option value="Over $1bn">Over $1bn</option>
-                <option value="$500m-$1bn">$500m-$1bn</option>
-                <option value="$100m-$500m">$100m-$500m</option>
-              </Field>
+              />
               <ErrorMessage
-                name="serviceableAddreassableMarket"
+                name="competitiveAdvantage"
                 component="p"
                 className="text-red-500 text-sm"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor=" evidenceUrl" className="block text-sm">
-                Share a link to a report or reputable source that shows to the
-                size of your market and provides a commercial market size
-                estimate (preferably in dollars):{" "}
-              </label>
-              <Field
-                type="text"
-                id="evidenceUrl"
-                name="evidenceUrl"
-                className="mt-1 p-2 w-full border rounded"
-              />
+            <div className="flex space-x-6">
+              {step > 1 && (
+                <button
+                  onClick={handleBack}
+                  className="flex bg-[#031549] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+                >
+                  <MdOutlineKeyboardDoubleArrowLeft />
+                  Previous
+                </button>
+              )}
+              <button
+                type="submit"
+                className="flex bg-[#031549] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+              >
+                Submit form
+                <MdOutlineKeyboardDoubleArrowRight />
+              </button>
             </div>
-
-            <button
-              type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-            >
-              Next
-            </button>
           </Form>
         )}
       </Formik>

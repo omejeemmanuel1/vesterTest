@@ -2,232 +2,406 @@
 import React, { useEffect, useState } from "react";
 import ComSideBar from "./ComSideBar";
 import { useTheme } from "../../../Context/ThemeContext";
-import Avatar from "../../../assets/man.png";
 import ProfileCard from "./ProfileCard";
 import ComNavBar from "./ComNavBar";
+import Badge from "../../../assets/BadgeDash.png";
+import BadgeAPlus from "../../../assets/BadgeA+.png";
+import BadgeA from "../../../assets/BadgeA.png";
+import BadgeB from "../../../assets/BadgeB.png";
+import BadgeC from "../../../assets/BadgeC.png";
+import BadgeD from "../../../assets/BadgeD.png";
+import BadgeE from "../../../assets/BadgeE.png";
+import BadgeF from "../../../assets/BadgeF.png";
 import axios from "axios";
-
-import jwt_decode from "jwt-decode";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-interface DecodedToken {
-  sub: any;
-  email: string;
-  companyName: string;
-}
 interface ApiScores {
   Grade: string;
+  Percentage: string;
+  api_score: number;
+  api_score2: number;
+  api_score3: number;
+  api_score4: number;
+  api_score5: number;
 }
+
 interface TeamScore {
   _id: string;
-  fundingStage: string;
-  totalFundingRaised: string;
-  moneyRaise: string;
-  industry: string;
   apiScores: ApiScores;
 }
 
+interface BusinessScore {
+  _id: string;
+  apiScores: ApiScores;
+}
+
+interface MarketScore {
+  _id: string;
+  apiScores: ApiScores;
+}
+
+interface FinancialScore {
+  _id: string;
+  apiScores: ApiScores;
+}
+
+interface GovernanceScore {
+  _id: string;
+  apiScores: ApiScores;
+}
+
+function convertGradeToNumber(grade: any) {
+  if (grade === "A+") {
+    return 5;
+  } else if (grade === "A") {
+    return 4.5;
+  } else if (grade === "B+") {
+    return 4;
+  } else if (grade === "B") {
+    return 3.5;
+  } else if (grade === "C") {
+    return 3;
+  } else if (grade === "D") {
+    return 2.5;
+  } else if (grade === "E") {
+    return 2;
+  } else {
+    return 0;
+  }
+}
+
+function convertVesterScoreToImage(vesterScore: any) {
+  if (vesterScore >= 5) {
+    return BadgeAPlus;
+  } else if (vesterScore >= 4.5) {
+    return BadgeA;
+  } else if (vesterScore >= 4) {
+    return BadgeB;
+  } else if (vesterScore >= 3.5) {
+    return BadgeB;
+  } else if (vesterScore >= 3) {
+    return BadgeC;
+  } else if (vesterScore >= 2) {
+    return BadgeD;
+  } else if (vesterScore >= 1) {
+    return BadgeE;
+  } else {
+    return BadgeF;
+  }
+}
+
+const apiNames = [
+  "team info",
+  "business info",
+  "market info",
+  "financial info",
+  "governance info",
+];
+
 const CompanyDashboard: React.FC = () => {
-  const [companyInfo, setCompanyInfo] = useState({
-    companyLogo: "",
-    companyType: "",
-  });
-  const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [scrapeLoading, setScrapeLoading] = useState(true);
-  const [teamscore, setTeamscore] = useState<TeamScore[]>([]);
+  const { theme } = useTheme();
+  const [teamscores, setTeamscores] = useState<TeamScore[]>([]);
+  const [businessScores, setBusinessScores] = useState<BusinessScore[]>([]);
+  const [marketScores, setMarketScores] = useState<MarketScore[]>([]);
+  const [financialScores, setFinancialScores] = useState<FinancialScore[]>([]);
+  const [governanceScores, setGovernanceScores] = useState<GovernanceScore[]>(
+    []
+  );
+  const [vesterScore, setVesterScore] = useState<string>("");
+  const [emptyAPIsList, setEmptyAPIsList] = useState([]);
+  const [progressPercentage, setProgressPercentage] = useState(0);
+  const [showInitialContent, setShowInitialContent] = useState(false);
+  const [lastCompletedDate, setLastCompletedDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (token) {
-          const decodedToken: DecodedToken = jwt_decode(token);
-          console.log(decodedToken.sub.companyWebsite);
-          setDecodedToken(decodedToken);
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamScores`;
 
-          const hasFailed = localStorage.getItem("companyInfoFailed");
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          if (hasFailed) {
-            setCompanyInfo({ companyLogo: "", companyType: "" });
-            setScrapeLoading(false);
-          } else {
-            const storedCompanyInfo = localStorage.getItem("companyInfo");
-
-            if (storedCompanyInfo) {
-              const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
-              setCompanyInfo(parsedCompanyInfo);
-              setScrapeLoading(false);
-            } else {
-              const companyApiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken.sub.companyWebsite}`;
-              console.log(companyApiUrl);
-
-              const response = await axios.get(companyApiUrl);
-
-              if (response.status !== 200) {
-                localStorage.setItem("companyInfoFailed", "true");
-                throw new Error("Failed to fetch company data");
-              }
-
-              const newCompanyInfo = {
-                companyLogo: response.data.companyWebsiteInfo.companyLogo,
-                companyType: response.data.companyWebsiteInfo.websiteType,
-              };
-
-              localStorage.setItem(
-                "companyInfo",
-                JSON.stringify(newCompanyInfo)
-              );
-
-              setCompanyInfo(newCompanyInfo);
-              setScrapeLoading(false);
-              console.log(response.data.companyName);
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch company data", error);
-        setLoading(false);
-        setScrapeLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const teamscoresApiUrl = `${baseUrl}/teamscore/get-teamscores`;
-
-        const storedTeamscores = localStorage.getItem("teamscores");
-
-        if (storedTeamscores) {
-          const parsedTeamscores = JSON.parse(storedTeamscores);
-          setTeamscore(parsedTeamscores);
-          setLoading(false);
-        } else {
-          const response = await axios.get(teamscoresApiUrl, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          localStorage.setItem("teamscores", JSON.stringify(response.data));
-
-          setTeamscore(response.data);
-          setLoading(false);
-        }
+        setTeamscores(response.data);
       } catch (error) {
         console.error("Failed to fetch teamscores", error);
-        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  const { theme } = useTheme();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-businessScores`;
+
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setBusinessScores(response.data);
+      } catch (error) {
+        console.error("Failed to fetch businessScores", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-marketScores`;
+
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setMarketScores(response.data);
+      } catch (error) {
+        console.error("Failed to fetch marketScores", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-financialScores`;
+
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setFinancialScores(response.data);
+      } catch (error) {
+        console.error("Failed to fetch financialScores", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const teamscoresApiUrl = `${baseUrl}/teamscore/get-governanceScores`;
+
+        const response = await axios.get(teamscoresApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setGovernanceScores(response.data);
+      } catch (error) {
+        console.error("Failed to fetch governanceScores", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const allScores = [
+      teamscores,
+      businessScores,
+      marketScores,
+      financialScores,
+      governanceScores,
+    ];
+
+    const emptyAPIs: any = [];
+
+    allScores.forEach((scores, index) => {
+      if (scores.length === 0) {
+        emptyAPIs.push(apiNames[index]);
+      }
+    });
+
+    setEmptyAPIsList(emptyAPIs);
+
+    const totalAPIs = apiNames.length;
+    const filledAPIs = totalAPIs - emptyAPIs.length;
+    const percentage = (filledAPIs / totalAPIs) * 100;
+
+    setProgressPercentage(percentage);
+
+    const anyEmpty = allScores.some((scores) => scores.length === 0);
+
+    if (anyEmpty) {
+      setVesterScore(Badge);
+      // If there's no data, set the Vester score to "Badge" and store it in localStorage
+      localStorage.setItem("vesterScore", "Badge");
+    } else {
+      const flattenedScores = allScores.flat();
+
+      const totalGrade = flattenedScores.reduce((acc, score) => {
+        if (score.apiScores) {
+          const numericalGrade = convertGradeToNumber(score.apiScores.Grade);
+          return acc + numericalGrade;
+        }
+        return acc;
+      }, 0);
+
+      const vesterScore =
+        flattenedScores.length > 0 ? totalGrade / flattenedScores.length : 0;
+
+      const vesterImage = convertVesterScoreToImage(vesterScore);
+      setVesterScore(vesterImage);
+
+      // Set the Vester score in localStorage when there's data
+      localStorage.setItem("vesterScore", vesterImage);
+
+      // Check if all APIs are completed and update the lastCompletedDate
+      if (emptyAPIs.length === 0) {
+        setLastCompletedDate(new Date());
+        setShowInitialContent(false);
+      }
+    }
+  }, [
+    teamscores,
+    businessScores,
+    marketScores,
+    financialScores,
+    governanceScores,
+    vesterScore,
+  ]);
 
   return (
     <div
       className={`flex bg-white ${
         theme === "light"
-          ? "bg-[#C0C0F5] bg-opacity-10 font-cabinet text-[#000D80]"
-          : "dark:bg-gray-800 text-white"
+          ? "font-poppins text-[#fff]"
+          : "dark:bg-[#031549] text-white"
       }`}
     >
       <div>
         {" "}
-        <ComSideBar marginTop="700px" />
+        <ComSideBar height="h-[825px]" />
       </div>
 
       <div className="flex-1">
         <ComNavBar />
 
-        <div>
-          <div className="block md:flex md:h-[175px] h-[370px] md:justify-between md:p-14 p-6 bg-[#C0C0F5] bg-opacity-10 pt-14">
-            {scrapeLoading ? (
-              <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-            ) : (
-              <div className="-mt-[30px] md:text-center mb-4 md:border-none md:mb-0 border-b border-gray-200">
-                {companyInfo.companyLogo ? (
-                  <img
-                    src={companyInfo.companyLogo}
-                    alt="Company logo"
-                    className="w-6 md:m-auto text-xs"
-                  />
-                ) : (
-                  <img
-                    src={Avatar}
-                    alt="Avatar"
-                    className="w-6 md:m-auto text-xs"
-                  />
-                )}
-                <h6 className="m-auto">{decodedToken?.sub.companyName}</h6>
-                {teamscore.map((teamscore) => (
-                  <span className="bg-[#C0C0F5] text-xs p-[2px] px-[5px] rounded-2xl text-[#000D80] text-center">
-                    {teamscore.industry}
-                  </span>
-                ))}
+        <div className="-mt-5">
+          {showInitialContent && (
+            <div
+              className={`block text-center ml-10 mr-10 rounded-2xl md:h-[200px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+                theme === "light"
+                  ? "font-poppins text-[#000D80]"
+                  : "dark:bg-white text-white"
+              }`}
+            >
+              <h1 className="text-2xl">
+                <span className="font-bold">Welcome to</span> Vester.AI
+              </h1>
+              <p>
+                Your Investment Readiness journey starts with a few simple
+                steps.
+              </p>
+              <br />
+              <p>
+                Click <span className="font-bold">'Get Started'</span> below to
+                get your <strong>Vester Score</strong> and connect with
+                potential investors.
+              </p>
+              <button className="bg-[#ec7f36] pl-6 pr-6 p-2 rounded-full mt-4">
+                Get Started
+              </button>
+            </div>
+          )}
+          <div className="flex">
+            <div
+              className={`flex  text-[20px] ml-10 mr-10 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
+                theme === "light"
+                  ? "font-poppins"
+                  : "dark:bg-white text-[#031549]"
+              }`}
+            >
+              <div className="w-[50%] ml-10">
+                <h2 className="">Your Vester Score</h2>
+                <img src={vesterScore} alt="" className="ml-5 w-[34%]" />
               </div>
-            )}
+              <div className="w-[50%] text-center mt-6 mr-4">
+                {emptyAPIsList.length > 0 && (
+                  <p>
+                    Complete your <strong>{emptyAPIsList.join(", ")}</strong> to
+                    get your <strong>Vester Score</strong> and connect with
+                    potential investors
+                  </p>
+                )}
 
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
-              <h6>Stage</h6>
-              {loading ? (
-                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-              ) : (
-                <div>
-                  {teamscore.map((teamscore) => (
+                {emptyAPIsList.length === 0 && (
+                  <div>
                     <p>
-                      <span className="bg-[#DCFFDD] text-xs p-[2px] px-[5px] rounded-2xl text-[#006804]">
-                        {teamscore.fundingStage || "NA"}
-                      </span>
+                      We offer access to investors based on your Vester Score
                     </p>
-                  ))}
-                </div>
-              )}
+                    <div className="flex justify-between mt-10">
+                      <button className="text-sm rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
+                        Understand your <br />
+                        Vester Score
+                      </button>
+                      <button className="text-sm rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
+                        Start your <br /> investor match
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
-              <h6>Company Valuation</h6>
-              {loading ? (
-                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-              ) : (
-                <div>
-                  {teamscore.map((teamscore) => (
-                    <p>{teamscore.totalFundingRaised || "NA"}</p>
-                  ))}
+            <div
+              className={`text-center pt-10 text-[20px] ml-10 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+                theme === "light"
+                  ? "font-poppins"
+                  : "dark:bg-white text-[#031549]"
+              }`}
+            >
+              <p>Profile completion</p>
+              <div className="flex justify-center">
+                <div className="bg-gray-300 w-[60%] h-4 rounded-full mt-4">
+                  <div
+                    className="bg-[#ec7f36] h-4 rounded-full"
+                    style={{ width: `${progressPercentage}%` }}
+                  ></div>
                 </div>
-              )}
-            </div>
-            <div className="mb-4 md:mb-0 md:border-none border-b border-gray-200">
-              <h6>Current Target Raised</h6>
-              {loading ? (
-                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-              ) : (
-                <div>
-                  {teamscore.map((teamscore) => (
-                    <p>${teamscore.moneyRaise || "NA"}</p>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="mb-4 md:mb-0">
-              <h6>Score</h6>
-              {loading ? (
-                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-              ) : (
-                <div>
-                  {teamscore.map((teamscore) => (
-                    <p>{teamscore.apiScores.Grade || "NA"}</p>
-                  ))}
-                </div>
+                <div className="mt-2 ml-1">{`${progressPercentage.toFixed(
+                  0
+                )}%`}</div>
+              </div>
+              {lastCompletedDate && (
+                <p className="mt-4 text-[14px]">
+                  Last Completed:{" "}
+                  {lastCompletedDate.toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
               )}
             </div>
           </div>
+
           <div>
-            <ProfileCard />
+            <ProfileCard
+              isGovernanceApiEmpty={governanceScores.length === 0}
+              isFinancialApiEmpty={financialScores.length === 0}
+              isBusinessApiEmpty={businessScores.length === 0}
+              isMarketApiEmpty={marketScores.length === 0}
+              isTeamApiEmpty={teamscores.length === 0}
+            />
           </div>
         </div>
       </div>

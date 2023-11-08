@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Formik, Form, Field } from "formik";
-import { BsChatRightDotsFill } from "react-icons/bs";
-import { FiMoon } from "react-icons/fi";
-import { BiSolidMoon } from "react-icons/bi";
+import { BsChatRightDotsFill, BsSendFill } from "react-icons/bs";
 import jwt_decode from "jwt-decode";
 import { useTheme } from "../../../Context/ThemeContext";
 import Avatar from "../../../assets/man.png";
@@ -34,7 +32,7 @@ interface ComNavBarProps {
   bgColor?: string;
 }
 
-const ComNavBar: React.FC<ComNavBarProps> = () => {
+const ScoreNav: React.FC<ComNavBarProps> = () => {
   const [userData, setUserData] = useState<DecodedToken | null>(null);
   const [companyInfo, setCompanyInfo] = useState({
     companyLogo: "",
@@ -47,7 +45,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
   };
 
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   console.log(theme);
   let decodedToken: DecodedToken;
 
@@ -125,15 +123,34 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
   };
 
   return (
-    <div
-      className={`flex bg-white ${
-        theme === "light" ? "font-poppins text-[#031549]" : "dark:bg-[#031549]"
-      }`}
-    >
-      <nav className="md:pl-10 md:pr-8  md:h-[95px] w-[100%] pb-4 md:pb-0 font-poppins">
+    <div className="flex bg-white text-[#031549]">
+      <nav className="md:pl-10 md:pr-20  md:h-[95px] w-[100%] pb-4 md:pb-0 font-poppins">
         <div className="flex md:items-center justify-between">
-          <div>
-            <h2 className="text-3xl">Dashboard</h2>
+          <div className="hidden md:flex md:items-center justify-center space-x-2 p-6">
+            <div className="flex text-center text-2xl m-auto">
+              {userData ? userData.sub.companyName : "Loading..."}
+            </div>
+            {loading ? (
+              <div className="text-center">
+                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
+              </div>
+            ) : (
+              <>
+                {companyInfo.companyLogo ? (
+                  <img
+                    src={companyInfo.companyLogo}
+                    alt="Company Logo"
+                    className="w-5 h-5 rounded-full"
+                  />
+                ) : (
+                  <img
+                    src={Avatar}
+                    alt="Avatar"
+                    className="w-5 h-5 rounded-full"
+                  />
+                )}
+              </>
+            )}
           </div>
           <div className="flex ml-auto">
             <Formik
@@ -165,44 +182,15 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
               )}
             </Formik>
           </div>
-          <div className="hidden md:flex md:items-center justify-center space-x-2 p-6 ml-auto">
-            <BsChatRightDotsFill className=" text-xl" />
-            {theme === "light" ? (
-              <FiMoon
-                className={`text-xl cursor-pointer text-[#000D80]`}
-                onClick={toggleTheme}
-              />
-            ) : (
-              <BiSolidMoon
-                className={`text-xl cursor-pointer`}
-                onClick={toggleTheme}
-              />
-            )}
-            <div className="flex text-center m-auto">
-              {userData ? userData.sub.companyName : "Loading..."}
-            </div>
-            {loading ? (
-              <div className="text-center">
-                <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
-              </div>
-            ) : (
-              <>
-                {companyInfo.companyLogo ? (
-                  <img
-                    src={companyInfo.companyLogo}
-                    alt="Company Logo"
-                    className="w-5 h-5 rounded-full"
-                  />
-                ) : (
-                  <img
-                    src={Avatar}
-                    alt="Avatar"
-                    className="w-5 h-5 rounded-full"
-                  />
-                )}
-              </>
-            )}
+          <div className="ml-auto">
+            <button className="flex bg-[#ec7f36] p-2 pr-4 pl-4 rounded-full text-white gap-2">
+              <span className="text-2xl">
+                <BsSendFill />
+              </span>
+              Share your vester score
+            </button>
           </div>
+
           {/* mobile nav */}
           <div className="md:hidden w-full">
             <button
@@ -290,4 +278,4 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
   );
 };
 
-export default ComNavBar;
+export default ScoreNav;

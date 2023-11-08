@@ -1,163 +1,251 @@
-import React, { useState } from "react";
-import { HiOutlineUpload } from "react-icons/hi";
-import { MdUploadFile } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import PitchDeckStep from "../PitchDeck/PitchDeckStep";
-import PitchDeckUpload from "../PitchDeck/PitchDeckUpload";
-import YC from "../../../assets/Ycom.png";
-import PerformanceChart from "../Chart/PerformanceChart";
-import Activity from "../Activity/Activity";
+import GeneralInfoContainer from "../VesterData/CompanyOverview/GeneralInfoContainer";
+import Team from "../../../assets/Team.mp4";
+import Market from "../../../assets/Markett.mp4";
+import Financials from "../../../assets/Financials.mp4";
+import Business from "../../../assets/Business.mp4";
+import Governance from "../../../assets/Governance.mp4";
 import { useTheme } from "../../../Context/ThemeContext";
-
-const overlayClassName = "modal-overlay";
-
-const chartData = {
-  dates: ["2017", "2018", "2019", "2020", "2021", "2022", "2023"],
-  actualValues: [1000, 1200, 1500, 1700, 1900, 2000, 2100],
-  forecastValues: [950, 1100, 1400, 1600, 1800, 1900, 2000],
-
-  actualKPI: "$10.2 +11.01%",
-  forecastKPI: "$9.4 +14.01%",
-};
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 Modal.setAppElement("#root");
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-const ProfileCard: React.FC = () => {
-  const [isPitchDeckStepOpen, setIsPitchDeckStepOpen] = useState(false);
-  const [isPitchDeckUploadOpen, setIsPitchDeckUploadOpen] = useState(false);
+interface profileProps {
+  isGovernanceApiEmpty: boolean;
+  isFinancialApiEmpty: boolean;
+  isBusinessApiEmpty: boolean;
+  isMarketApiEmpty: boolean;
+  isTeamApiEmpty: boolean;
+}
+
+const ProfileCard: React.FC<profileProps> = ({
+  isGovernanceApiEmpty,
+  isFinancialApiEmpty,
+  isBusinessApiEmpty,
+  isMarketApiEmpty,
+  isTeamApiEmpty,
+}) => {
+  const { theme } = useTheme();
+  const [showGeneralInfoModal, setShowGeneralInfoModal] = useState(false);
+  const [selectedComponent, setSelectedComponent] = useState<
+    string | undefined
+  >();
+  const [generalInfo, setGeneralInfo] = useState([]);
 
   const navigate = useNavigate();
 
-  const openPitchDeckStepModal = () => {
-    setIsPitchDeckStepOpen(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const generalInfoApiUrl = `${baseUrl}/teamscore/get-generalInfo`;
+
+        const response = await axios.get(generalInfoApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setGeneralInfo(response.data);
+      } catch (error) {
+        console.error("Failed to fetch generalinfo", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const isGeneralInfoEmpty = generalInfo.length === 0;
+
+  const openGeneralInfoModal = (componentType: string) => {
+    setSelectedComponent(componentType);
+    if (isGeneralInfoEmpty) {
+      setShowGeneralInfoModal(true);
+    } else {
+      // GeneralInfo is not empty, so you can navigate to the component directly
+      navigate(`/${componentType}-info`);
+    }
   };
 
-  const closePitchDeckStepModal = () => {
-    setIsPitchDeckStepOpen(false);
+  const closeGeneralInfoModal = () => {
+    setShowGeneralInfoModal(false);
   };
 
-  const openPitchDeckUploadModal = () => {
-    setIsPitchDeckStepOpen(false);
-    setIsPitchDeckUploadOpen(true);
-  };
+  const handleGeneralInfoSubmit = (componentType: string) => {
+    setSelectedComponent(componentType);
+    closeGeneralInfoModal();
 
-  const closePitchDeckUploadModal = () => {
-    setIsPitchDeckUploadOpen(false);
+    // Navigate to the specific component route when "Update" is clicked
+    navigate(`/${componentType}-info`);
   };
-
-  const handleUploadSuccess = () => {
-    setIsPitchDeckUploadOpen(false);
-    navigate("/company_dashboard");
-  };
-
-  const { theme } = useTheme();
 
   return (
-    <div className="font-cabinet">
-      <h2 className="mt-8 ml-5 mb-4">Upload or update company data</h2>
-      <div className="md:flex space-x-6">
-        <div>
-          <div className="block md:flex md:pl-2 md:space-x-[10px] md:w-[836px]">
-            <Link to="/team-info" className="h-[108px]">
-              <div className="bg-[rgb(0,13,128)] p-[16px] text-xl text-white md:w-[263px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4">
-                <HiOutlineUpload />
+    <>
+      {showGeneralInfoModal && (
+        <Modal
+          isOpen={showGeneralInfoModal}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+            },
+            content: {
+              background: "transparent",
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              top: "0",
+              left: "0",
+            },
+          }}
+        >
+          {selectedComponent !== undefined && (
+            <GeneralInfoContainer
+              onSubmit={handleGeneralInfoSubmit}
+              selectedComponent={selectedComponent ?? ""}
+              closeGeneralInfoModal={closeGeneralInfoModal}
+            />
+          )}
+        </Modal>
+      )}
 
-                <h2 className="mt-8"> Upload company data</h2>
-              </div>
-            </Link>
-            <div
-              className="text-[#0A0A3F] text-xl bg-[#C0C0F5] p-[16px] h-[108px]  md:w-[263px] w-[343px] mb-5 md:mb-none ml-4 rounded-2xl cursor-pointer"
-              onClick={openPitchDeckStepModal}
-            >
-              <MdUploadFile />
-              <h2 className="mt-8">Upload pitch deck</h2>
-            </div>
-            {isPitchDeckStepOpen && (
-              <Modal
-                isOpen={isPitchDeckStepOpen}
-                onRequestClose={closePitchDeckStepModal}
-                overlayClassName={overlayClassName}
-                className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
+      <div
+        className={`font-poppins text-center ${
+          theme === "light"
+            ? "font-poppins text-[#031549]"
+            : "dark:bg-[#031549] text-[#031549]"
+        }`}
+      >
+        <h2 className="md:mt-2 ml-5 mb-4">
+          You can assess any of the 5 areas below or complete all 5 to get your
+          Vester Score
+        </h2>
+        <div className="md:flex">
+          <div className="md:-mt-2">
+            <div className="block md:flex flex-wrap gap-20 justify-center">
+              <button
+                onClick={() => openGeneralInfoModal("team")}
+                className="h-[108px]"
               >
-                <PitchDeckStep
-                  openPitchDeckUploadModal={openPitchDeckUploadModal}
-                  closePitchDeckStepModal={closePitchDeckStepModal}
-                />
-              </Modal>
-            )}
-
-            {isPitchDeckUploadOpen && (
-              <Modal
-                isOpen={isPitchDeckUploadOpen}
-                onRequestClose={closePitchDeckUploadModal}
-                overlayClassName={overlayClassName}
-                className="absolute top-[0px] left-[0px] bg-black bg-opacity-60 w-full h-[1160px] overflow-hidden"
+                <div
+                  className={
+                    isTeamApiEmpty
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                  }
+                >
+                  <video autoPlay muted loop playsInline>
+                    <source src={Team} type="video/mp4"></source>
+                  </video>
+                  <h2 className={isTeamApiEmpty ? "mt-2" : "mt-2"}>
+                    {isTeamApiEmpty
+                      ? "Assess your Team"
+                      : "Update your Team info"}
+                  </h2>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedComponent("market"); // Set the component type
+                  openGeneralInfoModal("market");
+                }}
+                className="h-[108px]"
               >
-                <PitchDeckUpload
-                  closePitchDeckUploadModal={handleUploadSuccess}
-                />
-              </Modal>
-            )}
-            <div className="rounded-2xl mb-4">
-              <Link to="/https://www.ycombinator.com/apply">
-                <img
-                  src={YC}
-                  alt=""
-                  className="h-[108px] md:w-[263px] w-[343px] mb-5 md:mb-none ml-4 "
-                />
-              </Link>
+                <div
+                  className={
+                    isMarketApiEmpty
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                  }
+                >
+                  <video autoPlay muted loop playsInline>
+                    <source src={Market} type="video/mp4"></source>
+                  </video>
+                  <h2 className={isMarketApiEmpty ? "mt-2" : "mt-2"}>
+                    {isMarketApiEmpty
+                      ? "Assess your Market"
+                      : "Update your Market info"}
+                  </h2>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedComponent("business"); // Set the component type
+                  openGeneralInfoModal("business");
+                }}
+                className="h-[108px]"
+              >
+                <div
+                  className={
+                    isBusinessApiEmpty
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                  }
+                >
+                  <video autoPlay muted loop playsInline>
+                    <source src={Business} type="video/mp4"></source>
+                  </video>
+                  <h2 className={isBusinessApiEmpty ? "mt-2" : "mt-2"}>
+                    {isBusinessApiEmpty
+                      ? "Assess your Business Model"
+                      : "Update your Business info"}
+                  </h2>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedComponent("financial"); // Set the component type
+                  openGeneralInfoModal("financial");
+                }}
+                className="h-[108px] mt-16"
+              >
+                <div
+                  className={
+                    isFinancialApiEmpty
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                  }
+                >
+                  <video autoPlay muted loop playsInline>
+                    <source src={Financials} type="video/mp4"></source>
+                  </video>
+                  <h2 className={isFinancialApiEmpty ? "mt-2" : "mt-2"}>
+                    {isFinancialApiEmpty
+                      ? "Assess your Financials"
+                      : "Update your Financial info"}
+                  </h2>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedComponent("governance"); // Set the component type
+                  openGeneralInfoModal("governance");
+                }}
+                className="h-[108px] mt-16"
+              >
+                <div
+                  className={
+                    isGovernanceApiEmpty
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                  }
+                >
+                  <video autoPlay muted loop playsInline>
+                    <source src={Governance} type="video/mp4"></source>
+                  </video>
+                  <h2 className={isGovernanceApiEmpty ? "-mt-4" : "-mt-4"}>
+                    {isGovernanceApiEmpty
+                      ? "Assess your Corporate Governance"
+                      : "Update your Corporate Governance info"}
+                  </h2>
+                </div>
+              </button>
             </div>
           </div>
-
-          <div className="mt-10 mb-10 md:ml-5 shadow-md rounded">
-            <PerformanceChart data={chartData} />
-          </div>
-
-          <div className="md:flex mb-6 space-x-4">
-            <div
-              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
-                theme === "light"
-                  ? "bg-[#F7F9FB]  text-[#000D80]"
-                  : "dark:bg-gray-700 text-white"
-              }`}
-            >
-              <h2 className="text-2xl">
-                $2.2 <span className="text-[#00AB07] text-xs">+11.01%</span>
-                <p className="text-[18px] mt-4">Investors looking at you</p>
-              </h2>
-            </div>
-            <div
-              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
-                theme === "light"
-                  ? "bg-[#F7F9FB]  text-[#000D80]"
-                  : "dark:bg-gray-700 text-white"
-              }`}
-            >
-              <h2 className="text-2xl">
-                30 <span className="text-[#00AB07] text-xs">+11.01%</span>
-                <p className="text-[18px] mt-4">Connections</p>
-              </h2>
-            </div>
-            <div
-              className={`p-2 rounded-md md:w-[263px] w-[343px] mb-5 md:mb-none ml-4  h-[108px] shadow ${
-                theme === "light"
-                  ? "bg-[#F7F9FB]  text-[#000D80]"
-                  : "dark:bg-gray-700 text-white"
-              }`}
-            >
-              <h2 className="text-2xl">
-                5 <span className="text-[#00AB07] text-xs">+11.01%</span>
-                <p className="text-[18px] mt-4">Deals closed</p>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div>
-          <Activity />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

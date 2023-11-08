@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { teamscoreSchema } from "../formValidate";
+import { teamscoreSchema } from "./teamValidate";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface Teamscore1Props {
   onSubmit: (values: typeof initialValues) => void;
   initialValues: typeof initialValues;
 }
 const initialValues = {
+  foundingteam: "",
   cofounderCount: "",
   cofounderNames: ["", "", ""],
   cofounderLinkedins: ["", "", ""],
-  founderRoleTitle: ["", "", ""],
+  foundingteam_key_role: ["", "", ""],
   founderGender: ["", "", ""],
   technicalFounder: ["", "", ""],
-  founderTime: ["", "", ""],
-  cLevel: ["", "", ""],
-  cLevel2: ["", "", ""],
-  cLevel3: ["", "", ""],
-  founding_team_info: "",
+  foundingteam_committment: ["", "", ""],
 };
 
 const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
@@ -44,19 +46,22 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center mt-10">
+    <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize={true}
         validationSchema={teamscoreSchema}
       >
-        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-          <h2 className="text-[32px] font-semibold mb-4">Team Score</h2>
-
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white">
+          <h2 className="text-[24px] font-semibold">Who Makes Up Your Team?</h2>
+          <p className="italic text-xs text-red-500 font-thin mb-4">
+            * indicates required
+          </p>
           <div className="mb-4">
             <label htmlFor="cofounderCount" className="block text-sm">
               How many co-founders does your company have?
+              <span className="text-red-500">*</span>
             </label>
             <Field
               type="text"
@@ -77,7 +82,8 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 htmlFor={`cofounderNames[${index}]`}
                 className="block text-sm"
               >
-                Co-founder {index + 1} Name
+                Co-founder {index + 1} name
+                <span className="text-red-500">*</span>
               </label>
               <Field
                 type="text"
@@ -85,12 +91,18 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 name={`cofounderNames[${index}]`}
                 className="mt-1 p-2 w-full border rounded"
               />
+              <ErrorMessage
+                name="cofounderNames"
+                component="p"
+                className="text-red-500 text-sm"
+              />
 
               <label
                 htmlFor={`cofounderLinkedins[${index}]`}
                 className="block text-sm mt-2"
               >
-                Co-founder {index + 1} LinkedIn Profile
+                Co-founder {index + 1} LinkedIn{" "}
+                <span className="text-red-500">*</span>
               </label>
               <Field
                 type="text"
@@ -98,25 +110,35 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 name={`cofounderLinkedins[${index}]`}
                 className="mt-1 p-2 w-full border rounded"
               />
+              <ErrorMessage
+                name="cofounderLinkedins"
+                component="p"
+                className="text-red-500 text-sm"
+              />
               <label
-                htmlFor={`founderRoleTitle[${index}]`}
+                htmlFor={`foundingteam_key_role[${index}]`}
                 className="block text-sm mt-2"
               >
                 what is the title of this founder's role
+                <span className="text-red-500">*</span>
               </label>
               <Field
                 type="text"
-                id={`founderRoleTitle[${index}]`}
-                name={`founderRoleTitle[${index}]`}
+                id={`foundingteam_key_role[${index}]`}
+                name={`foundingteam_key_role[${index}]`}
                 className="mt-1 p-2 w-full border rounded"
+              />
+              <ErrorMessage
+                name="foundingteam_key_role"
+                component="p"
+                className="text-red-500 text-sm"
               />
 
               <label
                 htmlFor={`founderGender[${index}]`}
                 className="block text-sm mt-2"
               >
-                Is this founder male or female?
-                <span className="text-red-500">*</span>
+                Cofounder gender?
               </label>
               <div className="mt-1">
                 <label className="mr-4">
@@ -139,12 +161,17 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                   />
                   Female
                 </label>
+                <label className="mr-4">
+                  <Field
+                    type="radio"
+                    id={`founderGender[${index}]`}
+                    name={`founderGender[${index}]`}
+                    value="prefer"
+                    className="mr-[1px]"
+                  />
+                  Prefer not to say
+                </label>
               </div>
-              <ErrorMessage
-                name="founderGender"
-                component="p"
-                className="text-red-500 text-sm"
-              />
 
               <label
                 htmlFor={`technicalFounder[${index}]`}
@@ -181,7 +208,7 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 className="text-red-500 text-sm"
               />
               <label
-                htmlFor={`founderTime[${index}]`}
+                htmlFor={`foundingteam_committment[${index}]`}
                 className="block text-sm mt-2"
               >
                 Is this founder part time or full time in the business?
@@ -191,9 +218,9 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 <label className="mr-4">
                   <Field
                     type="radio"
-                    id={`founderTime[${index}]`}
-                    name={`founderTime[${index}]`}
-                    value="Yes"
+                    id={`foundingteam_committment[${index}]`}
+                    name={`foundingteam_committment[${index}]`}
+                    value="part time"
                     className="mr-[1px]"
                   />
                   Part-time
@@ -201,137 +228,61 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
                 <label className="mr-4">
                   <Field
                     type="radio"
-                    id={`founderTime[${index}]`}
-                    name={`founderTime[${index}]`}
-                    value="No"
+                    id={`foundingteam_committment[${index}]`}
+                    name={`foundingteam_committment[${index}]`}
+                    value="full time"
                     className="mr-[1px]"
                   />
                   Full-time
                 </label>
               </div>
               <ErrorMessage
-                name="founderTime"
+                name="foundingteam_committment"
                 component="p"
                 className="text-red-500 text-sm"
               />
-              <label
-                htmlFor={`cLevel[${index}]`}
-                className="block text-sm mt-2"
-              >
-                Has this founder been a founder or C-level exec in a previous
-                company?
-              </label>
-              <div className="mt-1">
-                <label className="mr-4">
-                  <Field
-                    type="radio"
-                    id={`cLevel[${index}]`}
-                    className="mr-[1px]"
-                    name={`cLevel[${index}]`}
-                    value="Yes"
-                  />
-                  Yes
-                </label>
-                <label className="mr-4">
-                  <Field
-                    type="radio"
-                    className="mr-[1px]"
-                    id={`cLevel[${index}]`}
-                    name={`cLevel[${index}]`}
-                    value="No"
-                  />
-                  No
-                </label>
-              </div>
-              <ErrorMessage
-                name="cLevel"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-
-              <label
-                htmlFor={`cLevel2[${index}]`}
-                className="block text-sm mt-2"
-              >
-                If yes, is the previous company still running?
-              </label>
-              <div className="mt-1">
-                <label className="mr-2">
-                  <Field
-                    type="radio"
-                    name={`cLevel2[${index}]`}
-                    value="yes"
-                    className="mr-[1px]"
-                  />
-                  Yes
-                </label>
-                <label>
-                  <Field
-                    type="radio"
-                    name={`cLevel2[${index}]`}
-                    value="no"
-                    className="mr-[1px]"
-                  />
-                  No
-                </label>
-              </div>
-              <label
-                htmlFor={`cLevel3[${index}]`}
-                className="block text-sm mt-2"
-              >
-                If yes, was that previous company acquired or did it have an
-                IPO?
-              </label>
-              <div className="mt-1">
-                <label className="mr-2">
-                  <Field
-                    type="radio"
-                    name={`cLevel3[${index}]`}
-                    value="yes"
-                    className="mr-[1px]"
-                  />
-                  Yes acquired
-                </label>
-                <label>
-                  <Field
-                    type="radio"
-                    name={`cLevel3[${index}]`}
-                    value="no"
-                    className="mr-[1px]"
-                  />
-                  No IPO
-                </label>
-              </div>
             </div>
           ))}
+
           <div className="mb-4">
-            <label
-              htmlFor="founding_team_info[${index}]"
-              className="block text-sm"
-            >
-              What is the founding team information
+            <label htmlFor="foundingteam" className="block text-sm">
+              In 100 words, tell us about the uniqueness of your founding team
+              that contributes to your business success? (include each
+              co-founders' title, role and number of years of experience)
               <span className="text-red-500">*</span>
             </label>
             <Field
               as="textarea"
-              id="founding_team_info"
-              name="founding_team_info"
-              rows={4}
+              id="foundingteam"
+              name="foundingteam"
+              rows={2}
               className="mt-1 p-2 w-full border rounded"
             />
             <ErrorMessage
-              name="founding_team_info"
+              name="foundingteam"
               component="p"
               className="text-red-500 text-sm"
             />
           </div>
 
-          <button
-            type="submit"
-            className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-          >
-            Next
-          </button>
+          <div className="flex space-x-6">
+            <Link
+              to="/company_dashboard"
+              className="flex bg-[#000D80] justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+            >
+              <button className="flex items-center">
+                <MdOutlineKeyboardDoubleArrowLeft />
+                Dashboard
+              </button>
+            </Link>
+            <button
+              type="submit"
+              className="flex bg-[#000D80] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+            >
+              Next
+              <MdOutlineKeyboardDoubleArrowRight />
+            </button>
+          </div>
         </Form>
       </Formik>
     </div>

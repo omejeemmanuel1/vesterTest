@@ -1,24 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
+import { teamscoreSchema2 } from "./teamValidate";
 
 interface Teamscore2Props {
   onSubmit: (values: typeof initialValues) => void;
+
+  isSubmitting: boolean;
+  handleBack: () => void;
 }
 
 const initialValues = {
-  cLevelNoneFounders: "",
-  howMany: "",
+  cLevelExec: "",
   cLevelLinkedin: "",
-  cLevelRole: "",
+  clevelteam_key_role: "",
   execGender: "",
-  execTime: "",
+  clevel_committment: "",
+  clevelteam: "",
   otherEmployee: "",
   otherEmployee2: "",
-  otherEmployeeWomen: "",
+  employeeGender: "",
 };
 
-const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
+const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
+  onSubmit,
+  isSubmitting,
+  handleBack,
+  step,
+}) => {
   const [hasCLevelExecs, setHasCLevelExecs] = useState<boolean>(false);
   const [hasOtherEmployees, setHasOtherEmployees] = useState<boolean>(false);
 
@@ -46,22 +59,33 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center md:-mt-4">
+      {isSubmitting && (
+        <div className="fixed inset-0 flex items-center justify-center space-x-4">
+          <div className="absolute inset-0 bg-black opacity-80"></div>
+          <div className="w-24 h-24 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
+          <p className="z-50 text-white">
+            Please wait while your data is being processed...
+          </p>
+        </div>
+      )}
       <Formik
         initialValues={initialFormValues}
         onSubmit={handleFormSubmit}
         enableReinitialize={true}
+        validationSchema={teamscoreSchema2}
       >
-        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white">
           <div className="mb-4">
-            <label htmlFor="cLevelNoneFounders" className="block text-sm">
-              Do you have any C-Level Execs that are non-founders?
+            <label htmlFor="cLevelExec" className="block text-sm">
+              Do you have any C-Level Execs that are non-founders?{" "}
+              <span className="text-red-500">*</span>
             </label>
             <div className="mt-1">
               <label className="mr-2">
                 <input
                   type="radio"
-                  name="cLevelNoneFounders"
+                  name="cLevelExec"
                   value="yes"
                   onChange={() => setHasCLevelExecs(true)}
                 />
@@ -70,32 +94,24 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
               <label>
                 <input
                   type="radio"
-                  name="cLevelNoneFounders"
+                  name="cLevelExec"
                   value="no"
                   onChange={() => setHasCLevelExecs(false)}
                 />
                 No
               </label>
             </div>
+            {/* <ErrorMessage
+              name="cLevelExec"
+              component="p"
+              className="text-red-500 text-sm"
+            /> */}
           </div>
-          {hasCLevelExecs && (
-            <div className="mt-4">
-              <label htmlFor="howMany" className="block text-sm">
-                How many:
-              </label>
-              <Field
-                type="text"
-                name="howMany"
-                id="howMany"
-                className="mt-1 p-2 w-full border rounded"
-              />
-            </div>
-          )}
 
           {hasCLevelExecs && (
             <div className="mb-4">
               <label htmlFor="cLevelLinkedin" className="block text-sm">
-                C-level linkedin
+                C-level linkedin<span className="text-red-500">*</span>
               </label>
               <Field
                 type="text"
@@ -103,19 +119,30 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
                 name="cLevelLinkedin"
                 className="mt-1 p-2 w-full border rounded"
               />
+              <ErrorMessage
+                name="cLevelLinkedin"
+                component="p"
+                className="text-red-500 text-sm"
+              />
             </div>
           )}
 
           {hasCLevelExecs && (
             <div className="mb-4">
-              <label htmlFor="cLevelRole" className="block text-sm">
-                What is their role in the business?
+              <label htmlFor="clevelteam_key_role" className="block text-sm">
+                What is their role in the business?{" "}
+                <span className="text-red-500">*</span>
               </label>
               <Field
                 type="text"
-                id="cLevelRole"
-                name="cLevelRole"
+                id="clevelteam_key_role"
+                name="clevelteam_key_role"
                 className="mt-1 p-2 w-full border rounded"
+              />
+              <ErrorMessage
+                name="clevelteam_key_role"
+                component="p"
+                className="text-red-500 text-sm"
               />
             </div>
           )}
@@ -123,7 +150,7 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
           {hasCLevelExecs && (
             <div className="mb-4">
               <label htmlFor="execGender" className="block text-sm">
-                Is this Exec male or female?
+                Is this Exec male or female?{" "}
               </label>
               <div className="mt-1">
                 <label className="mr-2">
@@ -150,15 +177,16 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
 
           {hasCLevelExecs && (
             <div className="mb-4">
-              <label htmlFor="execTime" className="block text-sm">
-                Is the Exec part time or full time in the business?
+              <label htmlFor="clevel_committment" className="block text-sm">
+                Is the Exec part time or full time in the business?{" "}
+                <span className="text-red-500">*</span>
               </label>
               <div className="mt-1">
                 <label className="mr-2">
                   <Field
                     type="radio"
-                    name="execTime"
-                    value="part-time"
+                    name="clevel_committment"
+                    value="part time"
                     className="mr-[1px]"
                   />
                   Part time
@@ -166,16 +194,41 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
                 <label>
                   <Field
                     type="radio"
-                    name="execTime"
-                    value="full-time"
+                    name="clevel_committment"
+                    value="full time"
                     className="mr-[1px]"
                   />
                   Full time
                 </label>
               </div>
+              <ErrorMessage
+                name="clevel_committment"
+                component="p"
+                className="text-red-500 text-sm"
+              />
             </div>
           )}
-          {!hasCLevelExecs && <p className="text-sm text-gray-500 mt-2"></p>}
+
+          <div className="mb-4">
+            <label htmlFor="clevelteam" className="block text-sm">
+              In 100 words, tell us about the role of this executive in your
+              startup (include their title, what they do and number of years of
+              experience)
+              <span className="text-red-500">*</span>
+            </label>
+            <Field
+              as="textarea"
+              id="clevelteam"
+              name="clevelteam"
+              rows={2}
+              className="mt-1 p-2 w-full border rounded"
+            />
+            <ErrorMessage
+              name="clevelteam"
+              component="p"
+              className="text-red-500 text-sm"
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="otherEmployee" className="block text-sm">
               Do you have any other employees?
@@ -220,24 +273,36 @@ const Teamscore2: React.FC<Teamscore2Props> = ({ onSubmit }) => {
 
           {hasOtherEmployees && (
             <div className="mb-4">
-              <label htmlFor="otherEmployeeWomen" className="block text-sm">
-                How many of your other employees are women?
+              <label htmlFor="employeeGender" className="block text-sm">
+                What's the gender split of your employees? Male: x% ; Female: y%
               </label>
               <Field
                 type="text"
-                id="otherEmployeeWomen"
-                name="otherEmployeeWomen"
+                id="employeeGender"
+                name="employeeGender"
                 className="mt-1 p-2 w-full border rounded"
               />
             </div>
           )}
 
-          <button
-            type="submit"
-            className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-          >
-            Next
-          </button>
+          <div className="flex space-x-6">
+            {step > 1 && (
+              <button
+                onClick={handleBack}
+                className="flex bg-[#000D80] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+              >
+                <MdOutlineKeyboardDoubleArrowLeft />
+                Previous
+              </button>
+            )}
+            <button
+              type="submit"
+              className="flex bg-[#000D80] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+            >
+              Submit form
+              <MdOutlineKeyboardDoubleArrowRight />
+            </button>
+          </div>
         </Form>
       </Formik>
     </div>

@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { businessSchema } from "../formValidate";
+import { businessSchema } from "./businessValidate";
+import { Link } from "react-router-dom";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
 
 const productStageOptions = [
-  "Idea",
-  "Prototype / Beta-testing",
-  "Launched but no sales yet",
-  "Launched with traction and customers",
-  "Focused on scaling company (entering new markets and significant team growth)",
+  "Launched, gotten customers and revenue, entering new markets",
+  "Some paid customers",
+  "Launched but no revenue yet",
+  "Pilot stage",
+  "Prototype/Beta-testing",
 ];
 
 interface BusinessModelProps {
   onSubmit: (values: typeof initialValues) => void;
 }
+
 const initialValues = {
   productStage: "",
+  monetization: "",
   businessModels: [],
   userCounts: {},
 };
@@ -27,6 +34,22 @@ const businessModels = [
   { label: "C2C", value: "C2C" },
   { label: "B2G", value: "B2G" },
 ];
+
+const saveFormValuesToLocalStorage = (values: any) => {
+  localStorage.setItem("businessModelValues", JSON.stringify(values));
+};
+
+const loadFormValuesFromLocalStorage = () => {
+  const storedValues = localStorage.getItem("businessModelValues");
+  if (storedValues) {
+    try {
+      return JSON.parse(storedValues);
+    } catch (error) {
+      console.error("Error parsing stored form values:", error);
+    }
+  }
+  return initialValues;
+};
 
 const DynamicUserCounts = ({ values }: any) => {
   return (
@@ -40,7 +63,7 @@ const DynamicUserCounts = ({ values }: any) => {
             {model}:
           </label>
           <Field
-            type="number"
+            type="text"
             id={`userCounts.${model}`}
             name={`userCounts.${model}`}
             className="p-2 w-full border rounded"
@@ -52,37 +75,31 @@ const DynamicUserCounts = ({ values }: any) => {
 };
 
 const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
-  const initializeFormValues = () => {
-    const storedValues = localStorage.getItem("businessModelValues");
-    if (storedValues) {
-      try {
-        return JSON.parse(storedValues);
-      } catch (error) {
-        console.error("Error parsing stored form values:", error);
-      }
-    }
-    return initialValues;
-  };
+  const initialFormValues = loadFormValuesFromLocalStorage();
 
-  const initialFormValues = initializeFormValues();
+  useEffect(() => {
+    saveFormValuesToLocalStorage(initialFormValues);
+  }, [initialFormValues]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center md:-mt-6">
       <Formik
         initialValues={initialFormValues}
         onSubmit={(values) => {
-          // Save the form values in localStorage
-          localStorage.setItem("businessModelValues", JSON.stringify(values));
-          // Call the provided onSubmit function
+          saveFormValuesToLocalStorage(values);
           onSubmit(values);
         }}
         validationSchema={businessSchema}
       >
         {({ values }) => (
-          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            <h2 className="text-[26px] font-semibold mb-4">
-              Understanding your Business Model
+          <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white">
+            <h2 className="text-[24px] font-semibold">
+              How does your business operate?
             </h2>
+            <p className="italic text-xs text-red-500 font-thin mb-4">
+              * indicates required
+            </p>
+
             <div className="mb-4">
               <label htmlFor="productStage" className="block text-sm">
                 What is your product status/stage?
@@ -107,6 +124,24 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
                 className="text-red-500 text-sm"
               />
             </div>
+            <div className="mb-4">
+              <label htmlFor="revenue" className="block text-sm">
+                what % of your revenue is coming from your core business or
+                product? <span className="text-red-500">*</span>
+              </label>
+              <Field
+                type="text"
+                id="monetization"
+                name="monetization"
+                className="mt-1 p-2 w-full border rounded"
+              />
+              <ErrorMessage
+                name="monetization"
+                component="p"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
             <div className="mb-4">
               <label className="block text-sm">
                 What is your business model(s)? (You can select multiple)
@@ -135,12 +170,24 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
               <DynamicUserCounts values={values} />
             )}
 
-            <button
-              type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-            >
-              Next
-            </button>
+            <div className="flex space-x-6">
+              <Link
+                to="/company_dashboard"
+                className="flex bg-[#031549] justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+              >
+                <button className="flex items-center">
+                  <MdOutlineKeyboardDoubleArrowLeft />
+                  Dashboard
+                </button>
+              </Link>
+              <button
+                type="submit"
+                className="flex bg-[#031549] items-center justify-center text-white py-2 px-2 rounded-full hover:bg-blue-600 w-full"
+              >
+                Next
+                <MdOutlineKeyboardDoubleArrowRight />
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

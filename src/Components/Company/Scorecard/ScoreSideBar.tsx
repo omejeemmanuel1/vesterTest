@@ -6,13 +6,8 @@ import { RiLogoutBoxRFill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../Context/ThemeContext";
 import Vester from "../../../assets/Vester.AI.png";
-import Vester2 from "../../../assets/Vester.AI2.png";
 
-interface ComSideBarProps {
-  height: string;
-}
-
-const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
+const ScoreSideBar: React.FC = () => {
   const isActive = (path: string) => {
     return window.location.pathname === path;
   };
@@ -33,26 +28,16 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
   };
 
   return (
-    <div className={`hidden md:flex ${height}`}>
+    <div className={`hidden md:flex h-[825px]`}>
       <aside
-        className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins ${
-          theme === "light"
-            ? "bg-[#031549]"
-            : "dark:bg-white text-[#031549] w-[257px] p-4 pr-10 font-poppins "
-        } flex flex-col justify-between h-full`}
+        className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins flex flex-col justify-between h-full`}
       >
         <div>
-          {theme === "light" ? (
-            <div>
-              <h1 className="mt-6 w-58">
-                <img src={Vester} alt="Vester logo" />
-              </h1>
-            </div>
-          ) : (
-            <h1 className="mt-6 w-[70%] ml-6">
-              <img src={Vester2} alt="Vester logo" />
+          <div>
+            <h1 className="mt-6 w-58">
+              <img src={Vester} alt="Vester logo" />
             </h1>
-          )}
+          </div>
 
           <ul className="mt-[30px] ml-6">
             <li
@@ -170,4 +155,4 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
   );
 };
 
-export default ComSideBar;
+export default ScoreSideBar;

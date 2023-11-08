@@ -22,6 +22,11 @@ import CompanyDataDisplay from "./Components/Admin/AdminDashboard/CompanyDataDis
 import TeamScoreDataDisplay from "./Components/Admin/AdminDashboard/TeamScoreDataDisplay";
 import PitchDeckDataDisplay from "./Components/Admin/AdminDashboard/PitchDeckDataDisplay";
 import CompanyProfilePage from "./Pages/CompanyProfilePage";
+import PrivacyAgreement from "./Components/Company/Privacy/PrivacyAgreement";
+import BusinessScorePage from "./Pages/BusinessScorePage";
+import MarketScorePage from "./Pages/MarketScorePage";
+import { FinancialScorePage } from "./Pages/FinancialScorePage";
+import GovernanceScorePage from "./Pages/GovernanceScorePage";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +44,7 @@ const App: React.FC = () => {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/password-created" element={<PasswordCreated />} />
               <Route path="/verify-link" element={<VerifyLink />} />
+              <Route path="/privacyAgreement" element={<PrivacyAgreement />} />
 
               <Route
                 path="/adminDashboard"
@@ -57,7 +63,7 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="company-data"
+                path="/company-data"
                 element={
                   <PrivateRoute>
                     <CompanyDataDisplay />
@@ -65,7 +71,7 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="teamscore-data"
+                path="/teamscore-data"
                 element={
                   <PrivateRoute>
                     <TeamScoreDataDisplay />
@@ -73,7 +79,7 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="pitchdeck-data"
+                path="/pitchdeck-data"
                 element={
                   <PrivateRoute>
                     <PitchDeckDataDisplay />
@@ -94,6 +100,38 @@ const App: React.FC = () => {
                 element={
                   <PrivateRoute>
                     <TeamscorePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/business-info"
+                element={
+                  <PrivateRoute>
+                    <BusinessScorePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/market-info"
+                element={
+                  <PrivateRoute>
+                    <MarketScorePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/financial-info"
+                element={
+                  <PrivateRoute>
+                    <FinancialScorePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/governance-info"
+                element={
+                  <PrivateRoute>
+                    <GovernanceScorePage />
                   </PrivateRoute>
                 }
               />
