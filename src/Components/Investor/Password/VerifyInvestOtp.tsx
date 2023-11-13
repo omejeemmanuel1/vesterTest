@@ -16,8 +16,8 @@ const validationSchema = Yup.object().shape({
     .required("OTP is required"),
 });
 
-const VerifyOtp: React.FC = () => {
-  const { verify_otp } = useAuth();
+const VerifyInvestOtp: React.FC = () => {
+  const { verifyInvest_otp } = useAuth();
 
   const handleKeyUp = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -49,12 +49,13 @@ const VerifyOtp: React.FC = () => {
     e: React.ClipboardEvent<HTMLInputElement>,
     form: any
   ) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default paste behavior
     const pastedText = e.clipboardData.getData("text");
 
     if (/^\d{6}$/.test(pastedText)) {
       const otpArray = pastedText.split("");
 
+      // Use Formik's setFieldValue to update the field values
       for (let i = 0; i < Math.min(otpArray.length, 6); i++) {
         await form.setFieldValue(`otp[${i}]`, otpArray[i]);
       }
@@ -65,7 +66,7 @@ const VerifyOtp: React.FC = () => {
     const otpString = values.otp.join("");
 
     try {
-      const response = await verify_otp({
+      const response = await verifyInvest_otp({
         otp: otpString,
       });
       console.log(response.data);
@@ -137,7 +138,7 @@ const VerifyOtp: React.FC = () => {
   );
 };
 
-export default VerifyOtp;
+export default VerifyInvestOtp;
 
 interface FormValues {
   otp: string[];

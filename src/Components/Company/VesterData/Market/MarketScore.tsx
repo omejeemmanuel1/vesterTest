@@ -50,7 +50,7 @@ const MarketScore: React.FC<MarketScoreProps> = ({
           onSubmit(values);
         }}
       >
-        <Form className="bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+        <Form className="bg-white m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[24px] font-semibold">
             What's your Market like?
           </h2>

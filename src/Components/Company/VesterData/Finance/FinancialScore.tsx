@@ -51,7 +51,7 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit }) => {
         }}
         enableReinitialize={true}
       >
-        <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[100px]">
+        <Form className="p-8 m-6 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[100px]">
           <h2 className="text-[24xpx] font-semibold">
             Tell us about your financials
           </h2>{" "}

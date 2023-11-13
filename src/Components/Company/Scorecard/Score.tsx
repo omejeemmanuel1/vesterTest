@@ -25,6 +25,9 @@ interface ApiScores {
   commit: string;
   founding_team: string;
   key_roles: string;
+  product_status: string;
+  location_served: string;
+  monetization: string;
   Grade: string;
   Percentage: string;
   api_score: number;
@@ -43,21 +46,25 @@ interface TeamScore {
 interface BusinessScore {
   _id: string;
   apiScores: ApiScores;
+  apiScore: ApiScores;
 }
 
 interface MarketScore {
   _id: string;
   apiScores: ApiScores;
+  apiScore: ApiScores;
 }
 
 interface FinancialScore {
   _id: string;
   apiScores: ApiScores;
+  apiScore: ApiScores;
 }
 
 interface GovernanceScore {
   _id: string;
   apiScores: ApiScores;
+  apiScore: ApiScores;
 }
 
 function convertNumberToGrade(vesterScore: number) {
@@ -130,59 +137,98 @@ const apiNames = [
 
 function getMessageForBalance(balance: number) {
   const messages: { [key: number]: string } = {
-    1: "Message for balance",
-    2: "Message for balance",
-    3: "Message for balance",
-    4: "Message for balance",
-    5: "Message for balance",
+    0: "• Your team is significantly unbalanced in terms of skills and experience, creating inefficiencies and hindering progress.",
+    1: "• Your team is not balanced, and you may need to make major changes to improve its composition.",
+    2: "• Message for balance",
+    3: "• Your team is generally balanced, but there may be some areas where you could benefit from additional expertise.",
+    4: "• Message for balance",
+    5: "• Your team is well-balanced, with a mix of skills and experience.",
   };
   return messages[balance] || "No message available";
 }
 
 function getMessageForCLevel(c_level: number) {
   const messages: { [key: number]: string } = {
-    0: "• Message for clevel",
-    1: "• Message for clevel",
-    2: "• Good leadership! Your C-level team is good, but continuous improvement is key.",
-    3: "• Promising C-level team! Consider further enhancing the expertise of your leadership for better prospects.",
-    4: "• Strong C-level expertise! Leverage your talented leaders to make your startup thrive.",
-    5: "• Your C-level team's expertise is remarkable. Keep them motivated and guide your startup to success.",
+    0: "• Your C-level team is inexperienced and may not have the skills required to manage the company's growth.",
+    1: "• Your C-level team lacks the necessary experience or expertise in specific areas to effectively manage the company's growth.",
+    2: "• Your C-level team may benefit from additional experience or expertise in specific areas to effectively manage the company's growth.",
+    3: "• Your C-level team has some of the necessary skills and experience to guide the company through its growth. You will need to supplement their expertise with additional talent.",
+    4: "• Your C-level team possesses strong leadership qualities and experience, providing a solid foundation for your company's growth.",
+    5: "• Your C-level team brings a wealth of experience and leadership to the table, ensuring that your company is guided by sound decision-making.",
   };
   return messages[c_level] || "No message available";
 }
 
 function getMessageForCommitment(commit: number) {
   const messages: { [key: number]: string } = {
-    1: "Message for commit",
-    2: "Message for commit",
-    3: "Message for commit",
-    4: "Message for commit ",
-    5: "Message for commit",
+    0: "• Your team is deeply committed to the company and is passionate about its mission.",
+    1: "• Your team is committed to the company, but there may be room for improvement in terms of alignment and focus.",
+    2: "•",
+    3: "• Your team's commitment to the company is questionable. You may need to address morale and motivation issues.",
+    4: "• Your team's commitment to the company is lacking. You may need to address serious morale and motivation issues.",
+    5: "• Your team's commitment to the company needs to be improved significantly. You may need to address serious morale and motivation issues.",
   };
   return messages[commit] || "No message available";
 }
 
 function getMessageForFoundingTeam(founding_team: number) {
   const messages: { [key: number]: string } = {
-    0: "• Work in progress! Your founding team has potential, but there's room for improvement.",
-    1: "• Room for improvement! Focus on enhancing the expertise and balance within your founding team.",
-    2: "• Good start! Your founding team shows potential, but strive for better balance and expertise.",
-    3: "• Strong foundation! Your founding team is promising, but there's room for enhancement. Consider refining your team's balance.",
-    4: "• Impressive founding team! Your expertise and balance are commendable. Keep pushing your startup forward with confidence.",
-    5: "• Your founding team's expertise and balance are exemplary. Keep up the good work and leverage your strong foundation for growth.",
+    0: "• Your founding team lacks the necessary expertise and experience to effectively lead the company.",
+    1: "• Your founding team needs to work on developing their expertise and experience in your company's industry, and may need additional support or guidance. ",
+    2: "• Your founding team is still in the early stages of developing their expertise and experience in your company's industry. Their expertise is not relevant to the business.",
+    3: "• Your founding team has an fair foundation of expertise and experience in your company's industry, with the potential to grow and develop further.",
+    4: "• Your founding team exhibits a high level of expertise and experience in your company's industry, positioning them well to lead the company to success.",
+    5: "• Your founding team possesses exceptional expertise and experience in your company's industry. Their expertise is well-balanced, and they complement each other well.",
   };
   return messages[founding_team] || "No message available";
 }
 
 function getMessageForKeyRoles(key_roles: number) {
   const messages: { [key: number]: string } = {
-    1: "Message for key_roles",
-    2: "Message for key_roles",
-    3: "Message for key_roles",
-    4: "Message for key_roles",
-    5: "Message for key_roles",
+    0: "• Message for key_roles",
+    1: "• Your team's commitment to the company needs to be improved significantly. You may need to address serious morale and motivation issues.",
+    2: "• Your team's commitment to the company is lacking. You may need to address serious morale and motivation issues.",
+    3: "• Your team's commitment to the company is questionable. You may need to address morale and motivation issues.",
+    4: "• Your team is committed to the company, but there may be room for improvement in terms of alignment and focus.",
+    5: "• Your team is deeply committed to the company and is passionate about its mission.",
   };
   return messages[key_roles] || "No message available";
+}
+
+function getMessageForProductStage(productStage: number) {
+  const messages: { [key: number]: string } = {
+    0: "• Your product is in a very early stage of development and requires substantial work to achieve market viability.",
+    1: "• Your product is still in the development stage and requires significant refinement to achieve market viability.",
+    2: "• Your product is in an early stage of development and requires further refinement to gain market traction.",
+    3: "• Your product has a good foundation and demonstrates early market adoption, with the potential for further development.",
+    4: "• Your product is well-developed and has gained significant market traction, laying a solid foundation for further growth.",
+    5: "• Your product has achieved a high level of maturity and market traction, positioning it well for continued growth.",
+  };
+  return messages[productStage] || "No message available";
+}
+
+function getMessageForLocationServed(location_served: number) {
+  const messages: { [key: number]: string } = {
+    0: "• You have no established market presence, and there may be a need to conduct thorough market research to identify viable target markets.",
+    1: "• You have a very limited presence, and there may be a need to focus on establishing a strong foundation in your primary market before expanding to new markets.",
+    2: "• You have a limited presence in your primary market, and there may be opportunities to expand to new markets.",
+    3: "• You have a presence in your primary market, with the potential to expand to new markets in the future.",
+    4: "• You have successfully established a presence in key markets, positioning yourself for further expansion..",
+    5: "• You have successfully expanded your reach to multiple locations, demonstrating your ability to penetrate new markets.",
+  };
+  return messages[location_served] || "No message available";
+}
+
+function getMessageForMonetization(monetization: number) {
+  const messages: { [key: number]: string } = {
+    0: "• Your monetization model is not yet defined, and there may be a need to completely rethink your business concept.",
+    1: "• Your monetization model is underdeveloped, and there may be a need to completely rethink your pricing strategy or revenue streams.",
+    2: "• Your monetization model is still in the early stages of development, and there may be a need to refine your pricing strategy or revenue streams to improve efficiency.",
+    3: "• Your monetization model is developing and shows potential for efficiency, but there may be opportunities to optimize your pricing strategy or revenue streams.",
+    4: "• Your monetization model is effective and generates a healthy take rate, indicating the viability of your business concept.",
+    5: "• Your monetization model is highly efficient and generates a strong take rate, indicating a viability of your business concept.",
+  };
+  return messages[monetization] || "No message available";
 }
 
 const Score: React.FC = () => {
@@ -367,14 +413,18 @@ const Score: React.FC = () => {
 
           <div className="">
             <div className={`${activeItem === "overall"}`}>
-              <div className="flex text-white">
-                <div className="text-[20px] ml-16 rounded-l-2xl border-r border-gray-400 md:h-[300px] md:w-[400px] h-[370px] md:justify-between bg-[#031549]">
-                  <div className="ml-28 mt-4">
+              <div className="block md:flex text-white">
+                <div className="ml-3 text-[20px] text-center md:text-left md:ml-16 border-b border-gray-400 md:rounded-l-2xl md:border-r md:border-gray-400 md:h-[300px] md:w-[400px] w-[350px] h-[200px] md:justify-between bg-[#031549]">
+                  <div className="md:ml-28 mt-4">
                     <h2 className="w-full">Your Vester Score</h2>
-                    <img src={vesterScore} alt="" className="ml-4 w-[44%] " />
+                    <img
+                      src={vesterScore}
+                      alt=""
+                      className="ml-32 md:ml-4 md:w-[44%] w-[22%] "
+                    />
                   </div>
                   <div>
-                    <p className="text-center absolute top-[310px] left-[320px] w-[400px] text-[16px]">
+                    <p className="w-full md:m-5 text-center md:absolute md:top-[310px] md:left-[320px] md:w-[400px] md:text-[16px] text-sm">
                       {(() => {
                         if (vesterScore === BadgeAPlus) {
                           return "Congratulations! Your startup is exceptionally well-prepared for investment.";
@@ -397,7 +447,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-center  p-6 text-[20px] rounded-r-2xl md:h-[300px]  md:w-[650px] h-[370px] md:justify-center bg-[#031549]">
+                <div className="text-center ml-3 md:ml-0 p-6 text-[20px] md:rounded-r-2xl md:h-[300px] w-[350px] md:w-[650px] h-[370px] md:justify-center bg-[#031549]">
                   <h2 className="mb-6 font-bold text-2xl">Score Summary</h2>
                   <div className=" text-center ">
                     {emptyAPIsList.length > 0 && (
@@ -432,7 +482,7 @@ const Score: React.FC = () => {
                             }
                           })()}
                         </p>
-                        <button className="bg-[#ec7f36] p-2 pr-4 pl-4 mt-12 rounded-full text-white">
+                        <button className="bg-[#ec7f36] p-1 text-sm md:text-xl md:p-2 pr-4 pl-4 md:mt-12 mt-4 rounded-full text-white">
                           View your investor matches
                         </button>
                       </div>
@@ -443,7 +493,7 @@ const Score: React.FC = () => {
             </div>
           </div>
 
-          <ul className="md:flex mb-4 justify-between mt-6 mr-16 ml-16">
+          <ul className="md:flex mb-4 justify-between m-4 md:mt-6 md:mr-16 md:ml-16">
             <li
               onClick={() => handleItemClick("overall")}
               className={
@@ -680,8 +730,8 @@ const Score: React.FC = () => {
             </li>
           </ul>
           <div className={`${activeItem === "overall" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
@@ -1032,8 +1082,8 @@ const Score: React.FC = () => {
             </div>
           </div>
           <div className={`${activeItem === "team" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
@@ -1053,7 +1103,7 @@ const Score: React.FC = () => {
                                   ? getMessageForBalance(
                                       parseInt(teamscore.apiScore.balance)
                                     )
-                                  : "Improvement"}
+                                  : ""}
                               </p>
                               <p className="">
                                 {/* {`C-Level: ${teamscore.apiScore.c_level}. `} */}
@@ -1061,7 +1111,7 @@ const Score: React.FC = () => {
                                   ? getMessageForCLevel(
                                       parseInt(teamscore.apiScore.c_level)
                                     )
-                                  : "Improvement"}
+                                  : ""}
                               </p>
                               <p className="">
                                 {/* {`Commitment: ${teamscore.apiScore.commit}. `} */}
@@ -1069,7 +1119,7 @@ const Score: React.FC = () => {
                                   ? getMessageForCommitment(
                                       parseInt(teamscore.apiScore.commit)
                                     )
-                                  : "Improvement"}
+                                  : ""}
                               </p>
                               <p className="">
                                 {/* {`Founding Team: ${teamscore.apiScore.founding_team}. `} */}
@@ -1077,7 +1127,7 @@ const Score: React.FC = () => {
                                   ? getMessageForFoundingTeam(
                                       parseInt(teamscore.apiScore.founding_team)
                                     )
-                                  : "Improvement"}
+                                  : ""}
                               </p>
                               <p className="">
                                 {/* {`Key Roles: ${teamscore.apiScore.key_roles}. `} */}
@@ -1085,7 +1135,7 @@ const Score: React.FC = () => {
                                   ? getMessageForKeyRoles(
                                       parseInt(teamscore.apiScore.key_roles)
                                     )
-                                  : "Improvement"}
+                                  : ""}
                               </p>
                             </>
                           )}
@@ -1104,7 +1154,7 @@ const Score: React.FC = () => {
                   ) : null}
                 </p>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1179,8 +1229,8 @@ const Score: React.FC = () => {
           </div>
 
           <div className={` ${activeItem === "market" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1188,12 +1238,10 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li>mxx</li>
-                  <li>xxx</li>
-                  <li>xxx</li>
+                  <li></li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1201,16 +1249,14 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li>xxx</li>
-                  <li>xxx</li>
-                  <li>xxx</li>
+                  <li></li>
                 </ul>
               </div>
             </div>
           </div>
           <div className={`${activeItem === "business" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1218,12 +1264,57 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li>bxx</li>
-                  <li>xxx</li>
-                  <li>xxx</li>
+                  <li>
+                    {businessScores.map((businessScore) => (
+                      <div key={businessScore._id}>
+                        <p className="">
+                          {businessScore.apiScore && (
+                            <>
+                              <p className="">
+                                {/* {`Balance: ${businessScore.apiScore.balance}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.product_status
+                                ) >= 3
+                                  ? getMessageForProductStage(
+                                      parseInt(
+                                        businessScore.apiScore.product_status
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                              <p className="">
+                                {/* {`C-Level: ${businessScore.apiScore.c_level}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.location_served
+                                ) >= 3
+                                  ? getMessageForLocationServed(
+                                      parseInt(
+                                        businessScore.apiScore.location_served
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                              <p className="">
+                                {/* {`Commitment: ${businessScore.apiScore.commit}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.monetization
+                                ) >= 3
+                                  ? getMessageForMonetization(
+                                      parseInt(
+                                        businessScore.apiScore.monetization
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1231,16 +1322,60 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li>xxx</li>
-                  <li>xxx</li>
-                  <li>xxx</li>
+                  <li>
+                    {businessScores.map((businessScore) => (
+                      <div key={businessScore._id}>
+                        <p className="">
+                          {businessScore.apiScore && (
+                            <>
+                              <p className="">
+                                {/* {`Balance: ${businessScore.apiScore.balance}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.product_status
+                                ) < 3
+                                  ? getMessageForProductStage(
+                                      parseInt(
+                                        businessScore.apiScore.product_status
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                              <p className="">
+                                {/* {`C-Level: ${businessScore.apiScore.c_level}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.location_served
+                                ) < 3
+                                  ? getMessageForLocationServed(
+                                      parseInt(
+                                        businessScore.apiScore.location_served
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                              <p className="">
+                                {/* {`Commitment: ${businessScore.apiScore.commit}. `} */}
+                                {parseInt(businessScore.apiScore.monetization) <
+                                3
+                                  ? getMessageForMonetization(
+                                      parseInt(
+                                        businessScore.apiScore.monetization
+                                      )
+                                    )
+                                  : ""}
+                              </p>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div className={` ${activeItem === "finance" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1253,7 +1388,7 @@ const Score: React.FC = () => {
                   <li>xxx</li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] h-[380px]  md:h-[300px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1269,8 +1404,8 @@ const Score: React.FC = () => {
             </div>
           </div>
           <div className={`${activeItem === "governance" ? "" : "hidden"}`}>
-            <div className="md:flex justify-between mt-[690px] md:mt-10 mb-4 ml-16 mr-16">
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md mb-4 md:mb-0">
+            <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
+              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1283,7 +1418,7 @@ const Score: React.FC = () => {
                   <li>xxx</li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">

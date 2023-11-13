@@ -121,7 +121,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("teamscores");
-    navigate("/comp-login");
+    navigate("/company-login");
   };
 
   return (
@@ -133,7 +133,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
       <nav className="md:pl-10 md:pr-8  md:h-[95px] w-[100%] pb-4 md:pb-0 font-poppins">
         <div className="flex md:items-center justify-between">
           <div>
-            <h2 className="text-3xl">Dashboard</h2>
+            <h2 className="text-xl md:text-3xl mt-2 md:mt-0 ml-2">Dashboard</h2>
           </div>
           <div className="flex ml-auto">
             <Formik
@@ -145,13 +145,13 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
               {() => (
                 <Form
                   onSubmit={handleFormSubmit}
-                  className="flex items-center mt-2 md:mt-none"
+                  className="flex items-center mt-2 ml-2 md:ml-0 md:mt-none"
                 >
                   <div className="relative">
                     <Field
                       type="text"
                       name="search"
-                      className=" border rounded-full md:w-[320px] w-[250px] md:h-[40px] h-[30px] px-2 py-1 pl-8"
+                      className=" border rounded-full md:w-[320px] w-[170px] md:h-[40px] h-[30px] px-2 py-1 pl-8"
                       placeholder="Search here..."
                     />
                     <button
@@ -207,7 +207,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
           <div className="md:hidden w-full">
             <button
               onClick={handleToggleMobileNav}
-              className="text-3xl ml-14 text-white absolute top-2 z-50"
+              className="text-3xl text-white absolute top-2 right-2 z-50"
             >
               {isMobileNavOpen ? (
                 <CgCloseR />
@@ -219,7 +219,44 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
             </button>
             {isMobileNavOpen && (
               <div className="md:hidden h-[300px] bg-[#000D80] absolute top-0 left-0 w-full block text-white pt-4 pb-4">
-                <BsChatRightDotsFill className=" text-xl mb-2 md:mb-none ml-5" />
+                <div className="flex md:items-center space-x-2 p-2 ">
+                  {theme === "light" ? (
+                    <FiMoon
+                      className={`text-xl cursor-pointer text-[#6873dd]`}
+                      onClick={toggleTheme}
+                    />
+                  ) : (
+                    <BiSolidMoon
+                      className={`text-xl cursor-pointer`}
+                      onClick={toggleTheme}
+                    />
+                  )}
+                  <div className="flex text-center m-auto">
+                    {userData ? userData.sub.companyName : "Loading..."}
+                  </div>
+                  {loading ? (
+                    <div className="text-center">
+                      <div className="w-4 h-4 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
+                    </div>
+                  ) : (
+                    <>
+                      {companyInfo.companyLogo ? (
+                        <img
+                          src={companyInfo.companyLogo}
+                          alt="Company Logo"
+                          className="w-5 h-5 rounded-full"
+                        />
+                      ) : (
+                        <img
+                          src={Avatar}
+                          alt="Avatar"
+                          className="w-5 h-5 rounded-full"
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
+
                 <ul className="">
                   <li className="text-white rounded-2xl pt-2 pb-2 pl-5">
                     <NavLink
@@ -260,7 +297,7 @@ const ComNavBar: React.FC<ComNavBarProps> = () => {
 
                   <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
                     <NavLink
-                      to="/comp-login"
+                      to="/company-login"
                       className="flex hover:transition-transform hover:scale-105"
                     >
                       <BiLogOut className="mt-[1px] mr-2 text-2xl" />

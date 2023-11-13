@@ -17,7 +17,7 @@ const Heading: React.FC = () => {
           <ul className="flex space-x-4">
             <li>
               <Link
-                to="/comp-login"
+                to="/login"
                 className="text-white hover:border-b-2 hover:border-blue-300 transition"
               >
                 Login
@@ -25,7 +25,7 @@ const Heading: React.FC = () => {
             </li>
             <li>
               <Link
-                to="/comp-reg"
+                to="/signup"
                 className="text-white hover:border-b-2 hover:border-blue-300 transition"
               >
                 Sign Up

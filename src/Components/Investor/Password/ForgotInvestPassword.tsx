@@ -3,19 +3,19 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { passwordSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
+import { Link } from "react-router-dom";
 import Logo from "../../../assets/Vester.AI2.png";
 import Bg from "../../../assets/bg.png";
-import { Link } from "react-router-dom";
 
 const initialValues = {
-  companyMail: "",
+  investorMail: "",
 };
 
-const ForgotPassword: React.FC = () => {
-  const { forgot_password } = useAuth();
+const ForgotInvestPassword: React.FC = () => {
+  const { forgotInvest_password } = useAuth();
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await forgot_password(values); 
+      const response = await forgotInvest_password(values);
 
       console.log(response);
     } catch (error: any) {
@@ -24,7 +24,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-       <>
+    <>
      <div
         className="min-h-screen flex md:items-center justify-center"
         style={{
@@ -52,19 +52,19 @@ const ForgotPassword: React.FC = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="companyMail"
+              htmlFor="investorMail"
               className="block text-sm text-[#0A0A3F]"
             >
-              Company mail?*
+              Email?*
             </label>
             <Field
               type="text"
-              id="companyMail"
-              name="companyMail"
+              id="investorMail"
+              name="investorMail"
               className="mt-1 p-2 w-full border rounded"
             />
             <ErrorMessage
-              name="companyMail"
+              name="investorMail"
               component="p"
               className="text-red-500 text-sm"
             />
@@ -83,4 +83,4 @@ const ForgotPassword: React.FC = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotInvestPassword;

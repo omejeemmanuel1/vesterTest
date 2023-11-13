@@ -68,7 +68,7 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
         validationSchema={validationSchema}
       >
         {({ values }) => (
-          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[200px]">
+          <Form className="p-8 m-6 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[200px]">
             <h2 className="text-[24px] font-semibold">
               How is your company governed?
             </h2>

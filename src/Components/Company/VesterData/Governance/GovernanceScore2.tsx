@@ -80,7 +80,7 @@ const GovernanceScore2: React.FC<GovernanceProps2 & { step: number }> = ({
         validationSchema={validationSchema2}
       >
         {({ values }) => (
-          <Form className="p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[200px]">
+          <Form className="p-8 m-6 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[200px]">
             <div className="mb-4">
               <label htmlFor="advisors" className="block text-sm">
                 Do you have a team of advisors?{" "}

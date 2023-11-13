@@ -5,6 +5,7 @@ import DataProvider from "./Context/authContext";
 import LoginPage from "./Pages/LoginPage";
 import ForgotPassword from "./Components/Company/Password/ForgotPassword";
 import VerifyOtp from "./Components/Company/Password/VerifyOtp";
+import VerifyInvestOtp from "./Components/Investor/Password/VerifyInvestOtp";
 import ResetPassword from "./Components/Company/Password/ResetPassword";
 import PasswordCreated from "./Components/Company/PasswordCreatedModal/PasswordCreated";
 import VerifyLink from "./Components/Company/VerifyLink/VerifyLink";
@@ -22,11 +23,19 @@ import CompanyDataDisplay from "./Components/Admin/AdminDashboard/CompanyDataDis
 import TeamScoreDataDisplay from "./Components/Admin/AdminDashboard/TeamScoreDataDisplay";
 import PitchDeckDataDisplay from "./Components/Admin/AdminDashboard/PitchDeckDataDisplay";
 import CompanyProfilePage from "./Pages/CompanyProfilePage";
-import PrivacyAgreement from "./Components/Company/Privacy/PrivacyAgreement";
 import BusinessScorePage from "./Pages/BusinessScorePage";
 import MarketScorePage from "./Pages/MarketScorePage";
 import { FinancialScorePage } from "./Pages/FinancialScorePage";
 import GovernanceScorePage from "./Pages/GovernanceScorePage";
+import LoginPageInves from "./Pages/LoginPageInves";
+import LoginType from "./Components/LoginType";
+import SignupType from "./Components/SignupType";
+import RegisterPageInves from "./Pages/RegisterPageInves";
+import VerifyInvestLink from "./Components/Investor/VerifyLink/VerifyInvestLink";
+import ResetInvestPassword from "./Components/Investor/Password/ResetInvestPassword";
+import ForgotInvestPassword from "./Components/Investor/Password/ForgotInvestPassword";
+import PasswordInvestCreated from "./Components/Investor/PasswordInCreatedModal/PasswordInvestCreated";
+import InvestorDashbordPage from "./Pages/InvestorDashbordPage";
 
 const App: React.FC = () => {
   return (
@@ -37,14 +46,29 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/admin-login" element={<AdminLoginPage />} />
               <Route path="/" element={<LandingPage />} />
-              <Route path="/comp-reg" element={<RegisterPage />} />
-              <Route path="/comp-login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupType />} />
+              <Route path="/company-reg" element={<RegisterPage />} />
+              <Route path="/investor-reg" element={<RegisterPageInves />} />
+              <Route path="/login" element={<LoginType />} />
+
+              <Route path="/company-login" element={<LoginPage />} />
+              <Route path="/investor-login" element={<LoginPageInves />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/forgotInvest-password"
+                element={<ForgotInvestPassword />}
+              />
               <Route path="/verify-otp" element={<VerifyOtp />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/verifyInvest-otp" element={<VerifyInvestOtp />} />
+              <Route path="/reset-password" element={<ResetInvestPassword />} />
+              <Route path="/resetInvest-password" element={<ResetPassword />} />
               <Route path="/password-created" element={<PasswordCreated />} />
+              <Route
+                path="/passwordInvest-created"
+                element={<PasswordInvestCreated />}
+              />
               <Route path="/verify-link" element={<VerifyLink />} />
-              <Route path="/privacyAgreement" element={<PrivacyAgreement />} />
+              <Route path="/verifyInvest-link" element={<VerifyInvestLink />} />
 
               <Route
                 path="/adminDashboard"
@@ -92,6 +116,14 @@ const App: React.FC = () => {
                 element={
                   <PrivateRoute>
                     <CompanyDashbordPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/investor_dashboard"
+                element={
+                  <PrivateRoute>
+                    <InvestorDashbordPage />
                   </PrivateRoute>
                 }
               />

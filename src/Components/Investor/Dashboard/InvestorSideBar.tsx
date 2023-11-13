@@ -8,11 +8,11 @@ import { useTheme } from "../../../Context/ThemeContext";
 import Vester from "../../../assets/Vester.AI.png";
 import Vester2 from "../../../assets/Vester.AI2.png";
 
-interface ComSideBarProps {
+interface InvestSideBarProps {
   height: string;
 }
 
-const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
+const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
   const isActive = (path: string) => {
     return window.location.pathname === path;
   };
@@ -22,20 +22,13 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("teamscores");
-    localStorage.removeItem("marketScores");
-    localStorage.removeItem("businessScores");
-    localStorage.removeItem("financialScores");
-    localStorage.removeItem("governanceScores");
-    localStorage.removeItem("companyInfo");
-    localStorage.removeItem("companyInfoFailed");
-    navigate("/company-login");
+    navigate("/investor-login");
   };
 
   return (
-    <div className={`hidden md:flex lg:h-[820px] ${height}`}>
+    <div className={`hidden md:flex ${height}`}>
       <aside
-        className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins ${
+        className={`bg-[#031549] text-white w-[280px] p-4 pr-10 font-poppins ${
           theme === "light"
             ? "bg-[#031549]"
             : "dark:bg-white text-[#031549] w-[257px] p-4 pr-10 font-poppins "
@@ -54,10 +47,10 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
             </h1>
           )}
 
-          <ul className="mt-[30px] ml-6">
+          <ul className="mt-[30px]">
             <li
               className={`mb-6 flex ${
-                isActive("/company_dashboard")
+                isActive("/investor_dashboard")
                   ? theme === "light"
                     ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
                     : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
@@ -65,7 +58,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
               }`}
             >
               <NavLink
-                to="/company_dashboard"
+                to="/investor_dashboard"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <BiSolidDashboard className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
@@ -82,16 +75,16 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
               }`}
             >
               <NavLink
-                to="/score"
+                to="/deal"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <RxBarChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
-                Vester Score
+                Deal Flow
               </NavLink>
             </li>
             <li
               className={`mb-6 flex ${
-                isActive("/Performance")
+                isActive("/investment")
                   ? theme === "light"
                     ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
                     : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
@@ -99,16 +92,16 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
               }`}
             >
               <NavLink
-                to="/Performance"
+                to="/investment"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <BiNetworkChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
-                Investor Match
+                Investment mandate
               </NavLink>
             </li>
             <li
               className={`flex ${
-                isActive("/profile-update")
+                isActive("/investor-profile")
                   ? theme === "light"
                     ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
                     : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
@@ -116,7 +109,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
               }`}
             >
               <NavLink
-                to="/profile-update"
+                to="/investor-profile"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <MdOutlineSettings className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
@@ -137,7 +130,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
             }`}
           >
             <a
-              href="/company-login"
+              href="/investor-login"
               className="flex hover:transition-transform hover:scale-105"
             >
               <RiLogoutBoxRFill className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
@@ -170,4 +163,4 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
   );
 };
 
-export default ComSideBar;
+export default InvestorSideBar;

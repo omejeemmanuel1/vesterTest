@@ -243,7 +243,7 @@ const CompanyDashboard: React.FC = () => {
 
     if (anyEmpty) {
       setVesterScore(Badge);
-      // If there's no data, set the Vester score to "Badge" and store it in localStorage
+
       localStorage.setItem("vesterScore", "Badge");
     } else {
       const flattenedScores = allScores.flat();
@@ -262,10 +262,8 @@ const CompanyDashboard: React.FC = () => {
       const vesterImage = convertVesterScoreToImage(vesterScore);
       setVesterScore(vesterImage);
 
-      // Set the Vester score in localStorage when there's data
       localStorage.setItem("vesterScore", vesterImage);
 
-      // Check if all APIs are completed and update the lastCompletedDate
       if (emptyAPIs.length === 0) {
         setLastCompletedDate(new Date());
         setShowInitialContent(false);
@@ -296,10 +294,10 @@ const CompanyDashboard: React.FC = () => {
       <div className="flex-1">
         <ComNavBar />
 
-        <div className="-mt-5">
+        <div className="md:-mt-5">
           {showInitialContent && (
             <div
-              className={`block text-center ml-10 mr-10 rounded-2xl md:h-[200px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+              className={`block text-center ml-2 mr-2 rounded-2xl md:h-[200px] h-[370px] md:justify-center p-6 bg-[#031549] ${
                 theme === "light"
                   ? "font-poppins text-[#000D80]"
                   : "dark:bg-white text-white"
@@ -325,17 +323,21 @@ const CompanyDashboard: React.FC = () => {
           )}
           <div className="flex">
             <div
-              className={`flex  text-[20px] ml-10 mr-10 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
+              className={`md:flex text-center text-[20px] ml-2 mr-2 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
                 theme === "light"
                   ? "font-poppins"
                   : "dark:bg-white text-[#031549]"
               }`}
             >
-              <div className="w-[50%] ml-10">
+              <div className="w-full md:w-[50%] md:ml-10">
                 <h2 className="">Your Vester Score</h2>
-                <img src={vesterScore} alt="" className="ml-5 w-[34%]" />
+                <img
+                  src={vesterScore}
+                  alt=""
+                  className="md:ml-5 w-[34%] ml-28"
+                />
               </div>
-              <div className="w-[50%] text-center mt-6 mr-4">
+              <div className="w-full md:w-[50%] text-center mt-6 mr-4">
                 {emptyAPIsList.length > 0 && (
                   <p>
                     Complete your <strong>{emptyAPIsList.join(", ")}</strong> to
@@ -350,11 +352,11 @@ const CompanyDashboard: React.FC = () => {
                       We offer access to investors based on your Vester Score
                     </p>
                     <div className="flex justify-between mt-10">
-                      <button className="text-sm rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
+                      <button className="md:text-sm text-[11px] rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
                         Understand your <br />
                         Vester Score
                       </button>
-                      <button className="text-sm rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
+                      <button className="md:text-sm text-[11px] rounded-full pl-6 pr-6 pt-1 pb-1 h-12 bg-orange-500 text-white">
                         Start your <br /> investor match
                       </button>
                     </div>
@@ -363,7 +365,7 @@ const CompanyDashboard: React.FC = () => {
               </div>
             </div>
             <div
-              className={`text-center pt-10 text-[20px] ml-10 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+              className={`hidden md:block text-center pt-10 text-[20px] ml-10 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] h-[370px] md:justify-center p-6 bg-[#031549] ${
                 theme === "light"
                   ? "font-poppins"
                   : "dark:bg-white text-[#031549]"

@@ -8,14 +8,14 @@ import Logo from "../../../assets/Vester.AI2.png";
 import Bg from "../../../assets/bg.png";
 import { Link } from "react-router-dom";
 
-const PasswordVerifyLink: React.FC = () => {
-  const { fetchUserEmail } = useAuth();
+const PasswordVerifyInvestLink: React.FC = () => {
+  const { fetchInvestEmail } = useAuth();
   const [fetchedEmail, setFetchedEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const getEmail = async () => {
       try {
-        const email = await fetchUserEmail();
+        const email = await fetchInvestEmail();
         console.log("Email fetched:", email);
         setFetchedEmail(email);
       } catch (error: any) {
@@ -25,7 +25,7 @@ const PasswordVerifyLink: React.FC = () => {
     };
 
     getEmail();
-  }, [fetchUserEmail]);
+  }, [fetchInvestEmail]);
 
   const goToMail = () => {
     if (fetchedEmail) {
@@ -70,7 +70,7 @@ const PasswordVerifyLink: React.FC = () => {
   }
 
   return (
-       <>
+      <>
      <div
         className="min-h-screen flex md:items-center justify-center"
         style={{
@@ -106,4 +106,4 @@ const PasswordVerifyLink: React.FC = () => {
   );
 };
 
-export default PasswordVerifyLink;
+export default PasswordVerifyInvestLink;

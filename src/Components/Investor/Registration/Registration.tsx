@@ -5,30 +5,23 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
 import Bg from "../../../assets/bg.png";
+import { FiPhoneCall } from "react-icons/fi";
+import { TbShieldLock } from "react-icons/tb";
+import { MdOutlineEmail } from "react-icons/md";
+import { BiUser } from "react-icons/bi";
 import Logo from "../../../assets/Vester.AI2.png";
 
-const sectors = [
-  "Technology",
-  "Healthcare",
-  "Retail",
-  "Finance",
-  "Automotive",
-  "Agriculture",
-  "Real Estate",
-];
-
 const initialValues = {
-  companyName: "",
-  companyWebsite: "",
-  companyMail: "",
+  fullName: "",
+  phone: "",
+  investorMail: "",
   password: "",
   confirmPassword: "",
-  companySector: "",
   agreeToTerms: false,
 };
 
 const Registration: React.FC = () => {
-  const { comp_register } = useAuth();
+  const { invest_register } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -43,7 +36,7 @@ const Registration: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await comp_register(values);
+      const response = await invest_register(values);
 
       console.log(response);
     } catch (error: any) {
@@ -79,60 +72,62 @@ const Registration: React.FC = () => {
             </h2>
             <div className="mb-4">
               <label
-                htmlFor="companyName"
-                className="block text-sm text-[#0A0A3F]"
+                htmlFor="fullName"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                What is your company name?*
+                <BiUser /> <span className="ml-2"> Full name* </span>
               </label>
               <Field
                 type="text"
-                id="companyName"
-                name="companyName"
-                placeholder="Company Name"
+                id="fullName"
+                name="fullName"
+                placeholder="full name"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="companyName"
+                name="fullName"
+                component="p"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="investorMail"
+                className="flex items-center text-sm text-[#0A0A3F]"
+              >
+                <MdOutlineEmail />
+                <span className="ml-2"> Email* </span>
+              </label>
+              <Field
+                type="text"
+                id="investorMail"
+                name="investorMail"
+                placeholder="investorMail@yahoo.com"
+                className="mt-1 p-2 w-full border rounded"
+              />
+              <ErrorMessage
+                name="investorMail"
                 component="p"
                 className="text-red-500 text-sm"
               />
             </div>
             <div className="mb-4">
               <label
-                htmlFor="companyWebsite"
-                className="block text-sm text-[#0A0A3F]"
+                htmlFor="phone"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                What is your company website?*
+                <FiPhoneCall /> <span className="ml-2"> Phone number* </span>
               </label>
               <Field
                 type="text"
-                id="companyWebsite"
-                name="companyWebsite"
-                placeholder="www.companyWebsite.com"
+                id="phone"
+                name="phone"
+                placeholder=""
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="companyWebsite"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="companyMail"
-                className="block text-sm text-[#0A0A3F]"
-              >
-                What is your company mail?*
-              </label>
-              <Field
-                type="text"
-                id="companyMail"
-                name="companyMail"
-                placeholder="companyMail@company.com"
-                className="mt-1 p-2 w-full border rounded"
-              />
-              <ErrorMessage
-                name="companyMail"
+                name="phone"
                 component="p"
                 className="text-red-500 text-sm"
               />
@@ -141,9 +136,9 @@ const Registration: React.FC = () => {
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="block text-sm text-[#0A0A3F]"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                Password
+                <TbShieldLock /> <span className="ml-2"> Password </span>
               </label>
               <div className="relative">
                 <Field
@@ -205,9 +200,9 @@ const Registration: React.FC = () => {
             <div className="mb-4">
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm text-[#0A0A3F]"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                Confirm Password
+                <TbShieldLock /> <span className="ml-2"> Confirm Password</span>
               </label>
               <div className="relative">
                 <Field
@@ -266,32 +261,7 @@ const Registration: React.FC = () => {
                 className="text-red-500 text-sm"
               />
             </div>
-            <div className="mb-4">
-              <label
-                htmlFor="companySector"
-                className="block text-sm text-[#0A0A3F]"
-              >
-                What is your company sector?*
-              </label>
-              <Field
-                as="select"
-                id="companySector"
-                name="companySector"
-                className="mt-1 p-2 w-full border rounded"
-              >
-                <option value=""></option>
-                {sectors.map((sector) => (
-                  <option key={sector} value={sector}>
-                    {sector}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage
-                name="companySector"
-                component="p"
-                className="text-red-500 text-sm"
-              />
-            </div>
+
             <div className="mb-4">
               <Field
                 type="checkbox"
@@ -316,7 +286,7 @@ const Registration: React.FC = () => {
             </button>
             <div className="mt-4 text-sm text-gray-600 text-center">
               Already have an account?{" "}
-              <Link to="/company-login" className="text-[#000D80]">
+              <Link to="/investor-login" className="text-[#000D80]">
                 Login
               </Link>
             </div>

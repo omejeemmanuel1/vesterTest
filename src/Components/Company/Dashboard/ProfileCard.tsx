@@ -131,8 +131,8 @@ const ProfileCard: React.FC<profileProps> = ({
                 <div
                   className={
                     isTeamApiEmpty
-                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
-                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-10 md:mb-5 md:mb-none rounded-2xl"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl"
                   }
                 >
                   <video autoPlay muted loop playsInline>
@@ -147,7 +147,7 @@ const ProfileCard: React.FC<profileProps> = ({
               </button>
               <button
                 onClick={() => {
-                  setSelectedComponent("market"); // Set the component type
+                  setSelectedComponent("market");
                   openGeneralInfoModal("market");
                 }}
                 className="h-[108px]"
@@ -155,8 +155,8 @@ const ProfileCard: React.FC<profileProps> = ({
                 <div
                   className={
                     isMarketApiEmpty
-                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
-                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 mt-16 md:mt-0 md:mb-none rounded-2xl"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 mt-16 md:mt-0 md:mb-none rounded-2xl"
                   }
                 >
                   <video autoPlay muted loop playsInline>
@@ -171,7 +171,7 @@ const ProfileCard: React.FC<profileProps> = ({
               </button>
               <button
                 onClick={() => {
-                  setSelectedComponent("business"); // Set the component type
+                  setSelectedComponent("business");
                   openGeneralInfoModal("business");
                 }}
                 className="h-[108px]"
@@ -179,8 +179,8 @@ const ProfileCard: React.FC<profileProps> = ({
                 <div
                   className={
                     isBusinessApiEmpty
-                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
-                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 mt-16 md:mt-0 md:mb-none rounded-2xl"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 mt-16 md:mt-0 md:mb-none rounded-2xl"
                   }
                 >
                   <video autoPlay muted loop playsInline>
@@ -195,7 +195,7 @@ const ProfileCard: React.FC<profileProps> = ({
               </button>
               <button
                 onClick={() => {
-                  setSelectedComponent("financial"); // Set the component type
+                  setSelectedComponent("financial");
                   openGeneralInfoModal("financial");
                 }}
                 className="h-[108px] mt-16"
@@ -203,8 +203,8 @@ const ProfileCard: React.FC<profileProps> = ({
                 <div
                   className={
                     isFinancialApiEmpty
-                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
-                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl"
                   }
                 >
                   <video autoPlay muted loop playsInline>
@@ -219,7 +219,7 @@ const ProfileCard: React.FC<profileProps> = ({
               </button>
               <button
                 onClick={() => {
-                  setSelectedComponent("governance"); // Set the component type
+                  setSelectedComponent("governance");
                   openGeneralInfoModal("governance");
                 }}
                 className="h-[108px] mt-16"
@@ -227,8 +227,8 @@ const ProfileCard: React.FC<profileProps> = ({
                 <div
                   className={
                     isGovernanceApiEmpty
-                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
-                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl ml-4"
+                      ? "border-orange-200 bg-white border-2 p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl"
+                      : "border-orange-300 bg-white border-[3px] p-[16px] md:w-[300px] w-[343px] mb-5 md:mb-none rounded-2xl"
                   }
                 >
                   <video autoPlay muted loop playsInline>

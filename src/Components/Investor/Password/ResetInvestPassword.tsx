@@ -12,10 +12,10 @@ const initialValues = {
   confirmPassword: "",
 };
 
-const ResetPassword: React.FC = () => {
+const ResetInvestPassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { reset_password } = useAuth();
+  const { resetInvest_password } = useAuth();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -27,8 +27,8 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const company_mail = sessionStorage.getItem("reset_email");
-      await reset_password(
+      const company_mail = sessionStorage.getItem("reset_investEmail");
+      await resetInvest_password(
         {
           newPassword: values.password,
           confirmNewPassword: values.confirmPassword,
@@ -205,4 +205,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetInvestPassword;

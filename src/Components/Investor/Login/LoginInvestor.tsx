@@ -7,16 +7,20 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Bg from "../../../assets/bg.png";
+import { TbShieldLock } from "react-icons/tb";
+import { MdOutlineEmail } from "react-icons/md";
 import Logo from "../../../assets/Vester.AI2.png";
+
+
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const initialValues = {
-  companyMail: "",
+  investorMail: "",
   password: "",
 };
 
-const Login: React.FC = () => {
+const LoginInvestor: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,12 +30,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await axios.post(`${baseUrl}/company/login`, values);
+      const response = await axios.post(`${baseUrl}/investor/login`, values);
 
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);
 
-        navigate("/company_dashboard");
+        navigate("/investor_dashboard");
       } else {
         console.error("Login failed");
       }
@@ -40,9 +44,9 @@ const Login: React.FC = () => {
         const errorMessage = error.response.data?.error || "An error occurred";
         console.log(errorMessage);
 
-        if (errorMessage === "Invalid email or password") {
+        if (errorMessage === "Invalid investorMail or password") {
           toast.error(
-            "Invalid email or password. Please check your credentials."
+            "Invalid investorMail or password. Please check your credentials."
           );
         } else {
           toast.error(errorMessage);
@@ -70,7 +74,6 @@ const Login: React.FC = () => {
             className="w-[200px] absolute top-6 left-[13px]"
           />
         </Link>
-
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}
@@ -83,30 +86,31 @@ const Login: React.FC = () => {
 
             <div className="mb-4">
               <label
-                htmlFor="companyMail"
-                className="block text-sm text-[#0A0A3F]"
+                htmlFor="investorMail"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                Company mail?*
+                <MdOutlineEmail />
+                <span className="ml-2"> Email* </span>
               </label>
               <Field
                 type="text"
-                id="companyMail"
-                name="companyMail"
+                id="investorMail"
+                name="investorMail"
+                placeholder="investorMail@yahoo.com"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="companyMail"
+                name="investorMail"
                 component="p"
                 className="text-red-500 text-sm"
               />
             </div>
-
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="block text-sm text-[#0A0A3F]"
+                className="flex items-center text-sm text-[#0A0A3F]"
               >
-                Password
+                <TbShieldLock /> <span className="ml-2"> Password </span>
               </label>
               <div className="relative">
                 <Field
@@ -174,11 +178,11 @@ const Login: React.FC = () => {
             </button>
             <div className="mt-4 text-sm text-gray-600 text-center">
               Don't have an account?{" "}
-              <Link to="/company-reg" className="text-[#000D80]">
+              <Link to="/investor-reg" className="text-[#000D80]">
                 Create account
               </Link>
               <div className="mt-4 text-sm text-gray-600 text-center">
-                <Link to="/forgot-password" className="text-[#000D80]">
+                <Link to="/forgotInvest-password" className="text-[#000D80]">
                   Forgot Password ?
                 </Link>
               </div>
@@ -191,4 +195,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginInvestor;

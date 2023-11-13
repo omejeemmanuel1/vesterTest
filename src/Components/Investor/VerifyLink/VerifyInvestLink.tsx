@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import MessageIcon from "../../assets/Vector.png";
+import MessageIcon from "../../../assets/Vector.png";
 import { useAuth } from "../../../Context/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Logo from "../../../assets/Vester.AI2.png";
-import Bg from "../../../assets/bg.png";
-import { Link } from "react-router-dom";
 
-const PasswordVerifyLink: React.FC = () => {
-  const { fetchUserEmail } = useAuth();
+const VerifyInvestLink: React.FC = () => {
+  const { fetchInvestEmail } = useAuth();
   const [fetchedEmail, setFetchedEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const getEmail = async () => {
       try {
-        const email = await fetchUserEmail();
+        const email = await fetchInvestEmail();
         console.log("Email fetched:", email);
         setFetchedEmail(email);
       } catch (error: any) {
@@ -25,7 +22,7 @@ const PasswordVerifyLink: React.FC = () => {
     };
 
     getEmail();
-  }, [fetchUserEmail]);
+  }, [fetchInvestEmail]);
 
   const goToMail = () => {
     if (fetchedEmail) {
@@ -70,25 +67,10 @@ const PasswordVerifyLink: React.FC = () => {
   }
 
   return (
-       <>
-     <div
-        className="min-h-screen flex md:items-center justify-center"
-        style={{
-          backgroundImage: `url(${Bg})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-        }}
-      >
-        <Link to="/">
-          <img
-            src={Logo}
-            alt="Vester Logo"
-            className="w-[200px] absolute top-6 left-[13px]"
-          />
-          </Link>
+    <div className="min-h-screen flex items-center justify-center">
       <div className="bg-whitex rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] text-center">
         <h4 className="text-[26px] font-semibold mb-6 text-[#0A0A3F]">
-          Check your mail for password reset Otp
+          Check mail for Verification link
         </h4>
         <div className="flex justify-center items-center w-[100px] mb-6 mx-auto ">
           <img src={MessageIcon} alt="" />
@@ -101,9 +83,8 @@ const PasswordVerifyLink: React.FC = () => {
         </button>
       </div>
       <ToastContainer />
-      </div>
-      </>
+    </div>
   );
 };
 
-export default PasswordVerifyLink;
+export default VerifyInvestLink;
