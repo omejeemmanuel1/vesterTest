@@ -77,12 +77,12 @@ const Profile: React.FC = () => {
     <div
       className={`flex bg-white ${
         theme === "light"
-          ? "bg-[#C0C0F5] bg-opacity-10 font-cabinet text-[#000D80] overflow-hidden"
+          ? "bg-[#C0C0F5] bg-opacity-10 font-poppins text-[#000D80] overflow-hidden"
           : "dark:bg-gray-800 text-white "
       }`}
     >
       <div>
-        <ComSideBar />
+        <ComSideBar height="h-[929px]" />
       </div>
 
       <div className="flex-1">
@@ -90,14 +90,14 @@ const Profile: React.FC = () => {
         <div>
           <div className="w-[350px] md:w-[700px] ml-[12px] mt-6 mb-6 md:ml-52 h-[780px] rounded-2xl shadow-md border border-gray-400">
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              <Form className="m-2 md:p-8 border-gray-400 font-cabinet w-[683px]">
+              <Form className="m-2 md:p-8 border-gray-400 font-poppins w-[683px]">
                 <h2 className="text-xl md:text-[32px] font-semibold mb-4">
                   Company Profile
                 </h2>
                 <div className="mb-8">
                   <label
                     htmlFor="companyName"
-                    className="block text-sm font-cabinet"
+                    className="block text-sm font-poppins"
                   >
                     Company Name
                   </label>

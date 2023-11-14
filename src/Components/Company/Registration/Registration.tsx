@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
-import Heading from "../../LandingPage/Heading";
+import Bg from "../../../assets/bg.png";
+import Logo from "../../../assets/Vester.AI2.png";
 
 const sectors = [
   "Technology",
@@ -52,21 +53,34 @@ const Registration: React.FC = () => {
 
   return (
     <>
-      <Heading />
-      <div className="min-h-screen flex items-center justify-center">
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${Bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+        }}
+      >
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Vester Logo"
+            className="w-[200px] absolute top-6 left-[13px]"
+          />
+        </Link>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-poppins w-[422px]">
             <h2 className="text-xl md:text-[32px] font-semibold mb-4 text-[#0A0A3F]">
               Create Account
             </h2>
             <div className="mb-4">
               <label
                 htmlFor="companyName"
-                className="block text-sm text-[#0A0A3F] font-cabinet"
+                className="block text-sm text-[#0A0A3F]"
               >
                 What is your company name?*
               </label>
@@ -74,6 +88,7 @@ const Registration: React.FC = () => {
                 type="text"
                 id="companyName"
                 name="companyName"
+                placeholder="Company Name"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
@@ -93,6 +108,7 @@ const Registration: React.FC = () => {
                 type="text"
                 id="companyWebsite"
                 name="companyWebsite"
+                placeholder="www.companyWebsite.com"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
@@ -112,6 +128,7 @@ const Registration: React.FC = () => {
                 type="text"
                 id="companyMail"
                 name="companyMail"
+                placeholder="companyMail@company.com"
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
@@ -293,13 +310,13 @@ const Registration: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
+              className="bg-[#031549] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
             >
               Create Account
             </button>
             <div className="mt-4 text-sm text-gray-600 text-center">
               Already have an account?{" "}
-              <Link to="/comp-login" className="text-[#000D80]">
+              <Link to="/company-login" className="text-[#000D80]">
                 Login
               </Link>
             </div>

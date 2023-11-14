@@ -22,7 +22,7 @@ const CompanyPerformance: React.FC = () => {
         }`}
       >
         <div>
-          <ComSideBar />
+          <ComSideBar height="h-[1220px]" />
         </div>
 
         <div className="flex-1">

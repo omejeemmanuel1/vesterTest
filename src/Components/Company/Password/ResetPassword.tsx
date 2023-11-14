@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { resetSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
+import Logo from "../../../assets/Vester.AI2.png";
+import Bg from "../../../assets/bg.png";
+import { Link } from "react-router-dom";
 
 const initialValues = {
   password: "",
@@ -38,7 +41,22 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+       <>
+     <div
+        className="min-h-screen flex md:items-center justify-center"
+        style={{
+          backgroundImage: `url(${Bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+        }}
+      >
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Vester Logo"
+            className="w-[200px] absolute top-6 left-[13px]"
+          />
+          </Link>
       <Formik
         initialValues={initialValues}
         validationSchema={resetSchema}
@@ -182,7 +200,8 @@ const ResetPassword: React.FC = () => {
           </button>
         </Form>
       </Formik>
-    </div>
+      </div>
+      </>
   );
 };
 

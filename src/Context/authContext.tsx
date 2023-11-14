@@ -10,13 +10,32 @@ export const dataContext = createContext<undefined | any>(undefined);
 const DataProvider = ({ children }: any) => {
   const comp_register = async (registerData: any) => {
     try {
-      const response = await apiPost("/auth/signup", registerData);
+      const response = await apiPost("/company/signup", registerData);
       console.log(response.data);
 
       sessionStorage.setItem("userEmail", registerData.companyMail);
 
       toast.success("Registration successful! You can now log in.");
       window.location.href = "/verify-link";
+    } catch (error: any) {
+      if (error.response) {
+        const errorMessage = error.response.data?.error || "An error occurred";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Server is not responding. Please try again later.");
+      }
+    }
+  };
+
+  const invest_register = async (registerData: any) => {
+    try {
+      const response = await apiPost("/investor/signup", registerData);
+      console.log(response.data);
+
+      sessionStorage.setItem("investorMail", registerData.investorMail);
+
+      toast.success("Registration successful! You can now log in.");
+      window.location.href = "/verifyInvest-link";
     } catch (error: any) {
       if (error.response) {
         const errorMessage = error.response.data?.error || "An error occurred";
@@ -39,12 +58,30 @@ const DataProvider = ({ children }: any) => {
     }
   };
 
-  const comp_login = async (loginData: any) => {
+  const fetchInvestEmail = async () => {
+    const investMailFromSession = sessionStorage.getItem("investorMail");
+    console.log("User email from session:", investMailFromSession);
+
+    if (investMailFromSession) {
+      return investMailFromSession;
+    } else {
+      console.log("Investor email not found in session");
+      return null;
+    }
+  };
+
+  const forgotInvest_password = async (passwordData: any) => {
     try {
-      await apiPost("/auth/login", loginData).then((res) => {
+      await apiPost("/investor/forgot_password", passwordData).then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data.access_token);
-        toast.success("Login successful");
+        console.log(
+          "Setting reset_inemail in session:",
+          passwordData.investorMail
+        );
+        sessionStorage.setItem("reset_inemail", passwordData.investorMail);
+
+        toast.success("Password reset otp sent to your email");
+        window.location.href = "/verifyInvest-otp";
       });
     } catch (error: any) {
       if (error.response) {
@@ -66,7 +103,7 @@ const DataProvider = ({ children }: any) => {
 
   const forgot_password = async (passwordData: any) => {
     try {
-      await apiPost("/auth/forgot_password", passwordData).then((res) => {
+      await apiPost("/company/forgot_password", passwordData).then((res) => {
         console.log(res);
         console.log(
           "Setting reset_email in session:",
@@ -97,7 +134,7 @@ const DataProvider = ({ children }: any) => {
 
   const verify_otp = async (otpData: any) => {
     try {
-      const response = await apiPassPost("/auth/verify_otp", otpData);
+      const response = await apiPassPost("/company/verify_otp", otpData);
 
       console.log(response.data);
 
@@ -120,10 +157,57 @@ const DataProvider = ({ children }: any) => {
       }
     }
   };
+  const verifyInvest_otp = async (otpData: any) => {
+    try {
+      const response = await apiPassPost("/investor/verify_otp", otpData);
+
+      console.log(response.data);
+
+      toast.success("OTP verified successfully");
+      window.location.href = "/resetInvest-password";
+    } catch (error: any) {
+      if (error.response) {
+        const errorMessage = error.response.data?.error || "An error occurred";
+        console.log(errorMessage);
+
+        if (errorMessage === "Invalid email or password") {
+          toast.error(
+            "Invalid email or password. Please check your credentials."
+          );
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error("Server is not responding. Please try again later.");
+      }
+    }
+  };
 
   const reset_password = async (passwordData: any) => {
     try {
-      await apiResetPost("/auth/reset_password", passwordData); // No need to pass headers here
+      await apiResetPost("/company/reset_password", passwordData);
+      window.location.href = "/passwordInvest-created";
+    } catch (error: any) {
+      if (error.response) {
+        const errorMessage = error.response.data?.error || "An error occurred";
+        console.log(errorMessage);
+
+        if (errorMessage === "Email not found in session") {
+          toast.error(
+            "Email not found in session. Please check your credentials."
+          );
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error("Server is not responding. Please try again later.");
+      }
+    }
+  };
+
+  const resetInvest_password = async (passwordData: any) => {
+    try {
+      await apiResetPost("/investor/reset_password", passwordData); // No need to pass headers here
       toast.success("Password reset successfully");
       window.location.href = "/password-created";
     } catch (error: any) {
@@ -144,41 +228,19 @@ const DataProvider = ({ children }: any) => {
     }
   };
 
-  const submitFormData = async (data: any) => {
-    try {
-      const response = await apiPost("/teamscore/create-teamscore", data);
-
-      console.log(response.data);
-
-      toast.success("Data submitted successfully");
-    } catch (error: any) {
-      if (error.response) {
-        const errorMessage = error.response.data?.error || "An error occurred";
-        console.log(errorMessage);
-
-        if (errorMessage === "Invalid email or password") {
-          toast.error(
-            "Invalid email or password. Please check your credentials."
-          );
-        } else {
-          toast.error(errorMessage);
-        }
-      } else {
-        toast.error("Server is not responding. Please try again later.");
-      }
-    }
-  };
-
   return (
     <dataContext.Provider
       value={{
         comp_register,
+        invest_register,
         fetchUserEmail,
-        comp_login,
+        fetchInvestEmail,
         forgot_password,
+        forgotInvest_password,
         verify_otp,
+        verifyInvest_otp,
         reset_password,
-        submitFormData,
+        resetInvest_password,
       }}
     >
       {children}

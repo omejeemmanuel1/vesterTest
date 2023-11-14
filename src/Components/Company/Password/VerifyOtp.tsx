@@ -5,6 +5,9 @@ import MessageIcon from "../../../assets/Vector.png";
 import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../../Context/authContext";
+import Logo from "../../../assets/Vester.AI2.png";
+import Bg from "../../../assets/bg.png";
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   otp: Yup.array()
@@ -46,13 +49,12 @@ const VerifyOtp: React.FC = () => {
     e: React.ClipboardEvent<HTMLInputElement>,
     form: any
   ) => {
-    e.preventDefault(); // Prevent default paste behavior
+    e.preventDefault();
     const pastedText = e.clipboardData.getData("text");
 
     if (/^\d{6}$/.test(pastedText)) {
       const otpArray = pastedText.split("");
 
-      // Use Formik's setFieldValue to update the field values
       for (let i = 0; i < Math.min(otpArray.length, 6); i++) {
         await form.setFieldValue(`otp[${i}]`, otpArray[i]);
       }
@@ -73,49 +75,65 @@ const VerifyOtp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Formik<FormValues>
-        initialValues={{ otp: ["", "", "", "", "", ""] }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+    <>
+      <div
+        className="min-h-screen flex md:items-center justify-center"
+        style={{
+          backgroundImage: `url(${Bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+        }}
       >
-        {({ ...form }) => (
-          <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
-            <div className="flex justify-center items-center w-[100px] mb-2 mx-auto ">
-              <img src={MessageIcon} alt="" />
-            </div>
-            <p className="text-[#0A0A3F] mb-5 text-sm text-center">
-              A 6-digit code has been sent to you via email
-            </p>
-            <div className="mb-4 flex items-center justify-center space-x-2">
-              {[0, 1, 2, 3, 4, 5].map((index) => (
-                <Field
-                  key={index}
-                  type="text"
-                  name={`otp[${index}]`}
-                  className="border rounded px-3 py-2 text-center w-12"
-                  maxLength={1}
-                  onKeyUp={(e: any) => handleKeyUp(e, index)}
-                  onPaste={(e: any) => handlePaste(e, form)}
-                />
-              ))}
-            </div>
-            <ErrorMessage
-              name="otp"
-              component="p"
-              className="text-red-500 text-sm"
-            />
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Vester Logo"
+            className="w-[200px] absolute top-6 left-[13px]"
+          />
+        </Link>
+        <Formik<FormValues>
+          initialValues={{ otp: ["", "", "", "", "", ""] }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ ...form }) => (
+            <Form className="m-6 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+              <div className="flex justify-center items-center w-[100px] mb-2 mx-auto ">
+                <img src={MessageIcon} alt="" />
+              </div>
+              <p className="text-[#0A0A3F] mb-5 text-sm text-center">
+                A 6-digit code has been sent to you via email
+              </p>
+              <div className="mb-4 flex items-center justify-center space-x-2">
+                {[0, 1, 2, 3, 4, 5].map((index) => (
+                  <Field
+                    key={index}
+                    type="text"
+                    name={`otp[${index}]`}
+                    className="border rounded px-3 py-2 text-center w-12"
+                    maxLength={1}
+                    onKeyUp={(e: any) => handleKeyUp(e, index)}
+                    onPaste={(e: any) => handlePaste(e, form)}
+                  />
+                ))}
+              </div>
+              <ErrorMessage
+                name="otp"
+                component="p"
+                className="text-red-500 text-sm"
+              />
 
-            <button
-              type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-            >
-              Confirm
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+              <button
+                type="submit"
+                className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
+              >
+                Confirm
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 };
 

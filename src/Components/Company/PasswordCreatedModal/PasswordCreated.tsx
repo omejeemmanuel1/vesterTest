@@ -10,8 +10,8 @@ const PasswordCreated: React.FC = () => {
           Your new password has been created.
         </p>
         <Link
-          to="/comp-login"
-          className=" text-[#0A0A3F] py-2 px-4 rounded hover:bg-blue-600 w-full flex items-center justify-center"
+          to="/company-login"
+          className=" text-[#0A0A3F] py-2 px-4 rounded hover:bg-blue-600 hover:text-white  w-full flex items-center justify-center"
         >
           <FaArrowLeft className="mr-2" /> Back to Log In
         </Link>

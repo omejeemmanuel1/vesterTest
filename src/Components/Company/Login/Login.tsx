@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Heading from "../../LandingPage/Heading";
+import Bg from "../../../assets/bg.png";
+import Logo from "../../../assets/Vester.AI2.png";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -25,7 +26,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const response = await axios.post(`${baseUrl}/auth/login`, values);
+      const response = await axios.post(`${baseUrl}/company/login`, values);
 
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);
@@ -54,14 +55,28 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Heading />
-      <div className="min-h-screen flex md:items-center justify-center">
+      <div
+        className="min-h-screen flex md:items-center justify-center"
+        style={{
+          backgroundImage: `url(${Bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+        }}
+      >
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Vester Logo"
+            className="w-[200px] absolute top-6 left-[13px]"
+          />
+        </Link>
+
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}
           onSubmit={handleSubmit}
         >
-          <Form className="m-6 h-[400px] mt-20 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
+          <Form className="m-6 h-[400px] mt-20 bg-white p-8 rounded-2xl shadow-md border border-gray-400 font-poppins w-[422px]">
             <h2 className="text-xl md:text-[32px] font-semibold mb-4 text-[#0A0A3F]">
               Log in
             </h2>
@@ -153,13 +168,13 @@ const Login: React.FC = () => {
 
             <button
               type="submit"
-              className="bg-[#000D80] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
+              className="bg-[#031549] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
             >
               Log in
             </button>
             <div className="mt-4 text-sm text-gray-600 text-center">
               Don't have an account?{" "}
-              <Link to="/comp-reg" className="text-[#000D80]">
+              <Link to="/company-reg" className="text-[#000D80]">
                 Create account
               </Link>
               <div className="mt-4 text-sm text-gray-600 text-center">

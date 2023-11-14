@@ -1,18 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { AiOutlinePieChart } from "react-icons/ai";
 import { MdOutlineSettings } from "react-icons/md";
 import { RxBarChart } from "react-icons/rx";
-import { BiLogOut } from "react-icons/bi";
+import { BiNetworkChart, BiSolidDashboard } from "react-icons/bi";
 import { MdHelp } from "react-icons/md";
+import { RiLogoutBoxRFill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../Context/ThemeContext";
+import Vester from "../../../assets/Vester.AI.png";
+import Vester2 from "../../../assets/Vester.AI2.png";
 
 interface ComSideBarProps {
-  marginTop: string;
+  height: string;
 }
 
-const ComSideBar: React.FC<ComSideBarProps> = ({ marginTop }) => {
+const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
   const isActive = (path: string) => {
     return window.location.pathname === path;
   };
@@ -23,116 +23,148 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ marginTop }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("teamscores");
+    localStorage.removeItem("marketScores");
+    localStorage.removeItem("businessScores");
+    localStorage.removeItem("financialScores");
+    localStorage.removeItem("governanceScores");
     localStorage.removeItem("companyInfo");
     localStorage.removeItem("companyInfoFailed");
-    navigate("/comp-login");
+    navigate("/company-login");
   };
+
   return (
-    <div className="hidden md:flex h-[100%]">
+    <div className={`hidden md:flex lg:h-[820px] ${height}`}>
       <aside
-        className={`bg-[#083982e2] text-[#fff] w-[257px] p-4 pr-10 font-cabinet ${
-          theme === "light" ? "bg-[#083982e2]" : "dark:bg-gray-700 text-white"
-        }`}
+        className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins ${
+          theme === "light"
+            ? "bg-[#031549]"
+            : "dark:bg-white text-[#031549] w-[257px] p-4 pr-10 font-poppins "
+        } flex flex-col justify-between h-full`}
       >
-        <h1 className="text-white ml-6 text-2xl mt-6">Vester.AI</h1>
-        <ul className="mt-[80px] ml-6">
-          <li
-            className={`mb-6 flex ${
-              isActive("/company_dashboard")
-                ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-5"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/company_dashboard"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <MdOutlineSpaceDashboard className="mt-[1px] mr-2 text-2xl" />
-              Dashboard
-            </NavLink>
-          </li>
-          <li
-            className={`mb-6 flex ${
-              isActive("/score")
-                ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-6"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/score"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <RxBarChart className="mt-[1px] mr-2 text-2xl" />
-              Vester Score
-            </NavLink>
-          </li>
-          <li
-            className={`mb-6 flex ${
-              isActive("/Performance")
-                ? "text-red-500 bg-white rounded-2xl pt-2 pb-2 pl-4"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/Performance"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
-              Investor Match
-            </NavLink>
-          </li>
-          <li
-            className={`flex ${
-              isActive("/d-admin")
-                ? "text-red-500 bg-white rounded-2xl p-2 pt-2 pb-2 pl-4"
-                : ""
-            }`}
-          >
-            <NavLink
-              to="/profile-update"
-              className="flex hover:transition-transform hover:scale-105"
-            >
-              <MdOutlineSettings className="mt-[1px] mr-2 text-2xl" />
-              Profile
-            </NavLink>
-          </li>
+        <div>
+          {theme === "light" ? (
+            <div>
+              <h1 className="mt-6 w-58">
+                <img src={Vester} alt="Vester logo" />
+              </h1>
+            </div>
+          ) : (
+            <h1 className="mt-6 w-[70%] ml-6">
+              <img src={Vester2} alt="Vester logo" />
+            </h1>
+          )}
 
-          <div className={`mt-[${marginTop}] ml`}>
+          <ul className="mt-[30px] ml-6">
             <li
-              className={`mb-4 flex ${
-                isActive("/d-admin")
-                  ? "text-red-500 bg-white rounded-2xl p-2"
-                  : ""
-              }`}
-            >
-              <a
-                href="/comp-login"
-                className="flex hover:transition-transform hover:scale-105"
-              >
-                <BiLogOut className="mt-[1px] mr-2 text-2xl" />
-                <button onClick={handleLogout} className="mr-2 pointer">
-                  Logout
-                </button>
-              </a>
-            </li>
-
-            <li
-              className={`flex ${
-                isActive("/d-admin")
-                  ? "text-red-500 bg-white rounded-2xl p-2 text-center"
-                  : ""
+              className={`mb-6 flex ${
+                isActive("/company_dashboard")
+                  ? theme === "light"
+                    ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                    : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
               }`}
             >
               <NavLink
-                to="/d-admin"
+                to="/company_dashboard"
                 className="flex hover:transition-transform hover:scale-105"
               >
-                <MdHelp className="mt-[1px] mr-2 text-2xl" />
-                Help
+                <BiSolidDashboard className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+                Dashboard
               </NavLink>
             </li>
-          </div>
-        </ul>
+            <li
+              className={`mb-6 flex ${
+                isActive("/score")
+                  ? theme === "light"
+                    ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                    : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
+              }`}
+            >
+              <NavLink
+                to="/score"
+                className="flex hover:transition-transform hover:scale-105"
+              >
+                <RxBarChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+                Vester Score
+              </NavLink>
+            </li>
+            <li
+              className={`mb-6 flex ${
+                isActive("/Performance")
+                  ? theme === "light"
+                    ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                    : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
+              }`}
+            >
+              <NavLink
+                to="/Performance"
+                className="flex hover:transition-transform hover:scale-105"
+              >
+                <BiNetworkChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+                Investor Match
+              </NavLink>
+            </li>
+            <li
+              className={`flex ${
+                isActive("/profile-update")
+                  ? theme === "light"
+                    ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                    : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
+              }`}
+            >
+              <NavLink
+                to="/profile-update"
+                className="flex hover:transition-transform hover:scale-105"
+              >
+                <MdOutlineSettings className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+                Profile
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <li
+            className={`mb-4 flex ${
+              isActive("")
+                ? theme === "light"
+                  ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
+            }`}
+          >
+            <a
+              href="/company-login"
+              className="flex hover:transition-transform hover:scale-105"
+            >
+              <RiLogoutBoxRFill className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+              <button onClick={handleLogout} className="mr-2 pointer">
+                Logout
+              </button>
+            </a>
+          </li>
+
+          <li
+            className={`mb-4 flex ${
+              isActive("")
+                ? theme === "light"
+                  ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
+                  : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
+                : "text-[#ec7f36] rounded-2xl pt-2 pb-2 pl-5"
+            }`}
+          >
+            <NavLink
+              to="/d-admin"
+              className="flex hover:transition-transform hover:scale-105"
+            >
+              <MdHelp className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
+              Help
+            </NavLink>
+          </li>
+        </div>
       </aside>
     </div>
   );
