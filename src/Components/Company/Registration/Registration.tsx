@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
 import Bg from "../../../assets/bg.png";
-import Logo from "../../../assets/Vester.AI2.png";
+// import Logo from "../../../assets/Vester.AI2.png";
 
 const sectors = [
   "Technology",
@@ -29,9 +29,18 @@ const initialValues = {
 
 const Registration: React.FC = () => {
   const { comp_register } = useAuth();
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const code = urlParams.get("ref");
+
+    setReferralCode(code);
+  }, [location.search]);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -42,10 +51,13 @@ const Registration: React.FC = () => {
   };
 
   const handleSubmit = async (values: typeof initialValues) => {
+    setLoading(true);
+    const payload = { ...values, referralCode };
     try {
-      const response = await comp_register(values);
+      const response = await comp_register(payload);
 
       console.log(response);
+      setLoading(false);
     } catch (error: any) {
       console.log(error.response.data.message);
     }
@@ -61,13 +73,13 @@ const Registration: React.FC = () => {
           backgroundSize: "contain",
         }}
       >
-        <Link to="/">
+        {/* <Link to="/">
           <img
             src={Logo}
             alt="Vester Logo"
             className="w-[200px] absolute top-6 left-[13px]"
           />
-        </Link>
+        </Link> */}
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -310,9 +322,19 @@ const Registration: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="bg-[#031549] text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
+              className={`bg-[#031549] text-white py-2 px-4 rounded hover:bg-blue-600 w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
             >
-              Create Account
+              {loading ? (
+                <div className="text-center flex justify-center space-x-4">
+                  <p>Creating account...</p>
+                  <div className="mt-1 w-5 h-5 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
+                </div>
+              ) : (
+                <>Create Account</>
+              )}
             </button>
             <div className="mt-4 text-sm text-gray-600 text-center">
               Already have an account?{" "}

@@ -24,11 +24,11 @@ const ScoreSideBar: React.FC = () => {
     localStorage.removeItem("governanceScores");
     localStorage.removeItem("companyInfo");
     localStorage.removeItem("companyInfoFailed");
-    navigate("/comp-login");
+    navigate("/company-login");
   };
 
   return (
-    <div className={`hidden md:flex md:h-[825px] lg:h-[819px]`}>
+    <div className={`hidden md:flex md:h-[100%] lg:h-[100%]`}>
       <aside
         className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins flex flex-col justify-between h-full`}
       >
@@ -122,7 +122,7 @@ const ScoreSideBar: React.FC = () => {
             }`}
           >
             <a
-              href="/comp-login"
+              href="/company-login"
               className="flex hover:transition-transform hover:scale-105"
             >
               <RiLogoutBoxRFill className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />

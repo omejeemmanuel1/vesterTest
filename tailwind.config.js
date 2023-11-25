@@ -11,6 +11,11 @@ export default {
         cabinet: ["Cabinet Grotesk Variable", "sans"],
         poppins: ["Poppins", "sans"],
       },
+      piechart: {
+        width: "100px",
+        height: "100px",
+        margin: "0 auto",
+      },
     },
   },
   plugins: [],

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+// import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export const validationSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
@@ -8,22 +8,22 @@ export const validationSchema = Yup.object().shape({
     .email("Invalid email format")
     .required("Investor mail is required"),
 
-  phone: Yup.mixed().test("phone", "Invalid phone number", function (value) {
-    if (!value) {
-      return this.createError({ message: "Phone number is required" });
-    }
-    const stringValue = String(value);
+  // phone: Yup.mixed().test("phone", "Invalid phone number", function (value) {
+  //   if (!value) {
+  //     return this.createError({ message: "Phone number is required" });
+  //   }
+  //   const stringValue = String(value);
 
-    if (!/^\+?\d+$/.test(stringValue)) {
-      return this.createError({ message: "Invalid phone number format" });
-    }
+  //   if (!/^\+?\d+$/.test(stringValue)) {
+  //     return this.createError({ message: "Invalid phone number format" });
+  //   }
 
-    const phoneNumber = parsePhoneNumberFromString(stringValue, undefined);
+  //   const phoneNumber = parsePhoneNumberFromString(stringValue, undefined);
 
-    return phoneNumber
-      ? phoneNumber.isValid()
-      : this.createError({ message: "Phone must start with country code" });
-  }),
+  //   return phoneNumber
+  //     ? phoneNumber.isValid()
+  //     : this.createError({ message: "Phone must start with country code" });
+  // }),
   password: Yup.string()
     .required("Password is required")
     .min(6, "Password must be at least 6 characters")

@@ -14,6 +14,15 @@ const initialValues = {
   revenueStatus: "",
 };
 
+const valuationOptions = [
+  "Under $5m",
+  "$5m - $10m",
+  "$10m-$15m",
+  "$15m-$20m",
+  "Over $20m",
+  "Other",
+];
+
 interface FinancialScoreProps {
   onSubmit: (values: typeof initialValues) => void;
 }
@@ -73,12 +82,20 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit }) => {
             <label htmlFor="valuation" className="block text-sm">
               What is your valuation?
             </label>
-            <Field
-              type="text"
-              id="valuation"
-              name="valuation"
-              className="mt-1 p-2 w-full border rounded"
-            />
+            <div>
+              {valuationOptions.map((option) => (
+                <div key={option} className="flex items-center">
+                  <Field
+                    type="checkbox"
+                    id={`startupValuation-${option}`}
+                    name="startupValuation"
+                    value={option}
+                    className="mr-2"
+                  />
+                  <label htmlFor={`startupValuation-${option}`}>{option}</label>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="mb-4">
             <label htmlFor="totalFundingRaised" className="block text-sm">

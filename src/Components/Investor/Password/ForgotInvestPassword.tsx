@@ -3,8 +3,8 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { passwordSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
-import { Link } from "react-router-dom";
-import Logo from "../../../assets/Vester.AI2.png";
+// import { Link } from "react-router-dom";
+// import Logo from "../../../assets/Vester.AI2.png";
 import Bg from "../../../assets/bg.png";
 
 const initialValues = {
@@ -33,13 +33,13 @@ const ForgotInvestPassword: React.FC = () => {
           backgroundSize: "contain",
         }}
       >
-        <Link to="/">
+        {/* <Link to="/">
           <img
             src={Logo}
             alt="Vester Logo"
             className="w-[200px] absolute top-6 left-[13px]"
           />
-          </Link>
+          </Link> */}
       <Formik
         initialValues={initialValues}
         validationSchema={passwordSchema}

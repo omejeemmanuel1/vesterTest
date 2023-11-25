@@ -67,7 +67,7 @@ const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
             </li>
             <li
               className={`mb-6 flex ${
-                isActive("/score")
+                isActive("/deal-flow")
                   ? theme === "light"
                     ? "text-[#ec7f36] bg-white rounded-2xl pt-2 pb-2 pl-5"
                     : "text-white bg-[#031549] rounded-2xl pt-2 pb-2 pl-5"
@@ -75,7 +75,7 @@ const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
               }`}
             >
               <NavLink
-                to="/deal"
+                to="/deal-flow"
                 className="flex hover:transition-transform hover:scale-105"
               >
                 <RxBarChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />

@@ -28,7 +28,7 @@ const SignupType: React.FC = () => {
         backgroundSize: "contain",
       }}
     >
-      <div className="flex flex-col items-center justify-center h-[250px] rounded-2xl shadow-md border border-gray-400 font-poppins w-[400px] p-6">
+      <div className="bg-white flex flex-col items-center justify-center h-[250px] rounded-2xl shadow-md border border-gray-400 font-poppins w-[400px] p-6">
         <h1 className="text-xl font-bold mb-4">Who are you signing up as?</h1>
         <div className="border border-gray-400 mt-4 w-full p-2 rounded">
           <label>
