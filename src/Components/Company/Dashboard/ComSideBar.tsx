@@ -33,7 +33,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
   };
 
   return (
-    <div className={`hidden md:flex lg:h-[820px] ${height}`}>
+    <div className={`hidden md:flex lg:h-[824px] ${height}`}>
       <aside
         className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins ${
           theme === "light"

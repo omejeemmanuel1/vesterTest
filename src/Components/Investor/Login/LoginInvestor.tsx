@@ -9,9 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Bg from "../../../assets/bg.png";
 import { TbShieldLock } from "react-icons/tb";
 import { MdOutlineEmail } from "react-icons/md";
-import Logo from "../../../assets/Vester.AI2.png";
-
-
+// import Logo from "../../../assets/Vester.AI2.png";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -67,13 +65,11 @@ const LoginInvestor: React.FC = () => {
           backgroundSize: "contain",
         }}
       >
-        <Link to="/">
-          <img
-            src={Logo}
-            alt="Vester Logo"
-            className="w-[200px] absolute top-6 left-[13px]"
-          />
-        </Link>
+        {/* <div className="w-[14%] fixed top-[2.8%] left-[0.83%]">
+          <Link to="/">
+            <img src={Logo} alt="Vester Logo" className=" " />
+          </Link>
+        </div> */}
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}

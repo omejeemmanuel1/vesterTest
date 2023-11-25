@@ -68,19 +68,19 @@ interface GovernanceScore {
 }
 
 function convertNumberToGrade(vesterScore: number) {
-  if (vesterScore >= 5) {
+  if (vesterScore >= 4.5) {
     return "A+";
-  } else if (vesterScore >= 4.5) {
-    return "A";
   } else if (vesterScore >= 4) {
-    return "B+";
+    return "A";
   } else if (vesterScore >= 3.5) {
-    return "B";
+    return "B+";
   } else if (vesterScore >= 3) {
-    return "C";
+    return "B";
   } else if (vesterScore >= 2.5) {
-    return "D";
+    return "C";
   } else if (vesterScore >= 2) {
+    return "D";
+  } else if (vesterScore >= 1.5) {
     return "E";
   } else {
     return "F";
@@ -108,19 +108,19 @@ function convertGradeToNumber(grade: any) {
 }
 
 function convertVesterScoreToImage(vesterScore: any) {
-  if (vesterScore >= 5) {
+  if (vesterScore >= 4.5) {
     return BadgeAPlus;
-  } else if (vesterScore >= 4.5) {
-    return BadgeA;
   } else if (vesterScore >= 4) {
-    return BadgeB;
+    return BadgeA;
   } else if (vesterScore >= 3.5) {
     return BadgeB;
   } else if (vesterScore >= 3) {
+    return BadgeB;
+  } else if (vesterScore >= 2.5) {
     return BadgeC;
   } else if (vesterScore >= 2) {
     return BadgeD;
-  } else if (vesterScore >= 1) {
+  } else if (vesterScore >= 1.5) {
     return BadgeE;
   } else {
     return BadgeF;
@@ -385,6 +385,12 @@ const Score: React.FC = () => {
       const vesterGrade = convertNumberToGrade(vesterScore);
 
       const vesterImage = convertVesterScoreToImage(vesterScore);
+
+      console.log("flattenedScores:", flattenedScores);
+      console.log("totalGrade:", totalGrade);
+      console.log("vesterScore:", vesterScore);
+      console.log("vesterGrade:", vesterGrade);
+      console.log("vesterImage:", convertVesterScoreToImage(vesterScore));
 
       setVesterScore(vesterImage);
       setVesterGrade(vesterGrade);
@@ -731,7 +737,7 @@ const Score: React.FC = () => {
           </ul>
           <div className={`${activeItem === "overall" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
@@ -905,7 +911,7 @@ const Score: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1083,7 +1089,7 @@ const Score: React.FC = () => {
           </div>
           <div className={`${activeItem === "team" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
@@ -1154,7 +1160,7 @@ const Score: React.FC = () => {
                   ) : null}
                 </p>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1230,7 +1236,7 @@ const Score: React.FC = () => {
 
           <div className={` ${activeItem === "market" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1238,10 +1244,10 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li></li>
+                  <li>xxx</li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1249,14 +1255,14 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li></li>
+                  <li>xxx</li>
                 </ul>
               </div>
             </div>
           </div>
           <div className={`${activeItem === "business" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1314,7 +1320,7 @@ const Score: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1375,7 +1381,7 @@ const Score: React.FC = () => {
           </div>
           <div className={` ${activeItem === "finance" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1388,7 +1394,7 @@ const Score: React.FC = () => {
                   <li>xxx</li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[380px]  md:h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1405,7 +1411,7 @@ const Score: React.FC = () => {
           </div>
           <div className={`${activeItem === "governance" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[300px] h-[380px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
@@ -1418,7 +1424,7 @@ const Score: React.FC = () => {
                   <li>xxx</li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] h-[380px] md:h-[300px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
