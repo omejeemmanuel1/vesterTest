@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   MdOutlineKeyboardDoubleArrowRight,
@@ -41,23 +41,6 @@ const GovernanceScore2: React.FC<GovernanceProps2 & { step: number }> = ({
   handleBack,
   step,
 }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (formSubmitted) {
-      const storedFormValues = localStorage.getItem("formValues2");
-      if (storedFormValues) {
-        try {
-          const parsedValues = JSON.parse(storedFormValues);
-          onSubmit(parsedValues);
-        } catch (error) {
-          console.error("Error parsing stored form values:", error);
-        }
-      }
-    }
-  }, [formSubmitted, onSubmit]);
-
-
   return (
     <div className="min-h-screen flex items-center justify-center">
       {isSubmitting && (
@@ -72,10 +55,7 @@ const GovernanceScore2: React.FC<GovernanceProps2 & { step: number }> = ({
 
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => {
-          localStorage.setItem("formValues2", JSON.stringify(values));
-          setFormSubmitted(true);
-        }}
+        onSubmit={onSubmit}
         enableReinitialize={true}
         validationSchema={validationSchema2}
       >

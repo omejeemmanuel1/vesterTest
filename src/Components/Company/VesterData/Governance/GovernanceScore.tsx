@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -39,31 +39,11 @@ const GovernanceScore: React.FC<GovernanceProps> = ({
   onSubmit,
   initialValues,
 }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (formSubmitted) {
-      const storedFormValues = localStorage.getItem("formValues");
-      if (storedFormValues) {
-        try {
-          const parsedValues = JSON.parse(storedFormValues);
-          onSubmit(parsedValues);
-        } catch (error) {
-          console.error("Error parsing stored form values:", error);
-        }
-      }
-    }
-  }, [formSubmitted, onSubmit]);
-
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => {
-          localStorage.setItem("formValues", JSON.stringify(values));
-          setFormSubmitted(true);
-          onSubmit(values);
-        }}
+        onSubmit={onSubmit}
         enableReinitialize={true}
         validationSchema={validationSchema}
       >

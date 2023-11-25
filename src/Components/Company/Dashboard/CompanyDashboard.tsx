@@ -323,7 +323,7 @@ const CompanyDashboard: React.FC = () => {
           )}
           <div className="flex">
             <div
-              className={`md:flex text-center text-[20px] ml-2 mr-2 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
+              className={`md:flex  text-[20px] ml-2 mr-2 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
                 theme === "light"
                   ? "font-poppins"
                   : "dark:bg-white text-[#031549]"

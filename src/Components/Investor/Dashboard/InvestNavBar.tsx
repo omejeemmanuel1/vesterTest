@@ -73,7 +73,7 @@ const InvestNavBar: React.FC<InvestNavBarProps> = () => {
 
   return (
     <div
-      className={`flex bg-white ${
+      className={`flex bg-[#fafafa] ${
         theme === "light" ? "font-poppins text-[#031549]" : "dark:bg-[#031549]"
       }`}
     >

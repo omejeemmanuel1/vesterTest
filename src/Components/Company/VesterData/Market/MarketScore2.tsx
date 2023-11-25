@@ -37,7 +37,7 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
   handleBack,
   step,
 }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted] = useState(false);
 
   useEffect(() => {
     if (formSubmitted) {
@@ -74,11 +74,6 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
     };
   };
 
-  const handleFormSubmit = (values: any) => {
-    localStorage.setItem("marketFormValues2", JSON.stringify(values));
-    setFormSubmitted(true);
-  };
-
   const initialFormValues = initializeFormValues();
 
   return (
@@ -93,9 +88,12 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
         </div>
       )}
       <Formik
-        initialValues={initialFormValues} // Use the initialized form values
+        initialValues={initialFormValues}
         validationSchema={validationSchema}
-        onSubmit={handleFormSubmit}
+        onSubmit={(values) => {
+          localStorage.setItem("marketFormValues2", JSON.stringify(values));
+          onSubmit(values);
+        }}
       >
         {(formikProps) => (
           <Form className="bg-white m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">

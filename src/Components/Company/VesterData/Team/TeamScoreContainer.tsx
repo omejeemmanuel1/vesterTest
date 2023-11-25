@@ -7,7 +7,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Vester from "../../../../assets/Vester.AI2.png";
-
 import FormBg from "../../../../assets/FormBg.mp4";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;

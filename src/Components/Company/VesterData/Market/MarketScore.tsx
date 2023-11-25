@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { marketscoreSchema } from "./marketValidate";
 import { Link } from "react-router-dom";
@@ -22,33 +22,13 @@ const MarketScore: React.FC<MarketScoreProps> = ({
   onSubmit,
   initialValues,
 }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (formSubmitted) {
-      const storedFormValues = localStorage.getItem("marketFormValues");
-      if (storedFormValues) {
-        try {
-          const parsedValues = JSON.parse(storedFormValues);
-          onSubmit(parsedValues);
-        } catch (error) {
-          console.error("Error parsing stored form values:", error);
-        }
-      }
-    }
-  }, [formSubmitted, onSubmit]);
-
   return (
     <div className="min-h-screen flex md:items-center justify-center md:-mt-16">
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
         validationSchema={marketscoreSchema}
-        onSubmit={(values) => {
-          localStorage.setItem("marketFormValues", JSON.stringify(values));
-          setFormSubmitted(true);
-          onSubmit(values);
-        }}
+        onSubmit={onSubmit}
       >
         <Form className="bg-white m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[24px] font-semibold">

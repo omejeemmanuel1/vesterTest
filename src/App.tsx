@@ -21,7 +21,6 @@ import AdminDashboardPage from "./Pages/AdminDashboardPage";
 import DataDisplayPage from "./Pages/DataDisplayPage";
 import CompanyDataDisplay from "./Components/Admin/AdminDashboard/CompanyDataDisplay";
 import TeamScoreDataDisplay from "./Components/Admin/AdminDashboard/TeamScoreDataDisplay";
-import PitchDeckDataDisplay from "./Components/Admin/AdminDashboard/PitchDeckDataDisplay";
 import CompanyProfilePage from "./Pages/CompanyProfilePage";
 import BusinessScorePage from "./Pages/BusinessScorePage";
 import MarketScorePage from "./Pages/MarketScorePage";
@@ -36,6 +35,8 @@ import ResetInvestPassword from "./Components/Investor/Password/ResetInvestPassw
 import ForgotInvestPassword from "./Components/Investor/Password/ForgotInvestPassword";
 import PasswordInvestCreated from "./Components/Investor/PasswordInCreatedModal/PasswordInvestCreated";
 import InvestorDashbordPage from "./Pages/InvestorDashbordPage";
+import PreferencePage from "./Pages/PreferencePage";
+import DealFlowPage from "./Pages/DealFlowPage";
 
 const App: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const App: React.FC = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/signup" element={<SignupType />} />
               <Route path="/company-reg" element={<RegisterPage />} />
+              <Route path="/company-reg/register" element={<RegisterPage />} />
               <Route path="/investor-reg" element={<RegisterPageInves />} />
               <Route path="/login" element={<LoginType />} />
 
@@ -102,14 +104,6 @@ const App: React.FC = () => {
                   </PrivateRoute>
                 }
               />
-              <Route
-                path="/pitchdeck-data"
-                element={
-                  <PrivateRoute>
-                    <PitchDeckDataDisplay />
-                  </PrivateRoute>
-                }
-              />
 
               <Route
                 path="/company_dashboard"
@@ -124,6 +118,22 @@ const App: React.FC = () => {
                 element={
                   <PrivateRoute>
                     <InvestorDashbordPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/preference"
+                element={
+                  <PrivateRoute>
+                    <PreferencePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/deal-flow"
+                element={
+                  <PrivateRoute>
+                    <DealFlowPage />
                   </PrivateRoute>
                 }
               />

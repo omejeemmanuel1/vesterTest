@@ -27,13 +27,13 @@ export const teamscoreSchema = Yup.object().shape({
   foundingteam_committment: Yup.array().of(
     Yup.string().required("Commitment selection is required")
   ),
-  founderTime: Yup.array()
-    .of(Yup.string().required("Please select"))
-    .min(1, "Please select at least one option"),
+  // founderTime: Yup.array()
+  //   .of(Yup.string().required("Please select"))
+  //   .min(1, "Please select at least one option"),
 });
 
 export const teamscoreSchema2 = Yup.object().shape({
-//   cLevelExec: Yup.string().required("This field is required"),
+  //   cLevelExec: Yup.string().required("This field is required"),
 
   cLevelLinkedin: Yup.string().required("This field is required"),
   clevelteam_key_role: Yup.string().required("This field is required"),

@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { resetSchema } from "../formValidate";
 import { useAuth } from "../../../Context/authContext";
-import Logo from "../../../assets/Vester.AI2.png";
+// import Logo from "../../../assets/Vester.AI2.png";
 import Bg from "../../../assets/bg.png";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const initialValues = {
   password: "",
@@ -50,13 +50,13 @@ const ResetInvestPassword: React.FC = () => {
           backgroundSize: "contain",
         }}
       >
-        <Link to="/">
+        {/* <Link to="/">
           <img
             src={Logo}
             alt="Vester Logo"
             className="w-[200px] absolute top-6 left-[13px]"
           />
-          </Link>
+          </Link> */}
       <Formik
         initialValues={initialValues}
         validationSchema={resetSchema}
