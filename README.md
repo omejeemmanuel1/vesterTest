@@ -53,3 +53,6 @@ Start the frontend development server:
 
 - yarn
 - yarn start
+
+## Versions
+Node version: lts/iron -> v20.9.0
