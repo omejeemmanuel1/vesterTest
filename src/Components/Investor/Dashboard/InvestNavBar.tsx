@@ -68,6 +68,13 @@ const InvestNavBar: React.FC<InvestNavBarProps> = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("favoritesCount");
+    localStorage.removeItem("companyScored");
+    localStorage.removeItem("matchingCompaniesCount");
+    localStorage.removeItem("matchingCompanies");
+    localStorage.removeItem("investorData");
+    localStorage.removeItem("preferenceData");
+    localStorage.clear();
     navigate("/investor-login");
   };
 

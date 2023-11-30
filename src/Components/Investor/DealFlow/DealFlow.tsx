@@ -65,6 +65,7 @@ interface Company {
 
 interface InvestorData {
   referral_link: string;
+  assessment: string;
   data: {
     company: string;
     fullName: string;
@@ -112,38 +113,112 @@ const CircularProgress: React.FC<{ percent: number }> = ({ percent }) => {
 const DealFlow: React.FC = () => {
   const { theme } = useTheme();
 
-  const [isYes, setIsYes] = useState<boolean>(true);
-
   const [matchingCompanies, setMatchingCompanies] = useState<Company[]>([]);
   const [investor, setInvestor] = useState<InvestorData | null>(null);
   const [, setPreference] = useState<any | null>(null);
   const [companyScored, setCompanyScored] = useState(0);
   const [matchingCompaniesCount, setMatchingCompaniesCount] = useState(0);
-  const [favoritesCount, setFavoritesCount] = useState(0);
+  const [matchingCompaniesCount2, setMatchingCompaniesCount2] = useState(0);
+
   const [showReferralLink, setShowReferralLink] = useState(false);
-  const [, setIsFavorited] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
+  const [getAssessment, setGetAssessment] = useState<string | null>(null);
+  const [getFavorite, setGetFavorite] = useState(false);
+
+  const updateFavorite = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const newFavorite = getFavorite === true ? false : true;
+
+      await axios.post(
+        `${baseUrl}/investor/update-favorite`,
+        { favorite: newFavorite },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setGetFavorite(newFavorite);
+    } catch (error) {
+      console.error("Error updating assessment:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("Component mounted");
+    const fetchFavorite = async () => {
       try {
         const token = localStorage.getItem("token");
 
-        // Fetch favorites count
-        const favoritesResponse = await axios.get(
-          `${baseUrl}/investor/favorites`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const { total_favorites } = favoritesResponse.data;
-        setFavoritesCount(total_favorites);
+        const response = await axios.get(`${baseUrl}/investor/get-favorite`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        // Fetch all data
+        setGetFavorite(response.data.favorite);
+        console.log("fav:", response.data.favorite);
+      } catch (error) {
+        console.error("Error fetching favorite:", error);
+      }
+    };
+
+    fetchFavorite();
+  }, [matchingCompaniesCount2]);
+
+  const updateAssessment = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const newAssessment = getAssessment === "yes" ? "no" : "yes";
+
+      await axios.post(
+        `${baseUrl}/investor/update-assessment`,
+        { assessment: newAssessment },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setGetAssessment(newAssessment);
+    } catch (error) {
+      console.error("Error updating assessment:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchAssessment = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(`${baseUrl}/investor/get-assessment`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setGetAssessment(response.data.assessment);
+        console.log("assess:", response.data.assessment);
+      } catch (error) {
+        console.error("Error fetching assessment:", error);
+      }
+    };
+
+    fetchAssessment();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
         const allDataResponse = await axios.get(
           `${baseUrl}/investor/get-all-data`,
           {
@@ -156,11 +231,12 @@ const DealFlow: React.FC = () => {
 
         const companyScore = data["Company scored"] || 0;
         const matchCompaniesCount = data["Matching companies count"] || 0;
+        const matchCompaniesCount2 = data["Matching companies count2"] || 0;
 
         setCompanyScored(companyScore);
         setMatchingCompaniesCount(matchCompaniesCount);
+        setMatchingCompaniesCount2(matchCompaniesCount2);
         setMatchingCompanies(data["Matching companies"]);
-        setLoading(false);
 
         // Fetch investor and preferences
         const investorResponse = await axios.get(
@@ -182,38 +258,30 @@ const DealFlow: React.FC = () => {
 
         setInvestor(investorResponse.data);
         setPreference(preferenceResponse.data);
+
+        const response = await axios.get(`${baseUrl}/investor/get-assessment`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setGetAssessment(response.data.assessment);
+        console.log("assess:", response.data.assessment);
+
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
-
-  const handleFavoriteClick = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `${baseUrl}/investor/favorite?companyMail=omejeemmanuel@yahoo.com`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log("favorite res:", response.data);
-
-      setIsFavorited(response.data.isFavorited);
-    } catch (error) {
-      console.error("Error favoriting company:", error);
-    }
-  };
-
-  const toggleValue = () => {
-    setIsYes((prevValue) => !prevValue);
-  };
+  }, [
+    matchingCompanies,
+    matchingCompaniesCount,
+    matchingCompaniesCount2,
+    investor,
+  ]);
 
   const investorRef = useRef<HTMLDivElement>(null);
 
@@ -237,7 +305,7 @@ const DealFlow: React.FC = () => {
   const handleShareLink = () => {
     setShowReferralLink(true);
   };
-  console.log("investor:", investor);
+  console.log("investors:", investor);
 
   const referralLink = investor?.data?.[0]?.referral_link || "";
   console.log("ref:", referralLink);
@@ -313,7 +381,7 @@ const DealFlow: React.FC = () => {
                 <div className="w-6 h-6 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
               </div>
             ) : (
-              <p className="text-6xl mt-4">{favoritesCount}</p>
+              <p className="text-6xl mt-4">{matchingCompaniesCount2}</p>
             )}
           </div>
           <div
@@ -387,6 +455,9 @@ const DealFlow: React.FC = () => {
                 <strong>Sector</strong>
               </th>
               <th>
+                <strong>Country</strong>
+              </th>
+              <th>
                 <strong>Vester Score</strong>
               </th>
               <th>
@@ -404,60 +475,64 @@ const DealFlow: React.FC = () => {
               </th>
             </thead>
             {matchingCompanies.map((company) => (
-              <tbody className="text-center">
-                <tr>
-                  <td>
-                    <div className="flex">
-                      {" "}
-                      <img
-                        src={ManArt}
-                        alt=""
-                        className="w-8 h-7 rounded-full pr-1"
-                      />{" "}
-                      {company.companyName}
-                    </div>
-                  </td>
-                  <td>{company.companySector}</td>
-                  <td>
-                    <div className="border border-[#ec7f36] rounded-full h-8 w-8 pt-1 ml-[70px] text-[#ec7f36]">
-                      {company.vesterScore}
-                    </div>
-                  </td>
-                  <td>
-                    <CircularProgress percent={95} />
-                  </td>
-                  <td
-                    className="cursor-pointer flex justify-center "
-                    onClick={toggleValue}
-                  >
-                    <div className="border border-gray-400 flex pr-1 pl-1 mt-7">
-                      <span>{isYes ? "Yes" : "No"}</span>
-                      <span className="mt-1 text-gray-500">
-                        <IoIosArrowDown />
-                      </span>
-                    </div>
-                  </td>
+              <>
+                {company.vesterScore !== "NA" && (
+                  <tbody className="text-center">
+                    <tr>
+                      <td>
+                        <div className="flex">
+                          {" "}
+                          <img
+                            src={ManArt}
+                            alt=""
+                            className="w-8 h-7 rounded-full pr-1"
+                          />{" "}
+                          {company.companyName}
+                        </div>
+                      </td>
+                      <td>{company.companySector}</td>
+                      <td>{company.generalinfos[0]?.registrationCountry}</td>
+                      <td>
+                        <div className="border border-[#ec7f36] rounded-full h-8 w-8 pt-1 ml-[70px] text-[#ec7f36]">
+                          {company.vesterScore}
+                        </div>
+                      </td>
+                      <td>
+                        <CircularProgress percent={95} />
+                      </td>
+                      <td className="cursor-pointer flex justify-center">
+                        <div className="border border-gray-400 flex pr-1 pl-1 mt-7">
+                          <button onClick={updateAssessment}>
+                            {getAssessment}
+                          </button>
+                          <span className="mt-1 text-gray-500">
+                            <IoIosArrowDown />
+                          </span>
+                        </div>
+                      </td>
 
-                  <td>
-                    <div
-                      className="rounded-full h-5 w-5 text-center items-center flex justify-center ml-10 cursor-pointer bg-gray-300"
-                      onClick={handleFavoriteClick}
-                    >
-                      <span className="text-gray-400">
-                        <IoMdHeart />
-                      </span>{" "}
-                      <span className="text-orange-500">
-                        <IoMdHeart />
-                      </span>{" "}
-                    </div>
-                  </td>
-                  <td className="">
-                    <div className="rounded-full border border-gray-300 text-gray-300 ">
-                      Request
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+                      <td>
+                        <div className="rounded-full h-5 w-5 text-center items-center flex justify-center ml-10 cursor-pointer bg-gray-300">
+                          <button onClick={updateFavorite}>
+                            <span
+                              className={`text-${
+                                getFavorite ? "orange-500" : "gray-400"
+                              }`}
+                            >
+                              <IoMdHeart />
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                      <td className="">
+                        <div className="rounded-full border border-gray-300 text-gray-300 ">
+                          Request
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                )}
+              </>
             ))}
           </table>
         </div>

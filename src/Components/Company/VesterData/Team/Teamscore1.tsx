@@ -48,7 +48,7 @@ const Teamscore1: React.FC<Teamscore1Props> = ({ onSubmit, initialValues }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
-        initialValues={initialValues}
+        initialValues={{ ...initialValues }}
         onSubmit={onSubmit}
         enableReinitialize={true}
         validationSchema={teamscoreSchema}

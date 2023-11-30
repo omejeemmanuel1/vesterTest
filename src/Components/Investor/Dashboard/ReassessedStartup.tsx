@@ -60,22 +60,43 @@ const ReassessedStartup: React.FC = () => {
   const { theme } = useTheme();
 
   const [matchingCompanies, setMatchingCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-    axios
-      .get(`${baseUrl}/investor/get-all-data`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setMatchingCompanies(response.data["Matching companies"]);
-      })
-      .catch((error) => {
+        // Fetch matching companies from localStorage
+        const matchingCompaniesFromStorage =
+          localStorage.getItem("matchingCompanies");
+        if (matchingCompaniesFromStorage) {
+          setMatchingCompanies(JSON.parse(matchingCompaniesFromStorage));
+        } else {
+          // Fetch matching companies from the API
+          const response = await axios.get(`${baseUrl}/investor/get-all-data`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const matchingCompaniesData = response.data["Matching companies"];
+          setMatchingCompanies(matchingCompaniesData);
+
+          // Store matching companies in localStorage
+          localStorage.setItem(
+            "matchingCompanies",
+            JSON.stringify(matchingCompaniesData)
+          );
+        }
+
+        setLoading(false);
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const colors = ["#031549", "#0000FF", "#800080"];
@@ -170,6 +191,10 @@ const ReassessedStartup: React.FC = () => {
   const pieChartData2 = sectorPercentages;
   const pieChartData3 = fundingStagePercentages;
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <div
@@ -198,32 +223,36 @@ const ReassessedStartup: React.FC = () => {
                 </th>
               </thead>
               {matchingCompanies.map((company) => (
-                <tbody className="text-center">
-                  <tr>
-                    <td>
-                      <div className="flex">
-                        {" "}
-                        <img
-                          src={ManArt}
-                          alt=""
-                          className="w-8 h-7 rounded-full pr-1"
-                        />{" "}
-                        {company.companyName}
-                      </div>
-                    </td>
-                    <td>{company.companySector}</td>
-                    <td>
-                      <div className="border border-[#ec7f36] rounded-full h-8 w-8 pt-1 ml-[70px] text-[#ec7f36]">
-                        {company.vesterScore}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="">
-                        <CircularProgress percent={95} />
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                <>
+                  {company.vesterScore !== "NA" && (
+                    <tbody className="text-center">
+                      <tr>
+                        <td>
+                          <div className="flex">
+                            {" "}
+                            <img
+                              src={ManArt}
+                              alt=""
+                              className="w-8 h-7 rounded-full pr-1"
+                            />{" "}
+                            {company.companyName}
+                          </div>
+                        </td>
+                        <td>{company.companySector}</td>
+                        <td>
+                          <div className="border border-[#ec7f36] rounded-full h-8 w-8 pt-1 ml-[70px] text-[#ec7f36]">
+                            {company.vesterScore}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="">
+                            <CircularProgress percent={95} />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  )}
+                </>
               ))}
             </table>
           </div>

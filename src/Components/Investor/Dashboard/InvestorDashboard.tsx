@@ -39,7 +39,7 @@ const InvestorDashboard: React.FC = () => {
   const [preference, setPreference] = useState<any | null>(null);
   const [companyScored, setCompanyScored] = useState(0);
   const [matchingCompaniesCount, setMatchingCompaniesCount] = useState(0);
-  const [favoritesCount, setFavoritesCount] = useState(0);
+  const [matchingCompaniesCount2, setMatchingCompaniesCount2] = useState(0);
   const [showReferralLink, setShowReferralLink] = useState(false);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -49,19 +49,7 @@ const InvestorDashboard: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
 
-        // Fetch favorites count
-        const favoritesResponse = await axios.get(
-          `${baseUrl}/investor/favorites`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const { total_favorites } = favoritesResponse.data;
-        setFavoritesCount(total_favorites);
-
-        // Fetch other data
+        // Fetch other data from the API
         const allDataResponse = await axios.get(
           `${baseUrl}/investor/get-all-data`,
           {
@@ -74,10 +62,11 @@ const InvestorDashboard: React.FC = () => {
 
         const companyScore = data["Company scored"] || 0;
         const matchCompaniesCount = data["Matching companies count"] || 0;
+        const matchCompaniesCount2 = data["Matching companies count2"] || 0;
 
         setCompanyScored(companyScore);
         setMatchingCompaniesCount(matchCompaniesCount);
-        setLoading(false);
+        setMatchingCompaniesCount2(matchCompaniesCount2);
 
         // Fetch investor and preferences
         const investorResponse = await axios.get(
@@ -99,8 +88,11 @@ const InvestorDashboard: React.FC = () => {
 
         setInvestor(investorResponse.data);
         setPreference(preferenceResponse.data);
+
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
@@ -231,7 +223,7 @@ const InvestorDashboard: React.FC = () => {
                   <div className="w-6 h-6 border-t-4 border-blue-400 border-solid rounded-full animate-spin bg-white z-10"></div>
                 </div>
               ) : (
-                <p className="text-6xl mt-4">{favoritesCount}</p>
+                <p className="text-6xl mt-4">{matchingCompaniesCount2}</p>
               )}
             </div>
             <div
