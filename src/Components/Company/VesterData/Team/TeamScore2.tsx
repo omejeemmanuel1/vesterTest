@@ -119,11 +119,11 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
                 name="cLevelLinkedin"
                 className="mt-1 p-2 w-full border rounded"
               />
-              <ErrorMessage
+              {/* <ErrorMessage
                 name="cLevelLinkedin"
                 component="p"
                 className="text-red-500 text-sm"
-              />
+              /> */}
             </div>
           )}
 
@@ -139,11 +139,11 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
                 name="clevelteam_key_role"
                 className="mt-1 p-2 w-full border rounded"
               />
-              <ErrorMessage
+              {/* <ErrorMessage
                 name="clevelteam_key_role"
                 component="p"
                 className="text-red-500 text-sm"
-              />
+              /> */}
             </div>
           )}
 
@@ -201,11 +201,11 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
                   Full time
                 </label>
               </div>
-              <ErrorMessage
+              {/* <ErrorMessage
                 name="clevel_committment"
                 component="p"
                 className="text-red-500 text-sm"
-              />
+              /> */}
             </div>
           )}
 

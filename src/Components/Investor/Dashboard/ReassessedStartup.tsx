@@ -197,7 +197,7 @@ const ReassessedStartup: React.FC = () => {
     return <p>Loading...</p>;
   }
 
-   const displayLimit = 5;
+  const displayLimit = 5;
 
   return (
     <>
@@ -268,7 +268,7 @@ const ReassessedStartup: React.FC = () => {
                 </Link>
               </div>
               <Link to="/deal-flow">
-                <p className="text-[#ec7f36] font-bold cursor-pointer hover:text-orange-700 text-sm m-1 hover:transition hover:ease-in-out transform hover:scale-105">
+                <p className="text-[#ec7f36] font-bold cursor-pointer hover:text-blue-600 text-sm m-1 hover:transition hover:ease-in-out transform hover:scale-105">
                   Go To Full Deal Flow
                 </p>
               </Link>

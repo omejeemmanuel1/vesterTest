@@ -35,10 +35,10 @@ export const teamscoreSchema = Yup.object().shape({
 export const teamscoreSchema2 = Yup.object().shape({
   //   cLevelExec: Yup.string().required("This field is required"),
 
-  cLevelLinkedin: Yup.string().required("This field is required"),
-  clevelteam_key_role: Yup.string().required("This field is required"),
+  // cLevelLinkedin: Yup.string().required("This field is required"),
+  // clevelteam_key_role: Yup.string().required("This field is required"),
 
-  clevel_committment: Yup.string().required("This field is required"),
+  // clevel_committment: Yup.string().required("This field is required"),
 
   clevelteam: Yup.string()
     .required("Description of the executive role is required")
