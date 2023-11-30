@@ -284,7 +284,12 @@ const DealFlow: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [
+    matchingCompanies,
+    matchingCompaniesCount,
+    matchingCompaniesCount2,
+    investor,
+  ]);
 
   const investorRef = useRef<HTMLDivElement>(null);
 
