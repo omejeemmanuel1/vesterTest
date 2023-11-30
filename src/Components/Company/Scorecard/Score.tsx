@@ -257,6 +257,7 @@ const Score: React.FC = () => {
         });
 
         setTeamscores(response.data);
+        console.log("team:", response.data)
       } catch (error) {
         console.error("Failed to fetch teamscores", error);
       }

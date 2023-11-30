@@ -22,6 +22,12 @@ const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("favoritesCount");
+    localStorage.removeItem("companyScored");
+    localStorage.removeItem("matchingCompaniesCount");
+    localStorage.removeItem("matchingCompanies");
+    localStorage.removeItem("investorData");
+    localStorage.removeItem("preferenceData");
     navigate("/investor-login");
   };
 

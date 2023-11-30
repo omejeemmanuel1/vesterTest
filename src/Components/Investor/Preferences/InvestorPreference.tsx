@@ -315,19 +315,34 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={startupOptions.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            { value: "all", label: "Select All" },
+                            ...startupOptions.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("startupStage", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue(
+                                "startupStage",
+                                startupOptions
+                              );
+                            } else {
+                              form.setFieldValue("startupStage", value);
+                            }
+                          }}
                         />
                       )}
                     />
+
                     <ErrorMessage
                       name="startupStage"
                       component="p"
@@ -349,16 +364,33 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={africanCountries.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            {
+                              value: "all",
+                              label: "Select All",
+                            },
+                            ...africanCountries.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("africanCountry", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue(
+                                "africanCountry",
+                                africanCountries
+                              );
+                            } else {
+                              form.setFieldValue("africanCountry", value);
+                            }
+                          }}
                         />
                       )}
                     />
@@ -383,16 +415,27 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={sectorOptions.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            { value: "all", label: "select All" },
+                            ...sectorOptions.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("sector", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue("sector", sectorOptions);
+                            } else {
+                              form.setFieldValue("sector", value);
+                            }
+                          }}
                         />
                       )}
                     />
@@ -417,16 +460,30 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={technologyOptions.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            { value: "all", label: "select All" },
+                            ...technologyOptions.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("technologyInterest", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue(
+                                "technologyInterest",
+                                technologyOptions
+                              );
+                            } else {
+                              form.setFieldValue("technologyInterest", value);
+                            }
+                          }}
                         />
                       )}
                     />
@@ -450,16 +507,30 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={businessOptions.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            { value: "all", label: "Select All" },
+                            ...businessOptions.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("businessModel", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue(
+                                "businessModel",
+                                businessOptions
+                              );
+                            } else {
+                              form.setFieldValue("businessModel", value);
+                            }
+                          }}
                         />
                       )}
                     />
@@ -480,16 +551,30 @@ const InvestorPreference: React.FC = () => {
                       render={({ field, form }: any) => (
                         <Select
                           {...field}
-                          options={valuationOptions.map((option) => ({
-                            value: option,
-                            label: option,
-                          }))}
+                          options={[
+                            { value: "all", label: "Select All" },
+                            ...valuationOptions.map((option) => ({
+                              value: option,
+                              label: option,
+                            })),
+                          ]}
                           isMulti
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) =>
-                            form.setFieldValue("startupValuation", value)
-                          }
+                          onChange={(value: any) => {
+                            if (
+                              value &&
+                              value.length > 0 &&
+                              value[0].value === "all"
+                            ) {
+                              form.setFieldValue(
+                                "startupValuation",
+                                valuationOptions
+                              );
+                            } else {
+                              form.SetFieldValue("startupValuation", value);
+                            }
+                          }}
                         />
                       )}
                     />
