@@ -132,7 +132,6 @@ const DealFlow: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
 
-      // Determine the new assessment value based on the current value
       const newFavorite = getFavorite === true ? false : true;
 
       await axios.post(
@@ -145,7 +144,6 @@ const DealFlow: React.FC = () => {
         }
       );
 
-      // Update the local state after a successful update
       setGetFavorite(newFavorite);
     } catch (error) {
       console.error("Error updating assessment:", error);
@@ -163,7 +161,6 @@ const DealFlow: React.FC = () => {
           },
         });
 
-        // Update the getInvestment state with the fetched value
         setGetFavorite(response.data.favorite);
         console.log("fav:", response.data.favorite);
       } catch (error) {
@@ -178,7 +175,6 @@ const DealFlow: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
 
-      // Determine the new assessment value based on the current value
       const newAssessment = getAssessment === "yes" ? "no" : "yes";
 
       await axios.post(
@@ -191,7 +187,6 @@ const DealFlow: React.FC = () => {
         }
       );
 
-      // Update the local state after a successful update
       setGetAssessment(newAssessment);
     } catch (error) {
       console.error("Error updating assessment:", error);
@@ -209,7 +204,6 @@ const DealFlow: React.FC = () => {
           },
         });
 
-        // Update the getInvestment state with the fetched value
         setGetAssessment(response.data.assessment);
         console.log("assess:", response.data.assessment);
       } catch (error) {
@@ -239,7 +233,6 @@ const DealFlow: React.FC = () => {
         const matchCompaniesCount = data["Matching companies count"] || 0;
         const matchCompaniesCount2 = data["Matching companies count2"] || 0;
 
-        // Update state and localStorage with new API data
         setCompanyScored(companyScore);
         setMatchingCompaniesCount(matchCompaniesCount);
         setMatchingCompaniesCount2(matchCompaniesCount2);
@@ -272,7 +265,6 @@ const DealFlow: React.FC = () => {
           },
         });
 
-        // Update the getInvestment state with the fetched value
         setGetAssessment(response.data.assessment);
         console.log("assess:", response.data.assessment);
 
