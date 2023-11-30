@@ -4,6 +4,8 @@ import { useTheme } from "../../../Context/ThemeContext";
 import Piechart from "./PieChart/Piechart";
 import ManArt from "../../../assets/manart.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { RiCornerUpRightFill } from "react-icons/ri";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -195,6 +197,8 @@ const ReassessedStartup: React.FC = () => {
     return <p>Loading...</p>;
   }
 
+   const displayLimit = 5;
+
   return (
     <>
       <div
@@ -222,7 +226,7 @@ const ReassessedStartup: React.FC = () => {
                   <strong>Mandate match</strong>
                 </th>
               </thead>
-              {matchingCompanies.map((company) => (
+              {matchingCompanies.slice(0, displayLimit).map((company) => (
                 <>
                   {company.vesterScore !== "NA" && (
                     <tbody className="text-center">
@@ -255,6 +259,20 @@ const ReassessedStartup: React.FC = () => {
                 </>
               ))}
             </table>
+            <div className="flex mt-[250px] float-right space-x-1">
+              <div className=" bg-[#031549] text-[#ec7f36] h-7 w-8 rounded shadow-md cursor-pointer hover:bg-blue-600 hover:transition hover:ease-in-out transform hover:scale-105">
+                <Link to="/deal-flow">
+                  <span className="text-xl float-right hover:text-white">
+                    <RiCornerUpRightFill />
+                  </span>
+                </Link>
+              </div>
+              <Link to="/deal-flow">
+                <p className="text-[#ec7f36] font-bold cursor-pointer hover:text-orange-700 text-sm m-1 hover:transition hover:ease-in-out transform hover:scale-105">
+                  Go To Full Deal Flow
+                </p>
+              </Link>
+            </div>
           </div>
           <div className="block">
             <div className="bg-white rounded-lg w-full h-[30%] shadow-md">
