@@ -19,7 +19,6 @@ const FinancialScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,7 +41,6 @@ const FinancialScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-    setIsSubmitting(true);
 
     try {
       const combinedData = { ...formData, ...finalData };
@@ -55,6 +53,11 @@ const FinancialScoreContainer: React.FC = () => {
         },
       };
 
+      navigate("/company_dashboard");
+      toast.info(
+        "Your financial data is submitting, you can move on to Assess other areas"
+      );
+
       await axios.post(
         `${baseUrl}/teamscore/create-financialScore`,
         combinedData,
@@ -62,8 +65,8 @@ const FinancialScoreContainer: React.FC = () => {
       );
 
       console.log("Data submitted successfully:", combinedData);
-      toast.success("Data submitted successfully");
-      navigate("/score");
+
+      toast.success("Finance Data submitted successfully");
     } catch (error: any) {
       if (error.response) {
         const errorMessage =
@@ -73,9 +76,7 @@ const FinancialScoreContainer: React.FC = () => {
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
 
   const totalSteps = 3;
@@ -120,7 +121,7 @@ const FinancialScoreContainer: React.FC = () => {
         <FinancialScore3
           onSubmit={handleSubmit}
           initialValues={formData}
-          isSubmitting={isSubmitting}
+       
           handleBack={handleBack}
           step={step}
         />

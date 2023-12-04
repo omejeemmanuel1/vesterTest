@@ -18,7 +18,7 @@ const BusinessScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -41,7 +41,6 @@ const BusinessScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-    setIsSubmitting(true);
 
     try {
       const combinedData = { ...formData, ...finalData };
@@ -53,6 +52,10 @@ const BusinessScoreContainer: React.FC = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       };
+      navigate("/company_dashboard");
+      toast.info(
+        "Your business data is submitting, you can move on to Assess other areas"
+      );
 
       await axios.post(
         `${baseUrl}/teamscore/create-businessScore`,
@@ -61,8 +64,8 @@ const BusinessScoreContainer: React.FC = () => {
       );
 
       console.log("Data submitted successfully:", combinedData);
-      toast.success("Data submitted successfully");
-      navigate("/score");
+
+      toast.success("Business Data submitted successfully");
     } catch (error: any) {
       if (error.response) {
         const errorMessage =
@@ -72,8 +75,6 @@ const BusinessScoreContainer: React.FC = () => {
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -112,7 +113,6 @@ const BusinessScoreContainer: React.FC = () => {
         <BusinessModel2
           onSubmit={handleSubmit}
           initialValues={formData}
-          isSubmitting={isSubmitting}
           handleBack={handleBack}
           step={step}
         />

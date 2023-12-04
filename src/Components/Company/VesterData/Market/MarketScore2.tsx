@@ -10,13 +10,12 @@ import {
 
 interface MarketScore2props {
   onSubmit: (values: typeof initialValues) => void;
-  isSubmitting: boolean;
   handleBack: () => void;
 }
 
 const initialValues = {
   competitors: [{ name: "", website: "" }],
-  competitiveAdvantage: "",
+  uniqueness: "",
 };
 
 const validationSchema = Yup.object().shape({
@@ -26,14 +25,13 @@ const validationSchema = Yup.object().shape({
       website: Yup.string().required("Website is required"),
     })
   ),
-  competitiveAdvantage: Yup.string()
+  uniqueness: Yup.string()
     .required("Competitive advantage is required")
     .max(100, "Competitive advantage must be 100 characters or less"),
 });
 
 const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
   onSubmit,
-  isSubmitting,
   handleBack,
   step,
 }) => {
@@ -78,15 +76,6 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
 
   return (
     <div className="min-h-screen flex items-center justify-center md:-mt-10">
-      {isSubmitting && (
-        <div className="fixed inset-0 flex items-center justify-center space-x-4">
-          <div className="absolute inset-0 bg-black opacity-80"></div>
-          <div className="w-24 h-24 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-          <p className="z-50 text-white">
-            Please wait while your data is being processed...
-          </p>
-        </div>
-      )}
       <Formik
         initialValues={initialFormValues}
         validationSchema={validationSchema}
@@ -158,7 +147,7 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
               </FieldArray>
             </div>
             <div className="mb-4">
-              <label htmlFor="competitiveAdvantage" className="block text-sm">
+              <label htmlFor="uniqueness" className="block text-sm">
                 In 100 words or less, tell us what your competitive advantage is
                 over the two competitors. Think about what makes you unique -
                 technology, speed, cost, quality, convenience, efficiency,
@@ -166,13 +155,13 @@ const MarketScore2: React.FC<MarketScore2props & { step: number }> = ({
               </label>
               <Field
                 as="textarea"
-                id="competitiveAdvantage"
-                name="competitiveAdvantage"
+                id="uniqueness"
+                name="uniqueness"
                 rows={4}
                 className="mt-1 p-2 w-full border rounded"
               />
               <ErrorMessage
-                name="competitiveAdvantage"
+                name="uniqueness"
                 component="p"
                 className="text-red-500 text-sm"
               />

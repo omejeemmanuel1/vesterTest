@@ -85,7 +85,6 @@ const MarketScore: React.FC<MarketScoreProps> = ({
               className="mt-1 p-2 w-full border rounded"
             >
               <option value="">Select serviceable addressable market</option>
-              <option value="Over $10bn">Over $10bn</option>
               <option value="Over $100bn">Over $100bn</option>
               <option value="$50bn - $100bn">$50bn - $100bn</option>
               <option value="$10bn - $50bn">$10bn - $50bn</option>

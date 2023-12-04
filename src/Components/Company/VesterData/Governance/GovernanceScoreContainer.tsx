@@ -18,7 +18,6 @@ const GovernanceScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,7 +40,6 @@ const GovernanceScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-    setIsSubmitting(true);
 
     try {
       const combinedData = { ...formData, ...finalData };
@@ -54,6 +52,11 @@ const GovernanceScoreContainer: React.FC = () => {
         },
       };
 
+      navigate("/company_dashboard");
+      toast.info(
+        "Your Governance data is submitting, you can move on to Assess other datas"
+      );
+
       await axios.post(
         `${baseUrl}/teamscore/create-governanceScore`,
         combinedData,
@@ -61,8 +64,7 @@ const GovernanceScoreContainer: React.FC = () => {
       );
 
       console.log("Data submitted successfully:", combinedData);
-      toast.success("Data submitted successfully");
-      navigate("/score");
+      toast.success("Governance Data submitted successfully");
     } catch (error: any) {
       if (error.response) {
         const errorMessage =
@@ -72,9 +74,7 @@ const GovernanceScoreContainer: React.FC = () => {
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
 
   const totalSteps = 2;
@@ -113,7 +113,6 @@ const GovernanceScoreContainer: React.FC = () => {
       {step === 2 && (
         <GovernanceScore
           onSubmit={handleSubmit}
-          isSubmitting={isSubmitting}
           handleBack={handleBack}
           step={step}
         />

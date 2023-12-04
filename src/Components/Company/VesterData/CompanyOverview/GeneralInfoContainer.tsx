@@ -49,22 +49,17 @@ const GeneralInfoContainer: React.FC<GeneralInfoConProps> = ({
         },
       };
 
-      // Create a data object with the form values
       const data = {
         ...values,
         selectedComponent: selectedComponent,
       };
 
-      // Make a POST request with the data
       await axios.post(`${baseUrl}/teamscore/create-generalInfo`, data, config);
 
-      toast.success("Data submitted successfully");
+      toast.success("General Overview Data submitted successfully");
 
-      // Call the onSubmit function and pass the selected component
       onSubmit(selectedComponent);
 
-      // You can also pass the selected component to navigate to the specific component route
-      // navigate(`/${selectedComponent}-info`); // Update the route
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage =
