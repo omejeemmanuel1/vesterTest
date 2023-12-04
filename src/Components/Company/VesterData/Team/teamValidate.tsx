@@ -42,5 +42,5 @@ export const teamscoreSchema2 = Yup.object().shape({
 
   clevelteam: Yup.string()
     .required("Description of the executive role is required")
-    .min(100, "Description should be at least 100 characters"),
+    .max(100, "Description should be at least 100 characters"),
 });

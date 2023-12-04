@@ -257,7 +257,7 @@ const Score: React.FC = () => {
         });
 
         setTeamscores(response.data);
-        console.log("team:", response.data)
+        console.log("team:", response.data);
       } catch (error) {
         console.error("Failed to fetch teamscores", error);
       }
@@ -1244,8 +1244,34 @@ const Score: React.FC = () => {
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-disc m-5">
-                  <li>xxx</li>
+                <ul className="list-disc m-5 text-blue-900">
+                  {marketScores.map((marketScore) => (
+                    <div key={marketScore._id}>
+                      <li className="">
+                        {["A", "B+", "B", "C"].includes(
+                          marketScore.apiScores.Grade
+                        ) && (
+                          <>
+                            {(() => {
+                              switch (marketScore.apiScores.Grade) {
+                                case "A":
+                                  return "• You have identified a large and addressable market with significant growth potential, positioning your company for substantial revenue opportunities.";
+                                  "";
+                                case "B+":
+                                  return "• You have identified a sizable and addressable market with room for expansion, providing opportunities for revenue growth..";
+                                case "B":
+                                  return "• The addressable market for your product or service is moderate, but there may be opportunities to expand your target audience or explore new markets.";
+                                case "C":
+                                  return "• The addressable market for your product or service is relatively small, and there may be a need to refine your target audience or consider niche markets.";
+                                default:
+                                  return "You have no strenght on the market";
+                              }
+                            })()}
+                          </>
+                        )}
+                      </li>
+                    </div>
+                  ))}
                 </ul>
               </div>
               <div className="w-[330px] md:w-[500px] md:h-[360px] h-[400px] rounded-2xl border shadow-md">
@@ -1256,7 +1282,32 @@ const Score: React.FC = () => {
                   </p>
                 </div>
                 <ul className="list-disc m-5">
-                  <li>xxx</li>
+                  {marketScores.map((marketScore) => (
+                    <div key={marketScore._id}>
+                      <li className="">
+                        {["C", "D", "E", "F"].includes(
+                          marketScore.apiScores.Grade
+                        ) && (
+                          <>
+                            {(() => {
+                              switch (marketScore.apiScores.Grade) {
+                                case "D":
+                                  return "• The addressable market for your product or service is limited, and there may be a need to significantly expand your target audience or identify new market opportunities.";
+                                  "";
+                                case "E":
+                                  return "• The addressable market for your product or service is very limited, and there may need to be a complete rethink of your target audience or market strategy.";
+                                case "F":
+                                  return "• The addressable market for your product or service is very limited, and there may need to be a complete rethink of your target audience or market strategy.";
+
+                                default:
+                                  return "You have no improvement on the market";
+                              }
+                            })()}
+                          </>
+                        )}
+                      </li>
+                    </div>
+                  ))}
                 </ul>
               </div>
             </div>

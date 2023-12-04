@@ -16,7 +16,7 @@ const DataProvider = ({ children }: any) => {
       sessionStorage.setItem("userEmail", registerData.companyMail);
 
       toast.success("Registration successful! You can now log in.");
-      window.location.href = "/verify-link";
+      window.location.href = "/company-login";
     } catch (error: any) {
       if (error.response) {
         const errorMessage = error.response.data?.error || "An error occurred";
@@ -35,7 +35,7 @@ const DataProvider = ({ children }: any) => {
       sessionStorage.setItem("investorMail", registerData.investorMail);
 
       toast.success("Registration successful! You can now log in.");
-      window.location.href = "/verifyInvest-link";
+      window.location.href = "/investor-login";
     } catch (error: any) {
       if (error.response) {
         const errorMessage = error.response.data?.error || "An error occurred";

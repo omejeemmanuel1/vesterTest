@@ -18,7 +18,7 @@ const MarketScoreContainer: React.FC = () => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const MarketScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-    setIsSubmitting(true);
+   
 
     try {
       const combinedData = { ...formData, ...finalData };
@@ -54,6 +54,11 @@ const MarketScoreContainer: React.FC = () => {
         },
       };
 
+      navigate("/company_dashboard");
+      toast.info(
+        "Your market data is submitting, you can move on to Assess other datas"
+      );
+
       await axios.post(
         `${baseUrl}/teamscore/create-marketScore`,
         combinedData,
@@ -61,8 +66,7 @@ const MarketScoreContainer: React.FC = () => {
       );
 
       console.log("Data submitted successfully:", combinedData);
-      toast.success("Data submitted successfully");
-      navigate("/score");
+      toast.success("Market data submitted successfully");
     } catch (error: any) {
       if (error.response) {
         const errorMessage =
@@ -72,9 +76,7 @@ const MarketScoreContainer: React.FC = () => {
       } else {
         toast.error("Server is not responding. Please try again later.");
       }
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
 
   const totalSteps = 2;
@@ -113,7 +115,6 @@ const MarketScoreContainer: React.FC = () => {
       {step === 2 && (
         <MarketScore2
           onSubmit={handleSubmit}
-          isSubmitting={isSubmitting}
           handleBack={handleBack}
           step={step}
         />

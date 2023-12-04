@@ -10,7 +10,6 @@ import * as Yup from "yup";
 
 interface GovernanceProps2 {
   onSubmit: (values: typeof initialValues) => void;
-  isSubmitting: boolean;
   handleBack: () => void;
 }
 export const initialValues = {
@@ -37,22 +36,11 @@ const validationSchema2 = Yup.object().shape({
 
 const GovernanceScore2: React.FC<GovernanceProps2 & { step: number }> = ({
   onSubmit,
-  isSubmitting,
   handleBack,
   step,
 }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      {isSubmitting && (
-        <div className="fixed inset-0 flex items-center justify-center space-x-4">
-          <div className="absolute inset-0 bg-black opacity-80"></div>
-          <div className="w-24 h-24 border-t-4 border-blue-400 border-solid rounded-full animate-spin z-10"></div>
-          <p className="z-50 text-white">
-            Please wait while your data is being processed...
-          </p>
-        </div>
-      )}
-
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
