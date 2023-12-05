@@ -22,13 +22,31 @@ const MarketScore: React.FC<MarketScoreProps> = ({
   onSubmit,
   initialValues,
 }) => {
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("marketFormValues1");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
+
+  const initialFormValues = initializeFormValues();
+
+  const handleFormSubmit = (values: any) => {
+    localStorage.setItem("marketFormValues1", JSON.stringify(values));
+    onSubmit(values);
+  };
   return (
     <div className="min-h-screen flex md:items-center justify-center md:-mt-16">
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormValues}
         enableReinitialize={true}
         validationSchema={marketscoreSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleFormSubmit}
       >
         <Form className="bg-white m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px]">
           <h2 className="text-[24px] font-semibold">

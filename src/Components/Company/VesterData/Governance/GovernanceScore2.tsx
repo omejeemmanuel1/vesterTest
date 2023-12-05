@@ -39,11 +39,29 @@ const GovernanceScore2: React.FC<GovernanceProps2 & { step: number }> = ({
   handleBack,
   step,
 }) => {
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("GovernaceFormValues2");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
+
+  const initialFormValues = initializeFormValues();
+
+  const handleFormSubmit = (values: any) => {
+    localStorage.setItem("GovernaceFormValues2", JSON.stringify(values));
+    onSubmit(values);
+  };
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
+        initialValues={initialFormValues}
+        onSubmit={handleFormSubmit}
         enableReinitialize={true}
         validationSchema={validationSchema2}
       >

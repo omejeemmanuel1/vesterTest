@@ -234,7 +234,7 @@ const CompanyDashboard: React.FC = () => {
         emptyAPIs.push(apiNames[index]);
       }
     });
-
+    console.log("emptyAPIsList:", emptyAPIs);
     setEmptyAPIsList(emptyAPIs);
 
     const totalAPIs = apiNames.length;
@@ -281,57 +281,55 @@ const CompanyDashboard: React.FC = () => {
     vesterScore,
   ]);
 
-    const [showGeneralInfoModal, setShowGeneralInfoModal] = useState(false);
-    const [selectedComponent, setSelectedComponent] = useState<
-      string | undefined
-    >();
-    const [generalInfo, setGeneralInfo] = useState([]);
+  const [showGeneralInfoModal, setShowGeneralInfoModal] = useState(false);
+  const [selectedComponent, setSelectedComponent] = useState<
+    string | undefined
+  >();
+  const [generalInfo, setGeneralInfo] = useState([]);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const token = localStorage.getItem("token");
-          const generalInfoApiUrl = `${baseUrl}/teamscore/get-generalInfo`;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const generalInfoApiUrl = `${baseUrl}/teamscore/get-generalInfo`;
 
-          const response = await axios.get(generalInfoApiUrl, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        const response = await axios.get(generalInfoApiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          setGeneralInfo(response.data);
-        } catch (error) {
-          console.error("Failed to fetch generalinfo", error);
-        }
-      };
-      fetchData();
-    }, []);
-
-    const isGeneralInfoEmpty = generalInfo.length === 0;
-
-    const openGeneralInfoModal = (componentType: string) => {
-      setSelectedComponent(componentType);
-      if (isGeneralInfoEmpty) {
-        setShowGeneralInfoModal(true);
-      } else {
-        // GeneralInfo is not empty, so you can navigate to the component directly
-        navigate(`/${componentType}-info`);
+        setGeneralInfo(response.data);
+      } catch (error) {
+        console.error("Failed to fetch generalinfo", error);
       }
     };
+    fetchData();
+  }, []);
 
-    const closeGeneralInfoModal = () => {
-      setShowGeneralInfoModal(false);
-    };
+  const isGeneralInfoEmpty = generalInfo.length === 0;
 
-    const handleGeneralInfoSubmit = (componentType: string) => {
-      setSelectedComponent(componentType);
-      closeGeneralInfoModal();
+  const openGeneralInfoModal = (componentType: string) => {
+    setSelectedComponent(componentType);
+    if (isGeneralInfoEmpty) {
+      setShowGeneralInfoModal(true);
+    } else {
+      navigate(`/${componentType}-info`);
+    }
+  };
 
-      // Navigate to the specific component route when "Update" is clicked
-      navigate(`/team-info`);
-    };
+  const closeGeneralInfoModal = () => {
+    setShowGeneralInfoModal(false);
+  };
+
+  const handleGeneralInfoSubmit = (componentType: string) => {
+    setSelectedComponent(componentType);
+    closeGeneralInfoModal();
+
+    navigate(`/team-info`);
+  };
 
   return (
     <>
@@ -370,16 +368,16 @@ const CompanyDashboard: React.FC = () => {
       >
         <div>
           {" "}
-          <ComSideBar height="h-[825px]" />
+          <ComSideBar height="md:h-[900px] lg:[1000px]" />
         </div>
 
         <div className="flex-1">
           <ComNavBar />
 
           <div className="md:-mt-5">
-            {emptyAPIsList.length > 0 ? (
+            {emptyAPIsList.length === 5 ? (
               <div
-                className={`block text-center ml-2 mr-2 rounded-2xl md:h-[200px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+                className={`block text-center ml-2 mr-2 rounded-2xl md:h-[30vh]  h-[370px] md:justify-center p-6 bg-[#031549] ${
                   theme === "light"
                     ? "font-poppins text-white"
                     : "dark:bg-white  text-[#000D80]"
@@ -408,13 +406,13 @@ const CompanyDashboard: React.FC = () => {
             ) : (
               <div className="flex">
                 <div
-                  className={`md:flex  text-[20px] ml-16 mr-2 rounded-2xl md:h-[200px] md:w-[740px] h-[370px] md:justify-between p-2 bg-[#031549] ${
+                  className={`md:flex  text-[20px] ml-16 mr-2 rounded-2xl md:h-[25vh] md:w-[740px] lg:w-[100%] h-[370px] md:justify-between p-2 bg-[#031549] ${
                     theme === "light"
                       ? "font-poppins"
                       : "dark:bg-white text-[#031549]"
                   }`}
                 >
-                  <div className="w-full md:w-[50%] md:ml-10">
+                  <div className="w-full md:w-[50%] lg:w-[50%] md:ml-10">
                     <h2 className="">Your Vester Score</h2>
                     <img
                       src={vesterScore}
@@ -422,7 +420,7 @@ const CompanyDashboard: React.FC = () => {
                       className="md:ml-5 w-[34%] ml-28"
                     />
                   </div>
-                  <div className="w-full md:w-[50%] text-center mt-6 mr-4">
+                  <div className="w-full md:w-[50%] lg:w-[50%] text-center mt-6 mr-4">
                     {emptyAPIsList.length === 0 ? (
                       <div>
                         <p>
@@ -453,7 +451,7 @@ const CompanyDashboard: React.FC = () => {
                 </div>
 
                 <div
-                  className={`hidden md:block text-center pt-10 text-[20px] ml-2 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+                  className={`hidden md:block text-center pt-10 text-[20px] ml-2 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] lg:w-[500px] h-[370px] md:justify-center p-6 bg-[#031549] ${
                     theme === "light"
                       ? "font-poppins"
                       : "dark:bg-white text-[#031549]"

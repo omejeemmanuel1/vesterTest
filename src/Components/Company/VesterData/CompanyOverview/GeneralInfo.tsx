@@ -173,7 +173,6 @@ const GeneralInfo: React.FC<
       <Formik
         validationSchema={generalSchema}
         onSubmit={(values) => {
-          // Pass the selectedComponent to the onSubmit callback
           onSubmit(values, selectedComponent);
         }}
         initialValues={initialValues}

@@ -55,7 +55,7 @@ const FinancialScoreContainer: React.FC = () => {
 
       navigate("/company_dashboard");
       toast.info(
-        "Your financial data is submitting, you can move on to Assess other areas"
+        "Your financial data is submitting, you can move on to Assess other pillars"
       );
 
       await axios.post(
@@ -98,16 +98,19 @@ const FinancialScoreContainer: React.FC = () => {
       </video>
 
       <div className="flex justify-center space-x-6 z-20">
-        {[1, 2, 3].map((circleStep) => (
-          <div
-            key={circleStep}
-            className={`w-10 h-10 rounded-full ${
-              circleStep <= step ? "bg-[#031549]" : "bg-white"
-            }`}
-          ></div>
+        {[1, 2, 3].map((circleStep, index) => (
+          <div key={circleStep} className="relative">
+            {index > 0 && (
+              <div className="absolute h-1 w-10 bg-[#000D80] top-4 -left-7 -z-10"></div>
+            )}
+            <div
+              className={`w-10 h-10 rounded-full ${
+                circleStep <= step ? "bg-[#000D80]" : "bg-white"
+              }`}
+            ></div>
+          </div>
         ))}
       </div>
-      <div className="w-40 h-1 bg-[#031549] relative left-[640px] -top-5 -z-10"></div>
 
       {step === 1 && <FinancialScore onSubmit={handleContinue} />}
       {step === 2 && (
@@ -121,7 +124,6 @@ const FinancialScoreContainer: React.FC = () => {
         <FinancialScore3
           onSubmit={handleSubmit}
           initialValues={formData}
-       
           handleBack={handleBack}
           step={step}
         />

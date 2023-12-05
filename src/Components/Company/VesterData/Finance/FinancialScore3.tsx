@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 
 import {
@@ -22,41 +22,36 @@ const initialValues = {
   currentBurnRate: "",
 };
 
-const saveFormValuesToLocalStorage = (values: any) => {
-  localStorage.setItem("financialScore3Values", JSON.stringify(values));
-};
-
-const loadFormValuesFromLocalStorage = () => {
-  const storedValues = localStorage.getItem("financialScore3Values");
-  if (storedValues) {
-    try {
-      return JSON.parse(storedValues);
-    } catch (error) {
-      console.error("Error parsing stored form values:", error);
-    }
-  }
-  return initialValues;
-};
-
 const FinancialScore3: React.FC<FinancialScore3Props & { step: number }> = ({
   onSubmit,
   initialValues,
   handleBack,
   step,
 }) => {
-  const initialFormValues = loadFormValuesFromLocalStorage();
-  useEffect(() => {
-    saveFormValuesToLocalStorage(initialFormValues);
-  }, [initialFormValues]);
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("FinancialFormValues3");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
+
+  const initialFormValues = initializeFormValues();
+
+  const handleFormSubmit = (values: any) => {
+    localStorage.setItem("FinancialFormValues3", JSON.stringify(values));
+    onSubmit(values);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          saveFormValuesToLocalStorage(values);
-          onSubmit(values);
-        }}
+        initialValues={initialFormValues}
+        onSubmit={handleFormSubmit}
         enableReinitialize={true}
       >
         <Form className="p-8 m-6 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white md:-mt-[50px]">

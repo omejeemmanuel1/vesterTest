@@ -51,7 +51,9 @@ const TeamScoreContainer: React.FC = () => {
       };
 
       navigate("/company_dashboard");
-      toast.info("Your teams data is submitting, you can move on to Assess other datas");
+      toast.info(
+        "Your teams data is submitting, you can move on to Assess other pillars"
+      );
 
       await axios.post(
         `${baseUrl}/teamscore/create-teamscore`,
@@ -93,16 +95,19 @@ const TeamScoreContainer: React.FC = () => {
       </video>
 
       <div className="flex justify-center space-x-6 z-20">
-        {[1, 2].map((circleStep) => (
-          <div
-            key={circleStep}
-            className={`w-10 h-10 rounded-full ${
-              circleStep <= step ? "bg-[#000D80]" : "bg-white"
-            }`}
-          ></div>
+        {[1, 2].map((circleStep, index) => (
+          <div key={circleStep} className="relative">
+            {index > 0 && (
+              <div className="absolute h-1 w-10 bg-[#000D80] top-4 -left-7 -z-10"></div>
+            )}
+            <div
+              className={`w-10 h-10 rounded-full ${
+                circleStep <= step ? "bg-[#000D80]" : "bg-white"
+              }`}
+            ></div>
+          </div>
         ))}
       </div>
-      <div className="w-20 h-1 bg-[#000D80] relative left-[690px] -top-5 -z-10"></div>
 
       {step === 1 && (
         <Teamscore1 onSubmit={handleContinue} initialValues={formData} />
