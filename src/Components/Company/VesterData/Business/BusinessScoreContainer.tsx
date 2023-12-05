@@ -19,7 +19,6 @@ const BusinessScoreContainer: React.FC = () => {
     return savedFormData ? JSON.parse(savedFormData) : initialValues;
   });
 
-
   const navigate = useNavigate();
 
   const getAccessToken = () => {
@@ -41,7 +40,6 @@ const BusinessScoreContainer: React.FC = () => {
   };
 
   const handleSubmit = async (finalData: any) => {
-
     try {
       const combinedData = { ...formData, ...finalData };
 
@@ -54,7 +52,7 @@ const BusinessScoreContainer: React.FC = () => {
       };
       navigate("/company_dashboard");
       toast.info(
-        "Your business data is submitting, you can move on to Assess other areas"
+        "Your business data is submitting, you can move on to Assess other pillars"
       );
 
       await axios.post(
@@ -97,16 +95,19 @@ const BusinessScoreContainer: React.FC = () => {
       </video>
 
       <div className="flex justify-center space-x-6 z-20">
-        {[1, 2].map((circleStep) => (
-          <div
-            key={circleStep}
-            className={`w-10 h-10 rounded-full ${
-              circleStep <= step ? "bg-[#031549]" : "bg-white"
-            }`}
-          ></div>
+        {[1, 2].map((circleStep, index) => (
+          <div key={circleStep} className="relative">
+            {index > 0 && (
+              <div className="absolute h-1 w-10 bg-[#000D80] top-4 -left-7 -z-10"></div>
+            )}
+            <div
+              className={`w-10 h-10 rounded-full ${
+                circleStep <= step ? "bg-[#000D80]" : "bg-white"
+              }`}
+            ></div>
+          </div>
         ))}
       </div>
-      <div className="w-20 h-1 bg-[#031549] relative left-[670px] -top-5 -z-10"></div>
 
       {step === 1 && <BusinessModel onSubmit={handleContinue} />}
       {step === 2 && (

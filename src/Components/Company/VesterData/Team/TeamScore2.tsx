@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import {
   MdOutlineKeyboardDoubleArrowRight,
   MdOutlineKeyboardDoubleArrowLeft,
@@ -34,7 +34,7 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
   const [hasOtherEmployees, setHasOtherEmployees] = useState<boolean>(false);
 
   const initializeFormValues = () => {
-    const storedValues = localStorage.getItem("teamscore3Values");
+    const storedValues = localStorage.getItem("teamscore2Values");
     if (storedValues) {
       try {
         return JSON.parse(storedValues);
@@ -47,13 +47,13 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
 
   const initialFormValues = initializeFormValues();
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasOtherEmployees(e.target.value === "yes");
+  const handleFormSubmit = (values: any) => {
+    localStorage.setItem("teamscore2Values", JSON.stringify(values));
+    onSubmit(values);
   };
 
-  const handleFormSubmit = (values: any) => {
-    localStorage.setItem("teamscore3Values", JSON.stringify(values));
-    onSubmit(values);
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasOtherEmployees(e.target.value === "yes");
   };
 
   return (
@@ -197,27 +197,28 @@ const Teamscore2: React.FC<Teamscore2Props & { step: number }> = ({
               /> */}
             </div>
           )}
-
-          <div className="mb-4">
-            <label htmlFor="clevelteam" className="block text-sm">
-              In 100 words, tell us about the role of this executive in your
-              startup (include their title, what they do and number of years of
-              experience)
-              <span className="text-red-500">*</span>
-            </label>
-            <Field
-              as="textarea"
-              id="clevelteam"
-              name="clevelteam"
-              rows={2}
-              className="mt-1 p-2 w-full border rounded"
-            />
-            <ErrorMessage
+          {hasCLevelExecs && (
+            <div className="mb-4">
+              <label htmlFor="clevelteam" className="block text-sm">
+                In 100 words, tell us about the role of this executive in your
+                startup (include their title, what they do and number of years
+                of experience)
+                <span className="text-red-500">*</span>
+              </label>
+              <Field
+                as="textarea"
+                id="clevelteam"
+                name="clevelteam"
+                rows={2}
+                className="mt-1 p-2 w-full border rounded"
+              />
+              {/* <ErrorMessage
               name="clevelteam"
               component="p"
               className="text-red-500 text-sm"
-            />
-          </div>
+            /> */}
+            </div>
+          )}
           <div className="mb-4">
             <label htmlFor="otherEmployee" className="block text-sm">
               Do you have any other employees?

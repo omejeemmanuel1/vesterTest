@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   MdOutlineKeyboardDoubleArrowRight,
@@ -20,40 +20,36 @@ const initialValues = {
   traction: "",
 };
 
-const saveFormValuesToLocalStorage = (values: any) => {
-  localStorage.setItem("businessModel2Values", JSON.stringify(values));
-};
-
-const loadFormValuesFromLocalStorage = () => {
-  const storedValues = localStorage.getItem("businessModel2Values");
-  if (storedValues) {
-    try {
-      return JSON.parse(storedValues);
-    } catch (error) {
-      console.error("Error parsing stored form values:", error);
-    }
-  }
-  return initialValues;
-};
-
 const BusinessModel2: React.FC<BusinessModel2Props & { step: number }> = ({
   onSubmit,
   initialValues,
   handleBack,
   step,
 }) => {
-  const initialFormValues = loadFormValuesFromLocalStorage();
+  const initializeFormValues = () => {
+    const storedValues = localStorage.getItem("businessFormValues2");
+    if (storedValues) {
+      try {
+        return JSON.parse(storedValues);
+      } catch (error) {
+        console.error("Error parsing stored form values:", error);
+      }
+    }
+    return initialValues;
+  };
 
-  useEffect(() => {
-    saveFormValuesToLocalStorage(initialFormValues);
-  }, [initialFormValues]);
+  const initialFormValues = initializeFormValues();
 
+  const handleFormSubmit = (values: any) => {
+    localStorage.setItem("businessFormValues2", JSON.stringify(values));
+    onSubmit(values);
+  };
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormValues}
         enableReinitialize={true}
-        onSubmit={onSubmit}
+        onSubmit={handleFormSubmit}
         validationSchema={businessSchema2}
       >
         <Form className="m-6 p-8 rounded-2xl shadow-md border border-gray-400 font-cabinet w-[422px] bg-white">

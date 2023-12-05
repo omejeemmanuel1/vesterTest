@@ -82,7 +82,7 @@ const Profile: React.FC = () => {
       }`}
     >
       <div>
-        <ComSideBar height="h-[929px]" />
+        <ComSideBar height="h-[929px] lg-h:[1000px]" />
       </div>
 
       <div className="flex-1">

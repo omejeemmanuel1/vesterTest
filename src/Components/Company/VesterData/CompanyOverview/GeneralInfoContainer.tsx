@@ -10,7 +10,7 @@ const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 interface GeneralInfoConProps {
   onSubmit: (selectedComponent: string) => void;
-  selectedComponent: string; // Add selectedComponent as a prop
+  selectedComponent: string;
   closeGeneralInfoModal: () => void;
 }
 
@@ -59,7 +59,6 @@ const GeneralInfoContainer: React.FC<GeneralInfoConProps> = ({
       toast.success("General Overview Data submitted successfully");
 
       onSubmit(selectedComponent);
-
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage =

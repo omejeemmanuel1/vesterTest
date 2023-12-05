@@ -64,7 +64,6 @@ const ProfileCard: React.FC<profileProps> = ({
     if (isGeneralInfoEmpty) {
       setShowGeneralInfoModal(true);
     } else {
-      // GeneralInfo is not empty, so you can navigate to the component directly
       navigate(`/${componentType}-info`);
     }
   };
@@ -77,7 +76,6 @@ const ProfileCard: React.FC<profileProps> = ({
     setSelectedComponent(componentType);
     closeGeneralInfoModal();
 
-    // Navigate to the specific component route when "Update" is clicked
     navigate(`/${componentType}-info`);
   };
 
@@ -111,7 +109,7 @@ const ProfileCard: React.FC<profileProps> = ({
       )}
 
       <div
-        className={`font-poppins text-center ${
+        className={`font-poppins text-center md:w-[80vw] md:h-[60vh] ${
           theme === "light"
             ? "font-poppins text-[#031549]"
             : "dark:bg-[#031549] text-[#031549]"
@@ -121,9 +119,9 @@ const ProfileCard: React.FC<profileProps> = ({
           You can assess any of the 5 areas below or complete all 5 to get your
           Vester Score
         </h2>
-        <div className="md:flex">
+        <div className="md:flex lg:flex ">
           <div className="md:-mt-2">
-            <div className="block md:flex flex-wrap gap-20 justify-center">
+            <div className="block md:flex lg:flex flex-wrap gap-20 justify-center">
               <button
                 onClick={() => openGeneralInfoModal("team")}
                 className="h-[108px]"

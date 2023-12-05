@@ -28,7 +28,7 @@ const ScoreSideBar: React.FC = () => {
   };
 
   return (
-    <div className={`hidden md:flex md:h-[100%] lg:h-[100%]`}>
+    <div className={`hidden md:flex md:h-[100%] lg:h-[1000px]`}>
       <aside
         className={`bg-[#031549] text-white w-[257px] p-4 pr-10 font-poppins flex flex-col justify-between h-full`}
       >
