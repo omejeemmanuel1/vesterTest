@@ -89,7 +89,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
                 Vester Score
               </NavLink>
             </li>
-            <li
+            {/* <li
               className={`mb-6 flex ${
                 isActive("/Performance")
                   ? theme === "light"
@@ -105,7 +105,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
                 <BiNetworkChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
                 Investor Match
               </NavLink>
-            </li>
+            </li> */}
             <li
               className={`flex ${
                 isActive("/profile-update")

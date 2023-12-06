@@ -88,7 +88,7 @@ const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
                 Deal Flow
               </NavLink>
             </li>
-            <li
+            {/* <li
               className={`mb-6 flex ${
                 isActive("/investment")
                   ? theme === "light"
@@ -104,7 +104,7 @@ const InvestorSideBar: React.FC<InvestSideBarProps> = ({ height }) => {
                 <BiNetworkChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
                 Investment mandate
               </NavLink>
-            </li>
+            </li> */}
             <li
               className={`flex ${
                 isActive("/investor-profile")

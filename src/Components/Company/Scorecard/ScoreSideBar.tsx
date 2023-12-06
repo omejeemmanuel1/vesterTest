@@ -74,7 +74,7 @@ const ScoreSideBar: React.FC = () => {
                 Vester Score
               </NavLink>
             </li>
-            <li
+            {/* <li
               className={`mb-6 flex ${
                 isActive("/Performance")
                   ? theme === "light"
@@ -90,7 +90,7 @@ const ScoreSideBar: React.FC = () => {
                 <BiNetworkChart className="mt-[1px] mr-2 text-2xl text-[#ec7f36]" />
                 Investor Match
               </NavLink>
-            </li>
+            </li> */}
             <li
               className={`flex ${
                 isActive("/profile-update")

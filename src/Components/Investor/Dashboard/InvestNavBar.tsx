@@ -174,7 +174,7 @@ const InvestNavBar: React.FC<InvestNavBarProps> = () => {
                       Deal Flow
                     </NavLink>
                   </li>
-                  <li className="text-white rounded-2xl pt-2 pb-2 pl-4">
+                  {/* <li className="text-white rounded-2xl pt-2 pb-2 pl-4">
                     <NavLink
                       to="/investment"
                       className="flex hover:transition-transform hover:scale-105"
@@ -182,7 +182,7 @@ const InvestNavBar: React.FC<InvestNavBarProps> = () => {
                       <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
                       Investment mandate
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
                     <NavLink
                       to="/profile-update"

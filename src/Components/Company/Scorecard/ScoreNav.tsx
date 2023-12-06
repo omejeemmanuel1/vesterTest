@@ -258,7 +258,7 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
                       Vester Score
                     </NavLink>
                   </li>
-                  <li className="text-white rounded-2xl pt-2 pb-2 pl-4">
+                  {/* <li className="text-white rounded-2xl pt-2 pb-2 pl-4">
                     <NavLink
                       to="/Performance"
                       className="flex hover:transition-transform hover:scale-105"
@@ -266,7 +266,7 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
                       <AiOutlinePieChart className="mt-[1px] mr-2 text-2xl" />
                       Investor Match
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li className="text-white rounded-2xl p-2 pt-2 pb-2 pl-4">
                     <NavLink
                       to="/profile-update"
