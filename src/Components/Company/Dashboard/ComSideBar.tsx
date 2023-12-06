@@ -1,6 +1,6 @@
 import { MdOutlineSettings } from "react-icons/md";
 import { RxBarChart } from "react-icons/rx";
-import { BiNetworkChart, BiSolidDashboard } from "react-icons/bi";
+import { BiSolidDashboard } from "react-icons/bi";
 import { MdHelp } from "react-icons/md";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
