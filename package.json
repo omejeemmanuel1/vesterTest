@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite --mode development",
-    "build:staging": "vite build --mode staging",
+    "build": "react-scripts build",
     "build:prod": "vite build --mode production",
     "vite": "vite",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
