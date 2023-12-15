@@ -28,8 +28,15 @@ interface ApiScores {
   product_status: string;
   location_served: string;
   monetization: string;
+  mom_user_growth_b2b: string;
+  mom_user_growth_b2c: string;
+  mom_user_growth_b2b2c: string;
   market: string;
   uniqueness: string;
+  advisor: string;
+  registered: string;
+  revenueStatus: string;
+  valuation: string;
   Grade: string;
   Percentage: string;
   api_score: number;
@@ -220,6 +227,64 @@ function getMessageForLocationServed(location_served: number) {
   };
   return messages[location_served] || "No message available";
 }
+function getMessageForMom_user_growth_b2b(mom_user_growth_b2b: number) {
+  const messages: { [key: number]: string } = {
+    0: "• Your MoM user growth in the B2B/B2B2C segment is nonexistent, and there may be significant challenges in attracting and retaining business customers.",
+    1: "• Your MoM user growth in the B2B/B2B2C segment is low, and there may be significant challenges in attracting and retaining business customers.",
+    2: "• Your MoM user growth in the B2B/B2B2C segment is modest, and there may be opportunities to improve your sales and customer acquisition strategies.",
+    3: "• You have achieved some MoM user growth in the B2B/B2B2C segment, but there may be opportunities to improve your customer acquisition and retention strategies.",
+    4: "• You have achieved consistent MoM user growth in the B2B/B2B2C segment, indicating your ability to attract and retain business customers.",
+    5: "• You have consistently achieved impressive MoM user growth in the B2B/B2B2C segment, reflecting your ability to attract and retain business customers.",
+  };
+  return messages[mom_user_growth_b2b] || "No message available";
+}
+
+function getMessageForMom_user_growth_b2c(mom_user_growth_b2c: number) {
+  const messages: { [key: number]: string } = {
+    0: "•Your MoM user growth in the B2C segment is nonexistent, and there may be significant challenges in attracting and retaining consumer users.",
+    1: "• Your MoM user growth in the B2C segment is low, and there may be significant challenges in attracting and retaining consumer users.",
+    2: "• Your MoM user growth in the B2C segment is modest, and there may be opportunities to enhance your marketing and user engagement strategies to drive user acquisition and retention.",
+    3: "• You have achieved some MoM user growth in the B2C segment, but there may be opportunities to enhance your marketing and user engagement strategies.",
+    4: "• You have achieved steady MoM user growth in the B2C segment, showcasing your ability to attract and retain consumer users.",
+    5: "• You have consistently achieved exceptional MoM user growth in the B2C segment, indicating your ability to attract and retain consumer users.",
+  };
+  return messages[mom_user_growth_b2c] || "No message available";
+}
+
+function getMessageForAdvisor(advisor: number) {
+  const messages: { [key: number]: string } = {
+    2: "• The board of directors and advisers your company may have is not meeting frequestly enough (best practices is to meet at least every quarter)",
+    5: "• You have assembled a advisory team and board of directors with extensive experience and expertise in relevant industries, that meet regularly to ensure the business is Governed effectively",
+  };
+  return messages[advisor] || "No message available";
+}
+function getMessageForRegistered(registered: number) {
+  const messages: { [key: number]: string } = {
+    0: "• You have not taken any steps towards legal registration or regulatory compliance.",
+    3: "• You have initiated the process of legal registration and are working towards regulatory compliance.",
+    5: "• You have ensured full legal compliance and are well-positioned to navigate the regulatory landscape.",
+  };
+  return messages[registered] || "No message available";
+}
+function getMessageForRevenueStatus(revenueStatus: number) {
+  const messages: { [key: number]: string } = {
+    0: "• You have not yet generated revenue, and you need to prioritize product development and market research.",
+    3: "• You have generated initial revenue, but you may need to focus on accelerating growth to achieve profitability.",
+    5: "• You have achieved significant revenue traction and are demonstrating a clear path to profitability.",
+  };
+  return messages[revenueStatus] || "No message available";
+}
+function getMessageForValuation(valuation: number) {
+  const messages: { [key: number]: string } = {
+    0: "• Your Month on Month revenue growth is nonexistent, as you have not yet started generating revenue from customers.",
+    1: "• Your Month on Month revenue growth is low or nonexistent, indicating a need to refine your product or service to address market needs and attract customers.",
+    2: "• You are experiencing modest Month on Month revenue growth, and there may be a need to refine your product-market fit or customer acquisition strategies.",
+    3: "• You are experiencing steady Month on Month revenue growth, but there may be opportunities to improve your sales and marketing strategies to drive faster growth.",
+    4: "• You are experiencing consistent Month on Month revenue growth, demonstrating ongoing market interest in your product or service.",
+    5: "• You are consistently achieving impressive Month on Month revenue growth, indicating strong market demand for your product or service..",
+  };
+  return messages[valuation] || "No message available";
+}
 
 function getMessageForServicableMarket(market: number) {
   const messages: { [key: number]: string } = {
@@ -344,6 +409,7 @@ const Score: React.FC = () => {
         });
 
         setFinancialScores(response.data);
+        console.log("financial scores:", response.data);
       } catch (error) {
         console.error("Failed to fetch financialScores", error);
       }
@@ -480,7 +546,7 @@ const Score: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-center ml-3 md:ml-0 p-6 text-[20px] md:rounded-r-2xl md:h-[300px] w-[350px] md:w-[650px] h-[370px] md:justify-center bg-[#031549]">
+                <div className="text-center ml-3 md:ml-0 p-6 text-[20px] md:rounded-r-2xl md:h-[300px] w-[350px] md:w-[650px] h-[400px] md:justify-center bg-[#031549]">
                   <h2 className="mb-6 font-bold text-2xl">Score Summary</h2>
                   <div className=" text-center ">
                     {emptyAPIsList.length > 0 && (
@@ -764,14 +830,14 @@ const Score: React.FC = () => {
           </ul>
           <div className={`${activeItem === "overall" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-none m-5 text-sm">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {emptyAPIsList.length === 0 && (
                       <div>
@@ -938,14 +1004,14 @@ const Score: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="m-5 text-sm">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {emptyAPIsList.length === 0 && (
                       <div>
@@ -1116,14 +1182,14 @@ const Score: React.FC = () => {
           </div>
           <div className={`${activeItem === "team" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-none m-5 text-sm">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {teamscores.map((teamscore) => (
                       <div key={teamscore._id}>
@@ -1187,14 +1253,14 @@ const Score: React.FC = () => {
                   ) : null}
                 </p>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="list-none m-5 text-sm">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {teamscores.map((teamscore) => (
                       <div key={teamscore._id}>
@@ -1263,14 +1329,14 @@ const Score: React.FC = () => {
 
           <div className={` ${activeItem === "market" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-2">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-2 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-none m-5 text-sm">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {marketScores.map((marketScore) => (
                       <div key={marketScore._id}>
@@ -1308,14 +1374,14 @@ const Score: React.FC = () => {
                   ) : null}
                 </p>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="list-none m-5 text-sm">
+                <ul className="list-none m-5">
                   <li>
                     {marketScores.map((marketScore) => (
                       <div key={marketScore._id}>
@@ -1357,14 +1423,14 @@ const Score: React.FC = () => {
           </div>
           <div className={`${activeItem === "business" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-none m-5">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {businessScores.map((businessScore) => (
                       <div key={businessScore._id}>
@@ -1407,6 +1473,32 @@ const Score: React.FC = () => {
                                     )
                                   : ""}
                               </li>
+                              <li className="">
+                                {/* {`mom_user_growth_b2b: ${businessScore.apiScore.mom_user_growth_b2b}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.mom_user_growth_b2b
+                                ) >= 3
+                                  ? getMessageForMom_user_growth_b2b(
+                                      parseInt(
+                                        businessScore.apiScore
+                                          .mom_user_growth_b2b
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`mom_user_growth_b2b: ${businessScore.apiScore.mom_user_growth_b2b}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.mom_user_growth_b2c
+                                ) >= 3
+                                  ? getMessageForMom_user_growth_b2c(
+                                      parseInt(
+                                        businessScore.apiScore
+                                          .mom_user_growth_b2c
+                                      )
+                                    )
+                                  : ""}
+                              </li>
                             </>
                           )}
                         </li>
@@ -1424,14 +1516,14 @@ const Score: React.FC = () => {
                   ) : null}
                 </p>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="list-none m-5">
+                <ul className="list-none m-5 text-sm md:text-[16px]">
                   <li>
                     {businessScores.map((businessScore) => (
                       <div key={businessScore._id}>
@@ -1473,6 +1565,32 @@ const Score: React.FC = () => {
                                     )
                                   : ""}
                               </li>
+                              <li className="">
+                                {/* {`Commitment: ${businessScore.apiScore.commit}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.mom_user_growth_b2b
+                                ) < 3
+                                  ? getMessageForMom_user_growth_b2b(
+                                      parseInt(
+                                        businessScore.apiScore
+                                          .mom_user_growth_b2b
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`mom_user_growth_b2c: ${businessScore.apiScore.mom_user_growth_b2c}. `} */}
+                                {parseInt(
+                                  businessScore.apiScore.mom_user_growth_b2c
+                                ) < 3
+                                  ? getMessageForMom_user_growth_b2c(
+                                      parseInt(
+                                        businessScore.apiScore
+                                          .mom_user_growth_b2c
+                                      )
+                                    )
+                                  : ""}
+                              </li>
                             </>
                           )}
                         </li>
@@ -1483,7 +1601,7 @@ const Score: React.FC = () => {
                 <p className="ml-5">
                   {businessScores.every((businessScore) =>
                     Object.values(businessScore.apiScore).every(
-                      (val) => parseInt(val) < 3
+                      (val) => parseInt(val) >= 3
                     )
                   ) ? (
                     <p>No improvement in any category.</p>
@@ -1494,545 +1612,217 @@ const Score: React.FC = () => {
           </div>
           <div className={` ${activeItem === "finance" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-disc m-5 text-black">
-                  {financialScores.map((financialScore) => (
-                    <div key={financialScore._id}>
-                      <li className="">
-                        {["A+", "A", "B+", "B"].includes(
-                          financialScore.apiScores.Grade
-                        ) ? (
-                          <>
-                            {(() => {
-                              switch (financialScore.apiScores.Grade) {
-                                case "A+":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have achieved significant revenue
-                                        traction and are demonstrating a clear
-                                        path to profitability.
-                                      </li>
-                                      <li>
-                                        You are consistently achieving
-                                        impressive Month on Month revenue
-                                        growth, indicating strong market demand
-                                        for your product or service.
-                                      </li>
-                                      <li>
-                                        You have a healthy gross margin,
-                                        demonstrating efficient operations and
-                                        the ability to generate profits.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is favorable,
-                                        indicating that you are acquiring
-                                        customers at a cost-effective rate.
-                                      </li>
-                                      <li>
-                                        You have a substantial runway, providing
-                                        you with the financial resources to
-                                        execute your growth plans.
-                                      </li>
-                                    </>
-                                  );
-                                case "A":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have achieved significant revenue
-                                        traction and are demonstrating a clear
-                                        path to profitability.
-                                      </li>
-                                      <li>
-                                        You are consistently achieving
-                                        impressive Month on Month revenue
-                                        growth, indicating strong market demand
-                                        for your product or service.
-                                      </li>
-                                      <li>
-                                        You have a healthy gross margin,
-                                        demonstrating efficient operations and
-                                        the ability to generate profits.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is favorable,
-                                        indicating that you are acquiring
-                                        customers at a cost-effective rate.
-                                      </li>
-                                      <li>
-                                        You have a substantial runway, providing
-                                        you with the financial resources to
-                                        execute your growth plans.
-                                      </li>
-                                    </>
-                                  );
-
-                                case "B+":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have established a solid revenue
-                                        stream and are making progress towards
-                                        profitability.
-                                      </li>
-                                      <li>
-                                        You are experiencing consistent Month on
-                                        Month revenue growth, demonstrating
-                                        ongoing market interest in your product
-                                        or service.
-                                      </li>
-                                      <li>
-                                        Your gross margin is improving,
-                                        reflecting your efforts to optimize your
-                                        operations and increase profitability.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is positive,
-                                        indicating that you are generating
-                                        revenue from your customer base.
-                                      </li>
-                                      <li>
-                                        You have a comfortable runway, providing
-                                        you with sufficient financial resources
-                                        to support your current growth
-                                        trajectory.
-                                      </li>
-                                    </>
-                                  );
-                                case "B":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have generated initial revenue, but
-                                        you may need to focus on accelerating
-                                        growth to achieve profitability.
-                                      </li>
-                                      <li>
-                                        You are experiencing steady Month on
-                                        Month revenue growth, but there may be
-                                        opportunities to improve your sales and
-                                        marketing strategies to drive faster
-                                        growth.
-                                      </li>
-                                      <li>
-                                        Your gross margin is still developing,
-                                        but there is potential for improvement
-                                        through cost optimization and revenue
-                                        maximization strategies.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is close to
-                                        breakeven, indicating that you are
-                                        making progress towards generating a
-                                        positive return on customer acquisition
-                                        costs.
-                                      </li>
-                                      <li>
-                                        You have a moderate runway, but you may
-                                        need to adjust your spending or revenue
-                                        projections to ensure long-term
-                                        sustainability.
-                                      </li>
-                                    </>
-                                  );
-
-                                default:
-                                  return "No strength in any category";
-                              }
-                            })()}
-                          </>
-                        ) : (
-                          <li>No strength in any category</li>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                <ul className="list-none m-5 text-sm md:text-[16px]">
+                  <li>
+                    {financialScores.map((financialScore) => (
+                      <div key={financialScore._id}>
+                        <li className="">
+                          {financialScore.apiScore && (
+                            <>
+                              <li className="">
+                                {/* {`Balance: ${financialScore.apiScore.balance}. `} */}
+                                {parseInt(
+                                  financialScore.apiScore.revenueStatus
+                                ) >= 3
+                                  ? getMessageForRevenueStatus(
+                                      parseInt(
+                                        financialScore.apiScore.revenueStatus
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`valuation: ${financialScore.apiScore.valuation}. `} */}
+                                {parseInt(financialScore.apiScore.valuation) >=
+                                3
+                                  ? getMessageForValuation(
+                                      parseInt(
+                                        financialScore.apiScore.valuation
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                            </>
+                          )}
+                        </li>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
+                <p className="ml-5">
+                  {financialScores.every((financialScore) =>
+                    Object.values(financialScore.apiScore).every(
+                      (val) => parseInt(val) < 3
+                    )
+                  ) ? (
+                    <p>No strength in any category.</p>
+                  ) : null}
+                </p>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="list-disc m-5 text-black">
-                  {financialScores.map((financialScore) => (
-                    <div key={financialScore._id}>
-                      <li className="">
-                        {["C", "D", "E", "F"].includes(
-                          financialScore.apiScores.Grade
-                        ) ? (
-                          <>
-                            {(() => {
-                              switch (financialScore.apiScores.Grade) {
-                                case "C":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have generated early revenue, but
-                                        you need to establish a consistent
-                                        growth pattern.
-                                      </li>
-                                      <li>
-                                        You are experiencing modest Month on
-                                        Month revenue growth, and there may be a
-                                        need to refine your product-market fit
-                                        or customer acquisition strategies.
-                                      </li>
-                                      <li>
-                                        Your gross margin is still in the early
-                                        stages of development, and there is
-                                        significant room for improvement through
-                                        operational efficiency and revenue
-                                        optimization.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is negative,
-                                        indicating that your customer
-                                        acquisition costs are exceeding your
-                                        revenue generated from customers.
-                                      </li>
-                                      <li>
-                                        You have a limited runway, and you may
-                                        need to make adjustments to your
-                                        spending or revenue projections to
-                                        extend your financial viability.
-                                      </li>
-                                    </>
-                                  );
-                                case "D":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have not yet generated significant
-                                        revenue, and you need to focus on
-                                        validating your product-market fit.
-                                      </li>
-                                      <li>
-                                        Your Month on Month revenue growth is
-                                        low or nonexistent, indicating a need to
-                                        refine your product or service to
-                                        address market needs and attract
-                                        customers.
-                                      </li>
-                                      <li>
-                                        Your gross margin needs to be improved,
-                                        and you need to establish a clear
-                                        pricing strategy and optimize your
-                                        operational costs.
-                                      </li>
-                                      <li>
-                                        Your ARPU/CAC ratio is significantly
-                                        negative, indicating that your customer
-                                        acquisition costs far exceed the revenue
-                                        generated from customers.
-                                      </li>
-                                      <li>
-                                        You have a very limited runway, and you
-                                        may need to reconsider your business
-                                        model or seek additional funding to
-                                        continue operations.
-                                      </li>
-                                    </>
-                                  );
-
-                                case "E":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have not yet generated revenue, and
-                                        you need to prioritize product
-                                        development and market research.
-                                      </li>
-                                      <li>
-                                        Your Month on Month revenue growth is
-                                        nonexistent, as you have not yet started
-                                        generating revenue from customers.
-                                      </li>
-
-                                      <li>
-                                        Your gross margin needs significant
-                                        improvement, as you have not yet
-                                        established a good enough pricing
-                                        strategy or operational structure.
-                                      </li>
-
-                                      <li>
-                                        Your ARPU/CAC ratio is not applicable,
-                                        as you have not yet acquired paying
-                                        customers.
-                                      </li>
-
-                                      <li>
-                                        You have no runway, and you need to
-                                        secure funding or reconsider your
-                                        business model to move forward.
-                                      </li>
-                                    </>
-                                  );
-                                case "F":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have not yet generated revenue, and
-                                        you need to prioritize product
-                                        development and market research.
-                                      </li>
-                                      <li>
-                                        Your Month on Month revenue growth is
-                                        nonexistent, as you have not yet started
-                                        generating revenue from customers.
-                                      </li>
-
-                                      <li>
-                                        Your gross margin needs significant
-                                        improvement, as you have not yet
-                                        established a good enough pricing
-                                        strategy or operational structure.
-                                      </li>
-
-                                      <li>
-                                        Your ARPU/CAC ratio is not applicable,
-                                        as you have not yet acquired paying
-                                        customers.
-                                      </li>
-
-                                      <li>
-                                        You have no runway, and you need to
-                                        secure funding or reconsider your
-                                        business model to move forward.
-                                      </li>
-                                    </>
-                                  );
-
-                                default:
-                                  return "No improvement in any category";
-                              }
-                            })()}
-                          </>
-                        ) : (
-                          <li>No improvement in any category</li>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                <ul className="list-none m-5 text-sm md:text-[16px]">
+                  <li>
+                    {financialScores.map((financialScore) => (
+                      <div key={financialScore._id}>
+                        <li className="">
+                          {financialScore.apiScore && (
+                            <>
+                              <li className="">
+                                {/* {`revenueSta: ${financialScore.apiScore.revenueSta}. `} */}
+                                {parseInt(
+                                  financialScore.apiScore.revenueStatus
+                                ) < 3
+                                  ? getMessageForRevenueStatus(
+                                      parseInt(
+                                        financialScore.apiScore.revenueStatus
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`valuation: ${financialScore.apiScore.valuation}. `} */}
+                                {parseInt(financialScore.apiScore.valuation) < 3
+                                  ? getMessageForValuation(
+                                      parseInt(
+                                        financialScore.apiScore.valuation
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                            </>
+                          )}
+                        </li>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
+                <p className="ml-5">
+                  {financialScores.every((financialScore) =>
+                    Object.values(financialScore.apiScore).every(
+                      (val) => parseInt(val) >= 3
+                    )
+                  ) ? (
+                    <p>No improvement in any category.</p>
+                  ) : null}
+                </p>
               </div>
             </div>
           </div>
           <div className={`${activeItem === "governance" ? "" : "hidden"}`}>
             <div className="md:flex justify-between mt-10 md:mt-10 mb-4 ml-5 md:ml-16 md:mr-16">
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md mb-4 md:mb-0">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Strengths</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <BsBarChart />
                   </p>
                 </div>
-                <ul className="list-disc m-5 text-black">
-                  {governanceScores.map((governanceScore) => (
-                    <div key={governanceScore._id}>
-                      <li className="">
-                        {["A+", "A", "B+", "B"].includes(
-                          governanceScore.apiScores.Grade
-                        ) ? (
-                          <>
-                            {(() => {
-                              switch (governanceScore.apiScores.Grade) {
-                                case "A+":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have ensured full legal compliance
-                                        and are well-positioned to navigate the
-                                        regulatory landscape.
-                                      </li>
-                                      <li>
-                                        You have proactively addressed all
-                                        regulatory requirements, demonstrating a
-                                        commitment to sound governance
-                                        practices.
-                                      </li>
-                                      <li>
-                                        You have assembled a advisory team and
-                                        board of directors with extensive
-                                        experience and expertise in relevant
-                                        industries, that meet regularly to
-                                        ensure the business is Governed
-                                        effectively
-                                      </li>
-                                      <li>
-                                        You have conducted thorough due
-                                        diligence on all directors and founders,
-                                        ensuring that they are not PEPs.
-                                      </li>
-                                      <li>
-                                        Your company is compliant with all
-                                        anti-money laundering and fraud
-                                        regulations, upholding the highest
-                                        ethical standards.
-                                      </li>
-                                    </>
-                                  );
-                                case "A":
-                                  return (
-                                    <>
-                                      <li></li>
-                                    </>
-                                  );
-
-                                case "B+":
-                                  return (
-                                    <>
-                                      <li></li>
-                                    </>
-                                  );
-                                case "B":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have initiated the process of legal
-                                        registration and are working towards
-                                        regulatory compliance.
-                                      </li>
-                                      <li>
-                                        You have established a good foundation
-                                        of regulatory compliance, but there may
-                                        be opportunities to further enhance your
-                                        standing with specific regulations.
-                                      </li>
-                                      <li>
-                                        You have assembled an advisory team with
-                                        some experience, that meet regularly to
-                                        ensure the leadership team is properly
-                                        guided
-                                      </li>
-                                    </>
-                                  );
-
-                                default:
-                                  return "No strength in this category";
-                              }
-                            })()}
-                          </>
-                        ) : (
-                          <li>
-                            <p>No strength in any category.</p>
-                          </li>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                <ul className="list-none m-5 text-sm md:text-[16px]">
+                  <li>
+                    {governanceScores.map((governanceScore) => (
+                      <div key={governanceScore._id}>
+                        <li className="">
+                          {governanceScore.apiScore && (
+                            <>
+                              <li className="">
+                                {/* {`advisor: ${governanceScore.apiScore.advisor}. `} */}
+                                {parseInt(governanceScore.apiScore.advisor) >= 3
+                                  ? getMessageForAdvisor(
+                                      parseInt(governanceScore.apiScore.advisor)
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`registered: ${financialScore.apiScore.registered}. `} */}
+                                {parseInt(
+                                  governanceScore.apiScore.registered
+                                ) >= 3
+                                  ? getMessageForRegistered(
+                                      parseInt(
+                                        governanceScore.apiScore.registered
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                            </>
+                          )}
+                        </li>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
+                <p className="ml-5">
+                  {governanceScores.every((governanceScore) =>
+                    Object.values(governanceScore.apiScore).every(
+                      (val) => parseInt(val) < 3
+                    )
+                  ) ? (
+                    <p>No strength in any category.</p>
+                  ) : null}
+                </p>
               </div>
-              <div className="w-[330px] md:w-[500px] md:h-[450px] h-[500px] rounded-2xl border shadow-md">
+              <div className="w-[330px] md:w-[500px] md:h-[400px] h-[500px] rounded-2xl border shadow-md">
                 <div className="flex justify-between">
                   <p className="text-3xl m-4">Improvements</p>
                   <p className="text-6xl text-[#083982e2] mt-4 mr-4">
                     <GiBreakingChain />
                   </p>
                 </div>
-                <ul className="list-disc m-5 text-black">
-                  {governanceScores.map((governanceScore) => (
-                    <div key={governanceScore._id}>
-                      <li className="">
-                        {["C", "D", "E", "F"].includes(
-                          governanceScore.apiScores.Grade
-                        ) ? (
-                          <>
-                            {(() => {
-                              switch (governanceScore.apiScores.Grade) {
-                                case "C":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have ensured full legal compliance
-                                        and are well-positioned to navigate the
-                                        regulatory landscape.
-                                      </li>
-                                      <li>
-                                        You have proactively addressed all
-                                        regulatory requirements, demonstrating a
-                                        commitment to sound governance
-                                        practices.
-                                      </li>
-                                      <li>
-                                        You have assembled a advisory team and
-                                        board of directors with extensive
-                                        experience and expertise in relevant
-                                        industries, that meet regularly to
-                                        ensure the business is Governed
-                                        effectively
-                                      </li>
-                                      <li>
-                                        You have conducted thorough due
-                                        diligence on all directors and founders,
-                                        ensuring that they are not PEPs.
-                                      </li>
-                                      <li>
-                                        Your company is compliant with all
-                                        anti-money laundering and fraud
-                                        regulations, upholding the highest
-                                        ethical standards.
-                                      </li>
-                                    </>
-                                  );
-                                case "D":
-                                  return (
-                                    <>
-                                      <li></li>
-                                    </>
-                                  );
-
-                                case "E":
-                                  return (
-                                    <>
-                                      <li></li>
-                                    </>
-                                  );
-                                case "F":
-                                  return (
-                                    <>
-                                      <li>
-                                        You have initiated the process of legal
-                                        registration and are working towards
-                                        regulatory compliance.
-                                      </li>
-                                      <li>
-                                        You have established a good foundation
-                                        of regulatory compliance, but there may
-                                        be opportunities to further enhance your
-                                        standing with specific regulations.
-                                      </li>
-                                      <li>
-                                        You have assembled an advisory team with
-                                        some experience, that meet regularly to
-                                        ensure the leadership team is properly
-                                        guided
-                                      </li>
-                                    </>
-                                  );
-
-                                default:
-                                  return "You have no improvement in this category";
-                              }
-                            })()}
-                          </>
-                        ) : (
-                          <li>No improvement in any category.</li>
-                        )}
-                      </li>
-                    </div>
-                  ))}
+                <ul className="list-none m-5 text-sm md:text-[16px]">
+                  <li>
+                    {governanceScores.map((governanceScore) => (
+                      <div key={governanceScore._id}>
+                        <li className="">
+                          {governanceScore.apiScore && (
+                            <>
+                              <li className="">
+                                {/* {`advisor: ${governanceScore.apiScore.advisor}. `} */}
+                                {parseInt(governanceScore.apiScore.advisor) < 3
+                                  ? getMessageForAdvisor(
+                                      parseInt(governanceScore.apiScore.advisor)
+                                    )
+                                  : ""}
+                              </li>
+                              <li className="">
+                                {/* {`registered: ${financialScore.apiScore.registered}. `} */}
+                                {parseInt(governanceScore.apiScore.registered) <
+                                3
+                                  ? getMessageForRegistered(
+                                      parseInt(
+                                        governanceScore.apiScore.registered
+                                      )
+                                    )
+                                  : ""}
+                              </li>
+                            </>
+                          )}
+                        </li>
+                      </div>
+                    ))}
+                  </li>
                 </ul>
+                <p className="ml-5">
+                  {governanceScores.every((governanceScore) =>
+                    Object.values(governanceScore.apiScore).every(
+                      (val) => parseInt(val) >= 3
+                    )
+                  ) ? (
+                    <p>No improvement in any category.</p>
+                  ) : null}
+                </p>
               </div>
             </div>
           </div>

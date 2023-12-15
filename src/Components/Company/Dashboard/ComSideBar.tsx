@@ -29,6 +29,7 @@ const ComSideBar: React.FC<ComSideBarProps> = ({ height }) => {
     localStorage.removeItem("governanceScores");
     localStorage.removeItem("companyInfo");
     localStorage.removeItem("companyInfoFailed");
+    localStorage.removeItem("vesterScore");
     navigate("/company-login");
   };
 

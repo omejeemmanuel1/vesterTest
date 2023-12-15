@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Formik, Form, Field } from "formik";
 import { BsSendFill } from "react-icons/bs";
-import jwt_decode from "jwt-decode";
 import { useTheme } from "../../../Context/ThemeContext";
 import Avatar from "../../../assets/man.png";
 import { BiLogOut } from "react-icons/bi";
@@ -15,28 +14,18 @@ import {
   MdOutlineSpaceDashboard,
 } from "react-icons/md";
 import { RxBarChart } from "react-icons/rx";
-// import { AiOutlinePieChart } from "react-icons/ai";
 import { CgMenuBoxed } from "react-icons/cg";
 import { CgCloseR } from "react-icons/cg";
 import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-interface DecodedToken {
-  sub: any;
-  email: string;
-  companyName: string;
-}
-
 interface ComNavBarProps {
   bgColor?: string;
 }
 
 const ScoreNav: React.FC<ComNavBarProps> = () => {
-  const [userData, setUserData] = useState<DecodedToken | null>(null);
-  const [companyInfo, setCompanyInfo] = useState({
-    companyLogo: "",
-  });
+  const [companyInfo, setCompanyInfo] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -47,68 +36,36 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
 
   const { theme } = useTheme();
   console.log(theme);
-  let decodedToken: DecodedToken;
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchLoggedInUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          decodedToken = jwt_decode(token);
-          console.log(decodedToken);
-          setUserData(decodedToken);
-        }
-      } catch (error) {
-        console.log(error);
+  const getJwtToken = () => {
+    return localStorage.getItem("token");
+  };
+
+  const fetchData = async () => {
+    try {
+      const token = getJwtToken();
+
+      if (!token) {
+        return;
       }
-    };
-    fetchLoggedInUser();
-  }, []);
+
+      const response = await axios.get(`${baseUrl}/company/get-company`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCompanyInfo(response.data.company);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching company information:", error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const apiUrl = `${baseUrl}/teamscore/scrape-website?companyWebsite=${decodedToken?.sub.companyWebsite}`;
-    console.log(apiUrl);
-
-    const fetchData = async () => {
-      try {
-        const hasFailed = localStorage.getItem("companyInfoFailed");
-
-        if (hasFailed) {
-          setCompanyInfo({ companyLogo: "" });
-          setLoading(false);
-        } else {
-          const storedCompanyInfo = localStorage.getItem("companyInfo");
-
-          if (storedCompanyInfo) {
-            const parsedCompanyInfo = JSON.parse(storedCompanyInfo);
-            setCompanyInfo(parsedCompanyInfo);
-            setLoading(false);
-          } else {
-            const response = await axios.get(apiUrl);
-
-            if (response.status !== 200) {
-              localStorage.setItem("companyInfoFailed", "true");
-              throw new Error("Failed to fetch company data");
-            }
-
-            const newCompanyInfo = {
-              companyLogo: response.data.companyWebsiteInfo.companyLogo,
-            };
-
-            localStorage.setItem("companyInfo", JSON.stringify(newCompanyInfo));
-
-            setCompanyInfo(newCompanyInfo);
-            setLoading(false);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching company data:", error);
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -119,6 +76,13 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("teamscores");
+    localStorage.removeItem("marketScores");
+    localStorage.removeItem("businessScores");
+    localStorage.removeItem("financialScores");
+    localStorage.removeItem("governanceScores");
+    localStorage.removeItem("companyInfo");
+    localStorage.removeItem("companyInfoFailed");
+    localStorage.removeItem("vesterScore");
     navigate("/comp-login");
   };
 
@@ -128,7 +92,7 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
         <div className="flex md:items-center justify-between">
           <div className="hidden md:flex md:items-center justify-center space-x-2 p-6">
             <div className="flex text-center text-2xl m-auto">
-              {userData ? userData.sub.companyName : "Loading..."}
+              {companyInfo ? companyInfo.companyName : "Loading..."}
             </div>
             {loading ? (
               <div className="text-center">
@@ -214,7 +178,7 @@ const ScoreNav: React.FC<ComNavBarProps> = () => {
               <div className="md:hidden h-[340px] bg-[#000D80] absolute top-0 left-0 w-full block text-white pt-4 pb-4">
                 <div className="flex space-x-2 pl-5">
                   <div className="flex text-center text-xl mb-1">
-                    {userData ? userData.sub.companyName : "Loading..."}
+                    {companyInfo ? companyInfo.companyName : "Loading..."}
                   </div>
                   {loading ? (
                     <div className="text-center">

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useTheme } from "../../../Context/ThemeContext";
 import Piechart from "./PieChart/Piechart";
-import ManArt from "../../../assets/manart.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { RiCornerUpRightFill } from "react-icons/ri";
@@ -18,6 +17,7 @@ interface Company {
   companyMail: string;
   companyName: string;
   companySector: string;
+  companyLogo: string;
   verified: boolean;
   vesterScore: string;
   generalinfos: GeneralInfo[];
@@ -69,13 +69,11 @@ const ReassessedStartup: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
 
-        // Fetch matching companies from localStorage
         const matchingCompaniesFromStorage =
           localStorage.getItem("matchingCompanies");
         if (matchingCompaniesFromStorage) {
           setMatchingCompanies(JSON.parse(matchingCompaniesFromStorage));
         } else {
-          // Fetch matching companies from the API
           const response = await axios.get(`${baseUrl}/investor/get-all-data`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -235,10 +233,10 @@ const ReassessedStartup: React.FC = () => {
                           <div className="flex">
                             {" "}
                             <img
-                              src={ManArt}
-                              alt=""
-                              className="w-8 h-7 rounded-full pr-1"
-                            />{" "}
+                              src={company.companyLogo}
+                              alt="Company Logo"
+                              className="w-5 h-5 rounded-full mr-2"
+                            />
                             {company.companyName}
                           </div>
                         </td>

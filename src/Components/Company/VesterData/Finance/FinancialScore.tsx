@@ -14,15 +14,6 @@ const initialValues = {
   revenueStatus: "",
 };
 
-const valuationOptions = [
-  "Under $5m",
-  "$5m - $10m",
-  "$10m-$15m",
-  "$15m-$20m",
-  "Over $20m",
-  "Other",
-];
-
 interface FinancialScoreProps {
   onSubmit: (values: typeof initialValues) => void;
 }
@@ -82,20 +73,20 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit }) => {
             <label htmlFor="valuation" className="block text-sm">
               What is your valuation?
             </label>
-            <div>
-              {valuationOptions.map((option) => (
-                <div key={option} className="flex items-center">
-                  <Field
-                    type="checkbox"
-                    id={`startupValuation-${option}`}
-                    name="startupValuation"
-                    value={option}
-                    className="mr-2"
-                  />
-                  <label htmlFor={`startupValuation-${option}`}>{option}</label>
-                </div>
-              ))}
-            </div>
+            <Field
+              as="select"
+              id="valuation"
+              name="valuation"
+              className="mt-1 p-2 w-full border rounded"
+            >
+              <option value="">Select Start up valuation</option>
+              <option value="Over $20m">Over $20m</option>
+              <option value="$15m-$20m">$15m-$20m</option>
+              <option value="$10m-$15m">$10m-$15m</option>
+              <option value="$5m - $10m">$5m - $10m</option>
+              <option value="Under $5m">Under $5m</option>
+              <option value="other">other</option>
+            </Field>
           </div>
           <div className="mb-4">
             <label htmlFor="totalFundingRaised" className="block text-sm">
@@ -119,11 +110,13 @@ const FinancialScore: React.FC<FinancialScoreProps> = ({ onSubmit }) => {
               className="mt-1 p-2 w-full border rounded"
             >
               <option value="">Select Revenue Status</option>
-              <option value="started">Started generating revenue</option>
-              <option value="customers_trying_but_no_revenue">
+              <option value="Started generating revenue">
+                Started generating revenue
+              </option>
+              <option value="Have potential customers trying the product but yet to close">
                 Have potential customers trying the product but yet to close
               </option>
-              <option value="no_trial_no_revenue">
+              <option value="Not generating revenue yet and no customers in the pipeline">
                 Not generating revenue yet and no customers in the pipeline
               </option>
             </Field>

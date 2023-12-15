@@ -24,6 +24,7 @@ const ScoreSideBar: React.FC = () => {
     localStorage.removeItem("governanceScores");
     localStorage.removeItem("companyInfo");
     localStorage.removeItem("companyInfoFailed");
+    localStorage.removeItem("vesterScore");
     navigate("/company-login");
   };
 

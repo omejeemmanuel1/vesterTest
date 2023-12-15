@@ -42,7 +42,7 @@ const Profile: React.FC = () => {
       }
 
       const response = await axios.put(
-        `${baseUrl}/auth/update_profile`,
+        `${baseUrl}/company/update_profile`,
         values,
         {
           headers: {

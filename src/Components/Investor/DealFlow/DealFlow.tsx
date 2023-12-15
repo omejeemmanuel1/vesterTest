@@ -19,7 +19,6 @@ import {
   WhatsappIcon,
 } from "react-share";
 import axios from "axios";
-import ManArt from "../../../assets/manart.png";
 
 const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -53,6 +52,7 @@ interface Company {
   companyMail: string;
   companyName: string;
   companySector: string;
+  companyLogo: string;
   verified: boolean;
   vesterScore: string;
   generalinfos: GeneralInfo[];
@@ -447,7 +447,7 @@ const DealFlow: React.FC = () => {
             </h2>
           </div>
           <table className="w-full text-[#031549]">
-            <thead className="text-sm text-center">
+            <thead className="text-sm text-center ">
               <th>
                 <div className="font-bold">Name</div>
               </th>
@@ -483,10 +483,10 @@ const DealFlow: React.FC = () => {
                         <div className="flex">
                           {" "}
                           <img
-                            src={ManArt}
-                            alt=""
-                            className="w-8 h-7 rounded-full pr-1"
-                          />{" "}
+                            src={company.companyLogo}
+                            alt="Company Logo"
+                            className="w-5 h-5 rounded-full mr-2"
+                          />
                           {company.companyName}
                         </div>
                       </td>

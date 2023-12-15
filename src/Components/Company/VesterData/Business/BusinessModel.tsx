@@ -24,7 +24,8 @@ const initialValues = {
   productStage: "",
   monetization: "",
   businessModels: [],
-  userCounts: {},
+  current_user_count: {},
+  past_user_count: {},
 };
 
 const businessModels = [
@@ -51,7 +52,7 @@ const loadFormValuesFromLocalStorage = () => {
   return initialValues;
 };
 
-const DynamicUserCounts = ({ values }: any) => {
+const DynamicCurrent_user_count = ({ values }: any) => {
   return (
     <div className="mb-4">
       <label className="block text-sm">
@@ -59,13 +60,36 @@ const DynamicUserCounts = ({ values }: any) => {
       </label>
       {values.businessModels.map((model: string) => (
         <div key={model}>
-          <label htmlFor={`userCounts.${model}`} className="block mt-1">
+          <label htmlFor={`current_user_count.${model}`} className="block mt-1">
             {model}:
           </label>
           <Field
             type="text"
-            id={`userCounts.${model}`}
-            name={`userCounts.${model}`}
+            id={`current_user_count.${model}`}
+            name={`current_user_count.${model}`}
+            className="p-2 w-full border rounded"
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const DynamicPast_user_count = ({ values }: any) => {
+  return (
+    <div className="mb-4">
+      <label className="block text-sm">
+        Past user interactions for each selected business model:
+      </label>
+      {values.businessModels.map((model: string) => (
+        <div key={model}>
+          <label htmlFor={`past_user_count.${model}`} className="block mt-1">
+            {model}:
+          </label>
+          <Field
+            type="text"
+            id={`past_user_count.${model}`}
+            name={`past_user_count.${model}`}
             className="p-2 w-full border rounded"
           />
         </div>
@@ -167,7 +191,11 @@ const BusinessModel: React.FC<BusinessModelProps> = ({ onSubmit }) => {
             </div>
 
             {values.businessModels.length > 0 && (
-              <DynamicUserCounts values={values} />
+              <DynamicCurrent_user_count values={values} />
+            )}
+
+            {values.businessModels.length > 0 && (
+              <DynamicPast_user_count values={values} />
             )}
 
             <div className="flex space-x-6">

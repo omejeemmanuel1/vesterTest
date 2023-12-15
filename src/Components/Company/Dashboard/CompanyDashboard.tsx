@@ -77,19 +77,19 @@ function convertGradeToNumber(grade: any) {
 }
 
 function convertVesterScoreToImage(vesterScore: any) {
-  if (vesterScore >= 5) {
+  if (vesterScore >= 4.5) {
     return BadgeAPlus;
-  } else if (vesterScore >= 4.5) {
-    return BadgeA;
   } else if (vesterScore >= 4) {
-    return BadgeB;
+    return BadgeA;
   } else if (vesterScore >= 3.5) {
     return BadgeB;
   } else if (vesterScore >= 3) {
+    return BadgeB;
+  } else if (vesterScore >= 2.5) {
     return BadgeC;
   } else if (vesterScore >= 2) {
     return BadgeD;
-  } else if (vesterScore >= 1) {
+  } else if (vesterScore >= 1.5) {
     return BadgeE;
   } else {
     return BadgeF;
@@ -265,6 +265,8 @@ const CompanyDashboard: React.FC = () => {
 
       const vesterImage = convertVesterScoreToImage(vesterScore);
       setVesterScore(vesterImage);
+      console.log("vester score: ", vesterScore);
+      console.log("vester image: ", vesterImage);
 
       localStorage.setItem("vesterScore", vesterImage);
 
@@ -377,7 +379,7 @@ const CompanyDashboard: React.FC = () => {
           <div className="md:-mt-5">
             {emptyAPIsList.length === 5 ? (
               <div
-                className={`block text-center ml-2 mr-2 rounded-2xl md:h-[30vh]  h-[370px] md:justify-center p-6 bg-[#031549] ${
+                className={`block text-center ml-2 mr-2 rounded-2xl md:h-[30vh]  h-[400px] md:justify-center p-6 bg-[#031549] ${
                   theme === "light"
                     ? "font-poppins text-white"
                     : "dark:bg-white  text-[#000D80]"
@@ -406,13 +408,13 @@ const CompanyDashboard: React.FC = () => {
             ) : (
               <div className="flex">
                 <div
-                  className={`md:flex  text-[20px] ml-10 mr-2 rounded-2xl md:h-[25vh] md:w-[740px] lg:w-[100%] h-[370px] md:justify-between p-2 bg-[#031549] ${
+                  className={`md:flex  text-[20px] ml-10 mr-10 md:mr-2 rounded-2xl md:h-[200px] md:w-[740px] lg:w-[100%] h-[400px] md:justify-between p-2 bg-[#031549] ${
                     theme === "light"
                       ? "font-poppins"
                       : "dark:bg-white text-[#031549]"
                   }`}
                 >
-                  <div className="w-full md:w-[50%] lg:w-[50%] md:ml-10">
+                  <div className="w-full md:w-[50%] lg:w-[50%] text-center md:text-none md:ml-10">
                     <h2 className="">Your Vester Score</h2>
                     <img
                       src={vesterScore}
@@ -451,7 +453,7 @@ const CompanyDashboard: React.FC = () => {
                 </div>
 
                 <div
-                  className={`hidden md:block text-center pt-10 text-[20px] ml-2 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] lg:w-[500px] h-[370px] md:justify-center p-6 bg-[#031549] ${
+                  className={`hidden md:block text-center pt-10 text-[20px] ml-2 mr-10 rounded-2xl md:h-[200px]  md:w-[300px] lg:w-[500px] h-[400px] md:justify-center p-6 bg-[#031549] ${
                     theme === "light"
                       ? "font-poppins"
                       : "dark:bg-white text-[#031549]"
